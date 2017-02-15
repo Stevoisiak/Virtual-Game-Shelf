@@ -6,8 +6,8 @@ the need for an internet connection.
 
 Code contributions should follow [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 
-## Building Virtual Game Shelf
+## Compiling with BlueJ
 
-Virtual Game Shelf was compiled using [Eclipse](https://eclipse.org/) with
-the [e(fx)clipse](https://www.eclipse.org/efxclipse/install.html) addon to allow the use
-of the JavaFX library.
+In BlueJ, Select **`Project -> Open Non BlueJ...`**. Select the project folder in the newly opened window and click **`Open in BlueJ`**. (By default, the folder should be named **Virtual-Game-Shelf**.) You should now be able to open and compile the project in BlueJ.
+
+Note: A Package Line Mismatch warning may appear if project files have been recently moved or renamed. If this appens, click "continue" to have BlueJ automatically correct the issue. 
