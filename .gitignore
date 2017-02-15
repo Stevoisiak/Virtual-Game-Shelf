@@ -1,4 +1,22 @@
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Compiled files
+bin/
 *.class
+
+# BlueJ files
+*.bluej
+*.ctxt
+
+# Eclipse files
+.classpath
+.project
+.settings/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
