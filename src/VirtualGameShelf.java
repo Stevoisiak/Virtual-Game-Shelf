@@ -1,4 +1,4 @@
-package edu.adelphi.svascellaro.virtualGameShelf;
+package src;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
