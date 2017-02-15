@@ -20,12 +20,12 @@ public class VirtualGameShelf extends Application {
 	
 	@Override
 	public void start(Stage mainStage) throws Exception {
-		mainStage.setTitle("Virtual Game Shelf");
+		mainStage.setTitle("Virtual Game Shelf"); // title
 		
 		BorderPane root = new BorderPane();
 		Scene mainScene = new Scene(root);
 		mainStage.setScene(mainScene);
 		
-		mainStage.show();
+		mainStage.show(); // used to show the stage
 	}
 }
