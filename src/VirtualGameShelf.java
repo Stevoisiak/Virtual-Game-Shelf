@@ -26,6 +26,7 @@ public class VirtualGameShelf extends Application {
 		Scene mainScene = new Scene(root);
 		mainStage.setScene(mainScene);
 		
+		// Show the main stage
 		mainStage.show();
 	}
 }
