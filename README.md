@@ -1,9 +1,10 @@
 # Virtual Game Shelf - A Game Collection Organizer
 Virtual Game Shelf is a desktop Java application to organize your 
 game library in a single convenient location. It strives to implement 
-the best features from services like [Backloggery](http://www.backloggery.com/) 
-and [My Game Collection](http://my-game-collection.tuyware.com/) without 
-the need for an internet connection or Android device.
+the best features from services like [Backloggery](http://www.backloggery.com/), 
+[VGCollect](https://vgcollect.com), and [My Game Collection]
+(http://my-game-collection.tuyware.com/) without the need for an 
+internet connection or Android device.
 
 Code contributions should loosely follow [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 
