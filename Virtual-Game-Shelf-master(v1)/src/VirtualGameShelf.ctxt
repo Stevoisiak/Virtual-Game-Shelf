@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=args
+comment0.target=void\ main(java.lang.String[])
+comment1.params=mainStage
+comment1.target=void\ start(javafx.stage.Stage)
+comment2.params=
+comment2.target=javafx.scene.control.MenuButton\ generateMenuButton()
+comment3.params=observable\ oldValue\ newValue
+comment3.target=void\ changed(javafx.beans.value.ObservableValue,\ java.lang.Boolean,\ java.lang.Boolean)
+comment4.params=
+comment4.target=javafx.scene.control.MenuBar\ generateMenuBar()
+numComments=5
