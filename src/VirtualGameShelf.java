@@ -1,7 +1,7 @@
 import javafx.animation.*;
 import javafx.application.*;
 import javafx.beans.value.*;
-import javafx.event.*; 
+import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -51,12 +51,12 @@ public class VirtualGameShelf extends Application {
 
         MenuBar menuBar = generateMenuBar();
         root.setTop(menuBar);
-        
+
         // used to add games to the library
         MenuButton menuButton = generateMenuButton();
         root.setMargin(menuButton, new Insets(16));
         root.setBottom(menuButton);
-        root.setAlignment( menuButton, Pos.CENTER_RIGHT );     
+        root.setAlignment( menuButton, Pos.CENTER_RIGHT );
 
         mainStage.show();
     }
@@ -67,19 +67,19 @@ public class VirtualGameShelf extends Application {
 
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
         manualAdd.setOnAction(e -> System.out.println("This feature is not yet available."));
-        
+
         MenuItem autoAdd = new MenuItem("Add New Game Via Steam");
         autoAdd.setOnAction(e -> System.out.println("This feature is not yet available."));
 
         menuButton.getItems().addAll(manualAdd, autoAdd);
-        
-        // rotates the image 45 degrees when the menu button is "active" 
+
+        // rotates the image 45 degrees when the menu button is "active"
         // then rotates the image 45 degrees when the menu button is not "active"
         menuButton.showingProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
-                    if( newValue) {
+                    if (newValue) {
                         RotateTransition rotation = new RotateTransition(Duration.seconds(0.5), menuButton);
                         rotation.setByAngle(45);
                         rotation.play();
@@ -95,8 +95,7 @@ public class VirtualGameShelf extends Application {
         return menuButton;
     }
 
-    public MenuBar generateMenuBar()
-    {
+    public MenuBar generateMenuBar() {
         MenuBar menuBar = new MenuBar();
 
         Menu menuFile = new Menu("File");
@@ -127,6 +126,4 @@ public class VirtualGameShelf extends Application {
 
         return menuBar;
     }
-    
-    
 }
