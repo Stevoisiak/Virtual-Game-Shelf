@@ -18,9 +18,8 @@ If this happens, click "continue" to have BlueJ auto-correct the issue.
 
 ## Compiling with Eclipse
 
-To start, make sure [Eclipse Neon](https://www.eclipse.org/) and the
-[e(fx)clipse](http://www.eclipse.org/efxclipse/install.html) addon are
-installed before trying to compile.
+Before trying to compile, make sure [Eclipse Neon](https://www.eclipse.org/) and the
+[e(fx)clipse](http://www.eclipse.org/efxclipse/install.html) addon are installed.
 
 On Eclipse's welcome screen, select `Checkout projects from Git` to
 open the project import wizard. (You can also use `File -> Import`,
