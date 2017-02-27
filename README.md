@@ -29,10 +29,7 @@ folder on your computer. Otherwise, select `Clone URI` and
 [fill in the necesary information](http://i.imgur.com/pcPI0Wh.png).
 Make sure to import the project as an existing Eclipse project.
 
-Once the project is done importing, right click Video-Game-Shelf
-in the Project Explorer and select `Properties`. Go to `Java Build
-Path` and make sure that JRE System Libary is selected. You should
-now be able to compile and run Video Game Shelf in Eclipse.
+You should now be able to compile and run Video Game Shelf in Eclipse.
 
 ## Automatic testing with Travis CI
 
