@@ -38,7 +38,7 @@ public class GameList{
 	{
 		int y = 1; //y is going to be the shrunkenConsoleList size
 		boolean comparison = false;
-		for (int i = 0; i < consoleList.length(); i++)
+		/*for (int i = 0; i < consoleList.length(); i++)
 		{
 			if(i == 0)
 			{
@@ -51,13 +51,12 @@ public class GameList{
 					//work here
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void addGame(String name, String system, int hours, String finish, int rating)
 	{
 		Game game = new Game();
-		game.setId((long) Math.ran());
 		game.setName(name);
 		game.setSystem(system);
 		game.setHours(hours);
