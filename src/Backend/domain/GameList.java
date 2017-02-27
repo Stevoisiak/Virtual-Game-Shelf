@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class GameList{
 
 	private long ID;
@@ -52,7 +54,7 @@ public class GameList{
 		}
 	}
 	
-	public void addGame(String name, string system, int hours, String finish, int rating)
+	public void addGame(String name, String system, int hours, String finish, int rating)
 	{
 		Game game = new Game();
 		game.setId((long) Math.ran());
