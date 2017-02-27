@@ -1,3 +1,5 @@
+package Backend.domain;
+
 import java.util.*;
 
 public class GameList{
@@ -5,7 +7,7 @@ public class GameList{
 	private long ID;
     private String name;
 	
-	private String[] consoleList; //Seperation of consoles
+	private String[] consoleList; //Separation of consoles
 	private String[] shrunkenConsoleList;
 	private int[] consoleGames; //Count for games per console
     private List<Game> games;

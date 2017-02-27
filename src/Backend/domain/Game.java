@@ -1,3 +1,5 @@
+package Backend.domain;
+
 public class Game{
 	private long ID;
 	private String name; //REQUIRED
@@ -23,7 +25,7 @@ public class Game{
 	public void setFinish(String finish) {
         this.finish = finish;
     }
-	public void setRating(String rating) {
+	public void setRating(int rating) {
         this.rating = rating;
     }
 	public void setExcess(String excess) {
