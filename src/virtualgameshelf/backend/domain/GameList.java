@@ -1,4 +1,4 @@
-package backend.domain;
+package virtualgameshelf.backend.domain;
 
 import java.util.*;
 

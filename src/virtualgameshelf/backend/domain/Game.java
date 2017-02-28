@@ -1,4 +1,4 @@
-package backend.domain;
+package virtualgameshelf.backend.domain;
 
 public class Game {
     private long ID; // AutoSet / Not Required
