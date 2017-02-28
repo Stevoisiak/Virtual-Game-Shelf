@@ -91,30 +91,15 @@ public class NewGameWindow extends Stage {
         starRow.setSpacing(5);
         starRow.setAlignment(Pos.CENTER);
 
-        // radio for star rating
-        ToggleGroup group = new ToggleGroup();
-        RadioButton s1 = new RadioButton("1 Star");
-        s1.setUserData("1 Star");
-        s1.setToggleGroup(group);
-        s1.requestFocus();
-
-        RadioButton s2 = new RadioButton("2 Star");
-        s2.setUserData("2 Star");
-        s2.setToggleGroup(group);
-
-        RadioButton s3 = new RadioButton("3 Star");
-        s3.setUserData("3 Star");
-        s3.setToggleGroup(group);
-
-        RadioButton s4 = new RadioButton("4 Star");
-        s4.setUserData("4 Star");
-        s4.setToggleGroup(group);
-
-        RadioButton s5 = new RadioButton("5 Star");
-        s5.setUserData("5 Star");
-        s5.setToggleGroup(group);
-
-        starRow.getChildren().addAll(s1, s2, s3, s4, s5);
+        // radio for 1-5 star rating
+        ToggleGroup starGroup = new ToggleGroup();
+        RadioButton starButtons[] = new RadioButton[5];
+        for (int i = 0; i < starButtons.length; i++) {
+            starButtons[i] = new RadioButton(i+1 + " Star");
+            starButtons[i].setUserData(i+1);
+            starButtons[i].setToggleGroup(starGroup);
+            starRow.getChildren().add(starButtons[i]);
+        }
 
         Button addButton = new Button("Add");
         addButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -132,16 +117,9 @@ public class NewGameWindow extends Stage {
 
                 System.out.println("Hours Played: " + hoursField.getText());
 
-                if (s1.isSelected()) {
-                    System.out.println("Rating: 1 Star");
-                } else if (s2.isSelected()) {
-                    System.out.println("Rating: 2 Star");
-                } else if (s3.isSelected()) {
-                    System.out.println("Rating: 3 Star");
-                } else if (s4.isSelected()) {
-                    System.out.println("Rating: 4 Star");
-                } else if (s5.isSelected()) {
-                    System.out.println("Rating: 5 Star");
+                if (starGroup.getSelectedToggle() != null) {
+                    int starRating = (int) starGroup.getSelectedToggle().getUserData();
+                    System.out.println("Rating: " + starRating + " Star");
                 }
             }
         });
