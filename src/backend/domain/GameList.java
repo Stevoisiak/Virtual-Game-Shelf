@@ -36,28 +36,22 @@ public class GameList {
     }
 	/* End Get Functions */
 
-	public void createShrunkenList()
-	{
+	public void createShrunkenList() {
 		int y = 1; //y is going to be the shrunkenConsoleList size
 		boolean comparison = false;
-		/*for (int i = 0; i < consoleList.length(); i++)
-		{
-			if(i == 0)
-			{
+		/*for (int i = 0; i < consoleList.length(); i++) {
+			if(i == 0) {
 				shrunkenConsoleList[0] = consoleList[i];
 			}
-			else
-			{
-				for (int x = 0; x < y; x++)
-				{
+			else {
+				for (int x = 0; x < y; x++) {
 					//work here
 				}
 			}
 		}*/
 	}
 
-	public void addGame(String name, String system, int hours, String finish, int rating)
-	{
+	public void addGame(String name, String system, int hours, String finish, int rating) {
 		Game game = new Game();
 		game.setName(name);
 		game.setSystem(system);
