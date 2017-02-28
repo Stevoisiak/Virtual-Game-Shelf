@@ -31,14 +31,14 @@ public class VirtualGameShelf extends Application {
         mainStage.setTitle("Virtual Game Shelf");
 
         // add application icon
-        //mainStage.getIcons().add( new Image("icons/") );
+        //mainStage.getIcons().add( new Image("resources/icons/") );
 
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root, 400, 600);
         mainStage.setScene(mainScene);
 
         // add stylesheet
-        mainScene.getStylesheets().add("assets/stylesheet.css");
+        mainScene.getStylesheets().add("resources/stylesheet.css");
 
         // custom code below --------------------------------------------
 
@@ -87,7 +87,7 @@ public class VirtualGameShelf extends Application {
     }
 
     public MenuButton createAddGameButton() {
-        MenuButton addGameButton = new MenuButton(null, new ImageView("icons/add.png"));
+        MenuButton addGameButton = new MenuButton(null, new ImageView("resources/icons/add.png"));
         addGameButton.setPopupSide(Side.TOP);
 
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
