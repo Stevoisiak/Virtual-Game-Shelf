@@ -1,4 +1,7 @@
-# Virtual Game Shelf - A Game Collection Organizer
+
+
+# Virtual Game Shelf - A Game Collection Organizer  [![Build Status](https://travis-ci.com/Stevoisiak/Virtual-Game-Shelf.svg?token=gNkwZVuxytsxPM98V5kb&branch=master)](https://travis-ci.com/Stevoisiak/Virtual-Game-Shelf)
+
 Virtual Game Shelf is a desktop Java application to organize your
 game library in a single convenient location. It strives to implement
 the best features from services like [Backloggery](http://www.backloggery.com/),
