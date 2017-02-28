@@ -14,13 +14,12 @@ public class VirtualGameShelf extends Application {
     public static void main(String[] args) {
         // Automatic VM reset
         try {
-            // http://stackoverflow.com/a/32597281
-            // Bugfix: Prevents JavaFX ComboBox freezing on Windows 10 touchscreen computers
+            // Bugfix: Prevents JavaFX ComboBox freezing on Windows 10
+            // touchscreen computers (http://stackoverflow.com/a/32597281)
             System.setProperty("glass.accessible.force", "false");
             launch(args);
             System.exit(0);
-        }
-        catch (Exception error) {
+        } catch (Exception error) {
             error.printStackTrace();
             System.exit(0);
         }
@@ -31,7 +30,7 @@ public class VirtualGameShelf extends Application {
         mainStage.setTitle("Virtual Game Shelf");
 
         // add application icon
-        //mainStage.getIcons().add( new Image("resources/icons/") );
+        // mainStage.getIcons().add(new Image("resources/icons/"));
 
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root, 400, 600);
@@ -61,18 +60,18 @@ public class VirtualGameShelf extends Application {
         menuBar.getMenus().add(menuFile);
 
         MenuItem menuItemNew = new MenuItem("New");
-        //menuItemNew.setOnAction(e -> onNew());
-        menuItemNew.setAccelerator( new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN) );
+        // menuItemNew.setOnAction(e -> onNew());
+        menuItemNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         menuFile.getItems().add(menuItemNew);
 
         MenuItem menuItemOpen = new MenuItem("Open");
-        //menuItemOpen.setOnAction(e -> onOpen());
-        menuItemOpen.setAccelerator( new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN) );
+        // menuItemOpen.setOnAction(e -> onOpen());
+        menuItemOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         menuFile.getItems().add(menuItemOpen);
 
         MenuItem menuItemSave = new MenuItem("Save");
-        //menuItemSave.setOnAction(e -> onSave());
-        menuItemSave.setAccelerator( new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN) );
+        // menuItemSave.setOnAction(e -> onSave());
+        menuItemSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         menuFile.getItems().add(menuItemSave);
 
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
@@ -80,7 +79,7 @@ public class VirtualGameShelf extends Application {
 
         MenuItem menuItemExit = new MenuItem("Exit");
         menuItemExit.setOnAction(e -> Platform.exit());
-        //menuItemExit.setAccelerator( new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN) );
+        // menuItemExit.setAccelerator(new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN));
         menuFile.getItems().add(menuItemExit);
 
         return menuBar;
