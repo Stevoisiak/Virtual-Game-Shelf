@@ -10,11 +10,11 @@ Code contributions should loosely follow [Google's Java Style Guide](https://goo
 
 ## Compiling with BlueJ
 
-Use the file `src/package.bluej` to open the project in BlueJ.
+In BlueJ, select `Project -> Open Non BlueJ...`. Navigate to the
+project directory, select the `src` folder, and click `Open in BlueJ`.
+Selecting any other folder may result in a Package Line Mismatch warning.
 
-If a Package Line Mismatch warning appears, project files may
-have been moved into different folders without updating packages.
-If this happens, click "continue" to have BlueJ auto-correct the issue.
+You should now be able to open and compile the project in BlueJ.
 
 ## Compiling with Eclipse
 
