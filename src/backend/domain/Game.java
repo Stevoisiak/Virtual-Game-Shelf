@@ -1,6 +1,6 @@
 package backend.domain;
 
-public class Game{
+public class Game {
 	private long ID;
 	private String name; //REQUIRED
 	private String system; //REQUIRED
@@ -8,7 +8,7 @@ public class Game{
 	private String finish; //REQUIRED
 	private int rating = 0; //rating will be 1-5
 	private String excess; //will not be grab-able. Is only used to store excess information from file grabs
-	
+
 	/* Start Set Functions */
 	public void setId (long ID) {
 		this.ID = ID;
@@ -32,7 +32,7 @@ public class Game{
         this.excess = excess;
     }
 	/* End Set Functions */
-	
+
 	/* Start Get Functions */
 	public long getId() {
 		return ID;
@@ -53,6 +53,4 @@ public class Game{
         return rating;
     }
 	/* End Get Functions */
-	
-	
 }
