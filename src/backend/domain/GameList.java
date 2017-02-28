@@ -1,4 +1,4 @@
-package Backend.domain;
+package backend.domain;
 
 import java.util.*;
 

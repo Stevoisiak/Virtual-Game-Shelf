@@ -1,4 +1,4 @@
-package Backend.domain;
+package backend.domain;
 
 public class Game{
 	private long ID;
