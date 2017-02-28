@@ -6,8 +6,8 @@ public class GameList {
     private long ID;
     private String name;
 
-    private String[] consoleList; // Separation of consoles
-    private String[] shrunkenConsoleList;
+    private String[] consoleList; // Giant list of consoles (an array based on game so you know which to grab)
+    private String[] shrunkenConsoleList; // Small list of consoles (no doubles)
     private int[] consoleGames; // Count for games per console
     private List<Game> games;
 
@@ -42,10 +42,15 @@ public class GameList {
     public void createShrunkenList() {
         int y = 1; // y is going to be the shrunkenConsoleList size
         boolean comparison = false;
-        /*
-         * for (int i = 0; i < consoleList.length(); i++) { if(i == 0) {
-         * shrunkenConsoleList[0] = consoleList[i]; } else { for (int x = 0; x <
-         * y; x++) { //work here } } }
+        /* for (int i = 0; i < consoleList.length(); i++) {
+         *     if(i == 0) {
+         *         shrunkenConsoleList[0] = consoleList[i];
+         *     } else {
+         *         for (int x = 0; x < y; x++) {
+         *             //work here
+         *         }
+         *     }
+         *  }
          */
     }
 
@@ -57,7 +62,7 @@ public class GameList {
         game.setFinish(finish);
         game.setRating(rating);
 
-        // TODO: Add Game to GameList final code.
-        //       Currently not added due to compilation errors.
+        /* TODO: Add Game to GameList final code.
+                 Currently not added due to compilation errors. */
     }
 }

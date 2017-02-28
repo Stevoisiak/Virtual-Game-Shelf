@@ -1,14 +1,14 @@
 package backend.domain;
 
 public class Game {
-    private long ID;
+    private long ID; // AutoSet / Not Required
     private String name; // REQUIRED
     private String system; // REQUIRED
     private int hours = 0;
     private String finish; // REQUIRED
     private int rating = 0; // rating will be 1-5
-    private String excess; // will not be grab-able. Is only used to store
-                           // excess information from file grabs
+    private String excess; /* will not be grab-able. Is only used to store
+                              excess information from file grabs */
 
     /* Start Set Functions */
     public void setId(long ID) {
