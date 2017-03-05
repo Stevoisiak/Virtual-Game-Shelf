@@ -1,17 +1,11 @@
 package virtualgameshelf.gui;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
@@ -44,10 +38,11 @@ public class VirtualGameShelf extends Application {
         // add stylesheet
         mainScene.getStylesheets().add("resources/stylesheet.css");
 
-        // custom code below --------------------------------------------
-
-        MenuBar menuBar = createMenuBar();
+        // top menu bar
+        MainMenuBar menuBar = new MainMenuBar();
         root.setTop(menuBar);
+
+        // custom code below ---------------------------------------
 
         // used to add games to the library
         MenuButton addGameButton = createAddGameButton();
@@ -56,58 +51,6 @@ public class VirtualGameShelf extends Application {
         root.setAlignment(addGameButton, Pos.CENTER_RIGHT);
 
         mainStage.show();
-    }
-
-    public MenuBar createMenuBar() {
-        MenuBar menuBar = new MenuBar();
-
-        Menu menuFile = new Menu("File");
-        menuBar.getMenus().add(menuFile);
-
-        MenuItem menuItemNew = new MenuItem("New");
-        // menuItemNew.setOnAction(e -> onNew());
-        menuItemNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
-        menuFile.getItems().add(menuItemNew);
-
-        MenuItem menuItemOpen = new MenuItem("Open");
-        // menuItemOpen.setOnAction(e -> onOpen());
-        menuItemOpen.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
-        menuFile.getItems().add(menuItemOpen);
-
-        MenuItem menuItemSave = new MenuItem("Save");
-        // menuItemSave.setOnAction(e -> onSave());
-        menuItemSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-        menuFile.getItems().add(menuItemSave);
-
-        menuFile.getItems().add(new SeparatorMenuItem());
-
-        MenuItem menuItemExit = new MenuItem("Exit");
-        menuItemExit.setOnAction(e -> Platform.exit());
-        // menuItemExit.setAccelerator(new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN));
-        menuFile.getItems().add(menuItemExit);
-
-        Menu menuHelp = new Menu("Help");
-        menuBar.getMenus().add(menuHelp);
-
-        MenuItem menuViewOnGithub = new MenuItem("View on GitHub");
-        menuViewOnGithub.setOnAction(e -> {
-            try {
-                URI githubURI = new URI("https://github.com/Stevoisiak/Virtual-Game-Shelf");
-                Desktop.getDesktop().browse(githubURI);
-            } catch (URISyntaxException | IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        menuHelp.getItems().add(menuViewOnGithub);
-
-        MenuItem menuItemAbout = new MenuItem("About Game Shelf");
-        menuItemAbout.setOnAction(e -> {
-            AboutGameShelfWindow aboutWindow = new AboutGameShelfWindow();
-            aboutWindow.showAndWait();
-        });
-        menuHelp.getItems().add(menuItemAbout);
-
-        return menuBar;
     }
 
     public MenuButton createAddGameButton() {
