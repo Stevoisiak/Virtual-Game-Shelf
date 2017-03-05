@@ -82,6 +82,16 @@ public class VirtualGameShelf extends Application {
         // menuItemExit.setAccelerator(new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN));
         menuFile.getItems().add(menuItemExit);
 
+        Menu menuHelp = new Menu("Help");
+        menuBar.getMenus().add(menuHelp);
+
+        MenuItem menuItemAbout = new MenuItem("About Game Shelf");
+        menuItemAbout.setOnAction(e -> {
+            AboutGameShelfWindow aboutWindow = new AboutGameShelfWindow();
+            aboutWindow.showAndWait();
+        });
+        menuHelp.getItems().add(menuItemAbout);
+
         return menuBar;
     }
 
