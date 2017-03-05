@@ -1,5 +1,10 @@
 package virtualgameshelf.gui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
@@ -74,8 +79,7 @@ public class VirtualGameShelf extends Application {
         menuItemSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         menuFile.getItems().add(menuItemSave);
 
-        SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
-        menuFile.getItems().add(separatorMenuItem);
+        menuFile.getItems().add(new SeparatorMenuItem());
 
         MenuItem menuItemExit = new MenuItem("Exit");
         menuItemExit.setOnAction(e -> Platform.exit());
@@ -84,6 +88,17 @@ public class VirtualGameShelf extends Application {
 
         Menu menuHelp = new Menu("Help");
         menuBar.getMenus().add(menuHelp);
+
+        MenuItem menuViewOnGithub = new MenuItem("View on GitHub");
+        menuViewOnGithub.setOnAction(e -> {
+            try {
+                URI githubURI = new URI("https://github.com/Stevoisiak/Virtual-Game-Shelf");
+                Desktop.getDesktop().browse(githubURI);
+            } catch (URISyntaxException | IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        menuHelp.getItems().add(menuViewOnGithub);
 
         MenuItem menuItemAbout = new MenuItem("About Game Shelf");
         menuItemAbout.setOnAction(e -> {
