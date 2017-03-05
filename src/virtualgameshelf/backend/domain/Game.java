@@ -61,7 +61,7 @@ public class Game {
         return finish;
     }
 
-    public int setRating() {
+    public int getRating() {
         return rating;
     }
     /* End Get Functions */
