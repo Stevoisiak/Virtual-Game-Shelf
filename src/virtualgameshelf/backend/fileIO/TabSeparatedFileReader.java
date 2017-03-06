@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,12 +32,6 @@ public class TabSeparatedFileReader {
                     arrayList.add(array);
                 }
             }
-
-            // print list of consoles
-            for (String[] s : arrayList) {
-                System.out.println(Arrays.toString(s));
-            }
-
             buf.close();
         } catch (FileNotFoundException e) {
             System.err.println("Unable to find file " + file.getAbsolutePath());
@@ -49,5 +44,26 @@ public class TabSeparatedFileReader {
         return arrayList;
     }
 
-    // TODO: saveToFile(String filePath, ArrayList<String[]> arrayList)
+    // Saves arrayList of arrays to a tab separated file
+    public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList) {
+
+        File file = new File(filePath);
+        try {
+            FileWriter writer = new FileWriter(file);
+            for (String[] s : arrayList) {
+                String formattedString = Arrays.toString(s)
+                        .replace(", ", "\t")   // replace commas with tab separators
+                        .replace("[", "")      // remove right bracket
+                        .replace("]", "");     // remove left bracket
+                writer.write(formattedString + "\r\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Error writing to file " + file.getAbsolutePath());
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }
