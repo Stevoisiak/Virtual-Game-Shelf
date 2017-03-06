@@ -17,7 +17,7 @@ public class TabSeparatedFileReader {
         try {
             // http://stackoverflow.com/a/19575418/3357935
             FileReader fileReader = new FileReader(file);
-            BufferedReader buf = new BufferedReader(fileReader); // TODO: Consistent naming
+            BufferedReader buf = new BufferedReader(fileReader);
             String lineJustFetched = null;
 
             while (true) {
@@ -48,4 +48,6 @@ public class TabSeparatedFileReader {
 
         return arrayList;
     }
+
+    // TODO: saveToFile(String filePath, ArrayList<String[]> arrayList)
 }
