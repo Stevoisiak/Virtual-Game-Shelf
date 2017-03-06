@@ -25,7 +25,8 @@ public class TabSeparatedFileReader {
                     // end of file
                     break;
                 } else {
-                    array = lineJustFetched.split("\t");
+                    // '-1' prevents empty entries from being trimmed
+                    array = lineJustFetched.split("\t", -1);
                     arrayList.add(array);
                 }
             }
