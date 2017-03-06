@@ -45,7 +45,7 @@ public class NewGameWindow extends Stage {
         TextField nameField = new TextField("");
 
         Label systemLabel = new Label("Game System:");
-        ComboBox<String> systemChooser = new ComboBox<String>();
+        ComboBox<String> systemChooser = new ComboBox<>();
         systemChooser.getItems().addAll(systemList);
 
         systemChooser.setPromptText("Choose a System");
@@ -64,7 +64,7 @@ public class NewGameWindow extends Stage {
         });
 
         Label completionLabel = new Label("Game Completion:");
-        ComboBox<String> completionChooser = new ComboBox<String>();
+        ComboBox<String> completionChooser = new ComboBox<>();
         completionChooser.getItems().addAll("Unfinished", "Beaten", "Completed", "Null", "Mastered", "Unplayed");
 
         completionChooser.setPromptText("Choose a Level of Completion");
@@ -119,14 +119,12 @@ public class NewGameWindow extends Stage {
                     newGame.setSystem(systemChooser.getValue());
                 }
 
-                newGame.setFinish(completionChooser.getValue());
+                newGame.setCompletion(completionChooser.getValue());
 
                 if (hoursField.getText() != null || hoursField.getText().trim().isEmpty())
                     newGame.setHours(0);
                 else
                     newGame.setHours(Integer.parseInt(hoursField.getText()));
-
-                newGame.setFinish(completionChooser.getValue());
 
                 if (starGroup.getSelectedToggle() != null)
                     newGame.setRating((int) starGroup.getSelectedToggle().getUserData());
@@ -136,7 +134,7 @@ public class NewGameWindow extends Stage {
                 // Print game info
                 System.out.println("Game Name: " + newGame.getName());
                 System.out.println("Game System: " + newGame.getSystem());
-                System.out.println("Game Completion: " + newGame.getFinish());
+                System.out.println("Game Completion: " + newGame.getCompletion());
                 System.out.println("Hours Played: " + newGame.getHours());
                 if (newGame.getRating() == 1) {
                     System.out.println("Rating: " + newGame.getRating() + " star");
