@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.*;
 import javafx.stage.*;
+import virtualgameshelf.backend.domain.Game;
 
 public class NewGameWindow extends Stage {
     private TextField systemField;
@@ -44,7 +45,7 @@ public class NewGameWindow extends Stage {
         TextField nameField = new TextField("");
 
         Label systemLabel = new Label("Game System:");
-        ComboBox<String> systemChooser = new ComboBox<String>();
+        ComboBox<String> systemChooser = new ComboBox<>();
         systemChooser.getItems().addAll(systemList);
 
         systemChooser.setPromptText("Choose a System");
@@ -63,7 +64,7 @@ public class NewGameWindow extends Stage {
         });
 
         Label completionLabel = new Label("Game Completion:");
-        ComboBox<String> completionChooser = new ComboBox<String>();
+        ComboBox<String> completionChooser = new ComboBox<>();
         completionChooser.getItems().addAll("Unfinished", "Beaten", "Completed", "Null", "Mastered", "Unplayed");
 
         completionChooser.setPromptText("Choose a Level of Completion");
@@ -101,25 +102,44 @@ public class NewGameWindow extends Stage {
             starRow.getChildren().add(starButtons[i]);
         }
 
+        // Create entry with entered game data
         Button addButton = new Button("Add");
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                System.out.println("Game Name: " + nameField.getText());
+                Game newGame = new Game();
+                boolean customConsole = false;
+
+                // Retrieve and set game info
+                newGame.setName(nameField.getText());
 
                 if (systemChooser.getValue() == "Add New System") {
-                    System.out.println("Game System: <Choice>" + systemChooser.getValue() + "<Choice> " + "<Adding>"
-                            + systemField.getText() + "<Adding>");
+                    customConsole = true;
+                    newGame.setSystem(systemField.getText());
                 } else {
-                    System.out.println("Game System: " + systemChooser.getValue());
+                    newGame.setSystem(systemChooser.getValue());
                 }
 
-                System.out.println("Game Completion: " + completionChooser.getValue());
+                newGame.setCompletion(completionChooser.getValue());
 
-                System.out.println("Hours Played: " + hoursField.getText());
+                if (hoursField.getText() != null || hoursField.getText().trim().isEmpty())
+                    newGame.setHours(0);
+                else
+                    newGame.setHours(Integer.parseInt(hoursField.getText()));
 
-                if (starGroup.getSelectedToggle() != null) {
-                    int starRating = (int) starGroup.getSelectedToggle().getUserData();
-                    System.out.println("Rating: " + starRating + " Star");
+                if (starGroup.getSelectedToggle() != null)
+                    newGame.setRating((int) starGroup.getSelectedToggle().getUserData());
+                else
+                    newGame.setRating(0);
+
+                // Print game info
+                System.out.println("Game Name: " + newGame.getName());
+                System.out.println("Game System: " + newGame.getSystem());
+                System.out.println("Game Completion: " + newGame.getCompletion());
+                System.out.println("Hours Played: " + newGame.getHours());
+                if (newGame.getRating() == 1) {
+                    System.out.println("Rating: " + newGame.getRating() + " star");
+                } else {
+                    System.out.println("Rating: " + newGame.getRating() + " stars");
                 }
             }
         });
