@@ -1,0 +1,172 @@
+value	option	display
+32X	32X	yes
+3DO	3DO	
+AcornA	Acorn Archimedes	
+AcornE	Acorn Electron	
+AMG	Amiga	
+CD32	Amiga CD32	
+AMS	Amstrad CPC	
+GX4k	Amstrad GX4000	
+Droid	Android	yes
+APF	APF-M1000	
+AppII	Apple II	
+Pippin	Apple Bandai Pippin	
+ARC	Arcade	
+2600	Atari 2600	yes
+5200	Atari 5200	yes
+7800	Atari 7800	yes
+Atr8b	Atari 8-bit	
+AtrST	Atari ST	
+Astro	Bally Astrocade	
+BNet	Battle.Net	yes
+BBC	BBC Micro	
+Bdog	Beamdog	
+BFG	Big Fish Games	
+Brwsr	Browser	
+CALC	Calculator	
+CDi	CD-i	yes
+CD32X	CD32X	
+Adam	Coleco Adam	
+CV	ColecoVision	
+C64	Commodore 64	yes
+CDTV	Commodore CDTV	
+Plus4	Commodore Plus/4	
+VIC20	Commodore VIC-20	
+CBoy	Cougar Boy	
+Desura	Desura	
+DOS	DOS	
+DotEmu	DotEmu	
+Dragon	Dragon 32/64	
+DC	Dreamcast	yes
+DSiW	DSiWare	
+Arc2k1	Emerson Arcadia 2001	
+ChF	Fairchild Channel F	
+FC	Family Computer	
+FDS	Famicom Disk System	yes
+FMT	FM Towns	
+FM7	Fujitsu Micro 7	
+Gamate	Gamate	
+GW	Game & Watch	
+GG	Game Gear	yes
+GB	Game Boy	yes
+GBC	Game Boy/Color	yes
+GBA	Game Boy Advance	yes
+eRdr	e-Reader	
+GWFES	Game Wave Family Entertainment System	
+GCN	GameCube	yes
+GFly	GameFly	
+GGate	GamersGate	
+Imp	GameStop PC	
+G4W	Games For Windows	
+GCOM	Game.com	
+GEN	Genesis / Mega Drive	yes
+GGames	GetGames	
+Gizm	Gizmondo	
+GOG	GOG.com	
+Wiz	GP2X Wiz	
+GMG	Green Man Gaming	
+Vive	HTC Vive	
+HprScn	HyperScan	
+IndieC	IndieCity	
+IntVis	Intellivision	
+iOS	iOS	yes
+iPad	iPad	
+iPod	iPod	
+iPhone	iPhone	
+itchio	itch.io	
+JAG	Jaguar	
+JagCD	Jaguar CD	
+LasAct	LaserActive	
+Linux	Linux	
+Lynx	Lynx	
+Mac	Mac	
+MagOdy	Magnavox Odyssey	
+SMS	Master System	
+Micvis	Microvision	
+Misc	Miscellaneous	
+Mobile	Mobile	
+MSX	MSX	
+NGage	N-Gage	
+PC88	NEC PC-8801	
+PC98	NEC PC-9801	
+NG	Neo Geo	
+NGCD	Neo Geo CD	
+NGPC	Neo Geo Pocket/Color	
+3DS	Nintendo 3DS	yes
+3DSDL	3DS Downloads	
+NDS	Nintendo DS	yes
+N64	Nintendo 64	yes
+64DD	Nintendo 64DD	
+NES	Nintendo Entertainment System	yes
+Switch	Nintendo Switch	yes
+Nuon	Nuon	
+Nuuvem	Nuuvem	
+Oculus	Oculus Rift	
+Ody2	Odyssey² / Videopac	
+OnLive	OnLive	
+Origin	Origin	
+OUYA	OUYA	
+Pndra	Pandora	
+PC	PC	yes
+PCDL	PC Downloads	
+PC50X	PC-50X	
+PCFX	PC-FX	
+PB	Pinball	
+PS	PlayStation	yes
+PS2	PlayStation 2	yes
+PS3	PlayStation 3	yes
+PS4	PlayStation 4	yes
+PSM	PlayStation Mobile	
+PSN	PlayStation Network	
+PS1C	PSOne Classics	
+PS2C	PS2 Classics	
+PSmini	PlayStation minis	
+PSP	PlayStation Portable	yes
+PSVita	PlayStation Vita	yes
+PSVR	PlayStation VR	
+PnP	Plug-and-Play	
+PktStn	PocketStation	
+PkMini	Pokémon Mini	
+RZN	R-Zone	
+RCAS2	RCA Studio II	
+SACan	Super A'Can	
+SAM	SAM Coupé	
+Saturn	Saturn	yes
+SCD	Sega CD	yes
+Pico	Sega Pico	
+SG1000	Sega SG-1000	
+X1	Sharp X1	
+X68k	Sharp X68000	
+Steam	Steam	yes
+SNES	Super Nintendo Entertainment System	yes
+SGfx	SuperGrafx	
+TI99	TI-99/4A	
+Tiger	Tiger Handhelds	
+TDuo	TurboDuo	
+TG16	TurboGrafx-16	yes
+TGCD	TurboGrafx-CD	
+TRS80	TRS-80 Color Computer	
+UPlay	Uplay	
+VECT	Vectrex	
+VB	Virtual Boy	yes
+VC	Virtual Console (Wii)	
+VCH	Virtual Console (3DS)	
+SVis	Watara Supervision	
+Wii	Wii	yes
+WW	WiiWare	
+WiiU	Wii U	yes
+WiiUDL	Wii U Downloads	
+WiiUVC	Virtual Console (WiiU)	
+WinP7	Windows Phone 7	
+WinStr	Windows Store	
+WSC	WonderSwan/Color	
+XXPORT	XaviXPORT	
+Xbox	Xbox	yes
+360	Xbox 360	yes
+XBLA	Xbox LIVE Arcade	
+XNA	XNA Indie Games	
+XbxGoD	Xbox 360 Games on Demand	
+XBO	Xbox One	yes
+Zeebo	Zeebo	
+Zune	Zune	
+ZXS	ZX Spectrum	

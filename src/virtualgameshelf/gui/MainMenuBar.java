@@ -14,6 +14,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
+import virtualgameshelf.backend.fileIO.TabSeparatedFileReader;
+
 public class MainMenuBar extends MenuBar {
     public MainMenuBar() {
         Menu menuFile = new Menu("File");
@@ -61,5 +63,15 @@ public class MainMenuBar extends MenuBar {
             aboutWindow.showAndWait();
         });
         menuHelp.getItems().add(menuItemAbout);
+
+        Menu menuTesting = new Menu("Testing");
+        this.getMenus().add(menuTesting);
+
+        MenuItem menuItemOpenSystemList = new MenuItem("Open System List");
+        menuItemOpenSystemList.setOnAction(e -> {
+            TabSeparatedFileReader reader = new TabSeparatedFileReader();
+            reader.readFromFile("src/resources/system_list.txt"); // TODO: Move into `config` folder
+        });
+        menuTesting.getItems().add(menuItemOpenSystemList);
     }
 }
