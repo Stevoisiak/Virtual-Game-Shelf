@@ -138,7 +138,11 @@ public class NewGameWindow extends Stage {
                 System.out.println("Game System: " + newGame.getSystem());
                 System.out.println("Game Completion: " + newGame.getFinish());
                 System.out.println("Hours Played: " + newGame.getHours());
-                System.out.println("Rating: " + newGame.getRating() + " Star");
+                if (newGame.getRating() == 1) {
+                    System.out.println("Rating: " + newGame.getRating() + " star");
+                } else {
+                    System.out.println("Rating: " + newGame.getRating() + " stars");
+                }
             }
         });
         root.setHalignment(addButton, HPos.CENTER);
