@@ -5,7 +5,7 @@ public class Game {
     private String name; // REQUIRED
     private String system; // REQUIRED
     private int hours = 0;
-    private String finish; // REQUIRED
+    private String completion; // REQUIRED
     private int rating = 0; // rating will be 1-5
     private String excess; /* will not be grab-able. Is only used to store
                               excess information from file grabs */
@@ -27,8 +27,8 @@ public class Game {
         this.hours = hours;
     }
 
-    public void setFinish(String finish) {
-        this.finish = finish;
+    public void setCompletion(String completion) {
+        this.completion = completion;
     }
 
     public void setRating(int rating) {
@@ -57,8 +57,8 @@ public class Game {
         return hours;
     }
 
-    public String getFinish() {
-        return finish;
+    public String getCompletion() {
+        return completion;
     }
 
     public int getRating() {

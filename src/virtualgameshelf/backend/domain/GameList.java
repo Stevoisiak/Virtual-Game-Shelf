@@ -54,12 +54,12 @@ public class GameList {
          */
     }
 
-    public void addGame(String name, String system, int hours, String finish, int rating) {
+    public void addGame(String name, String system, int hours, String completion, int rating) {
         Game game = new Game();
         game.setName(name);
         game.setSystem(system);
         game.setHours(hours);
-        game.setFinish(finish);
+        game.setCompletion(completion);
         game.setRating(rating);
 
         /* TODO: Add Game to GameList final code.
