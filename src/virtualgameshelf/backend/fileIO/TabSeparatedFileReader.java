@@ -9,14 +9,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TabSeparatedFileReader {
-    public static void readFromFile(String filePath) {
+    // returns arrayList of entries from a tab separated .txt file
+    public static ArrayList<String[]> readFromFile(String filePath) {
         File file = new File(filePath);
+        String[] array; // Stores a single, split line entry
+        ArrayList<String[]> arrayList = new ArrayList<>(); // ArrayList of all entries
         try {
             // http://stackoverflow.com/a/19575418/3357935
             FileReader fileReader = new FileReader(file);
             BufferedReader buf = new BufferedReader(fileReader); // TODO: Consistent naming
-            String[] array; // Array of a single line
-            ArrayList<String[]> arrayList = new ArrayList<>(); // ArrayList of all arrays
             String lineJustFetched = null;
 
             while (true) {
@@ -44,5 +45,7 @@ public class TabSeparatedFileReader {
             System.err.println("Error while reading file " + file.getAbsolutePath());
             e.printStackTrace();
         }
+
+        return arrayList;
     }
 }
