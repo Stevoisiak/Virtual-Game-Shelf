@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TabSeparatedFileReader {
     public static void readFromFile(String filePath) {
@@ -14,9 +15,9 @@ public class TabSeparatedFileReader {
             // http://stackoverflow.com/a/19575418/3357935
             FileReader fileReader = new FileReader(file);
             BufferedReader buf = new BufferedReader(fileReader); // TODO: Consistent naming
-            ArrayList<String> words = new ArrayList<>();
+            String[] array; // Array of a single line
+            ArrayList<String[]> arrayList = new ArrayList<>(); // ArrayList of all arrays
             String lineJustFetched = null;
-            String[] wordsArray;
 
             while (true) {
                 lineJustFetched = buf.readLine();
@@ -24,18 +25,14 @@ public class TabSeparatedFileReader {
                     // end of file
                     break;
                 } else {
-                    wordsArray = lineJustFetched.split("\t");
-                    for (String each : wordsArray) {
-                        if (!"".equals(each)) {
-                            words.add(each);
-                        }
-                    }
+                    array = lineJustFetched.split("\t");
+                    arrayList.add(array);
                 }
             }
 
-            // TODO: Debug
-            for (String each : words) {
-                System.out.println(each);
+            // print list of consoles
+            for (String[] s : arrayList) {
+                System.out.println(Arrays.toString(s));
             }
 
             buf.close();
