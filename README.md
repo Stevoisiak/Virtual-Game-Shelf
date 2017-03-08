@@ -24,13 +24,13 @@ You should now be able to open and compile the project in BlueJ.
 Before trying to compile, make sure [Eclipse Neon](https://www.eclipse.org/) and the
 [e(fx)clipse](http://www.eclipse.org/efxclipse/install.html) addon are installed.
 
-On Eclipse's welcome screen, select `Checkout projects from Git` to
-open the project import wizard. (You can also use `File -> Import`,
-`Git -> Projects from Git`.) If you have already opened the project
-with Git, use `Existing local repository` and select the project
-folder on your computer. Otherwise, select `Clone URI` and
-[fill in the necesary information](http://i.imgur.com/pcPI0Wh.png).
-Make sure to import the project as an existing Eclipse project.
+Select `File -> Import` from the menu, then select `Git -> Projects from Git`
+to open the project import wizard. If you haven't already cloned
+the project in a separate Git client, select `Clone URI` and
+[fill in the necessary information](http://i.imgur.com/pcPI0Wh.png).
+Otherwise, use `Existing local repository` and select the project
+folder on your computer. Either way, be sure to import the project
+as an existing Eclipse project when asked.
 
 You should now be able to compile and run Video Game Shelf in Eclipse.
 
