@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.*;
 import javafx.stage.*;
 import virtualgameshelf.backend.domain.Game;
+import virtualgameshelf.backend.fileIO.TabSeparatedFileReader;
 
 public class NewGameWindow extends Stage {
     private TextField systemField;
@@ -38,6 +39,11 @@ public class NewGameWindow extends Stage {
 
         // selectable list of game systems
         ArrayList<String> systemList = new ArrayList<>();
+        // TODO: Parse console list from file
+        // TODO: See if Unable to find file "..\src\src\resources\system_list.txt"
+        //       is a BlueJ specific error
+        parseSystemListFromFile("src/resources/system_list.txt");
+        
         systemList.add("Add New System");
         systemList.add("PSP");
 
@@ -121,15 +127,17 @@ public class NewGameWindow extends Stage {
 
                 newGame.setCompletion(completionChooser.getValue());
 
-                if (hoursField.getText() != null || hoursField.getText().trim().isEmpty())
+                if (hoursField.getText() != null || hoursField.getText().trim().isEmpty()) {
                     newGame.setHours(0);
-                else
+                } else {
                     newGame.setHours(Integer.parseInt(hoursField.getText()));
+                }
 
-                if (starGroup.getSelectedToggle() != null)
+                if (starGroup.getSelectedToggle() != null) {
                     newGame.setRating((int) starGroup.getSelectedToggle().getUserData());
-                else
+                } else {
                     newGame.setRating(0);
+                }
 
                 // Print game info
                 System.out.println("Game Name: " + newGame.getName());
@@ -156,5 +164,33 @@ public class NewGameWindow extends Stage {
         root.add(ratingLabel, 0, 4);
         root.add(starRow, 1, 4);
         root.add(addButton, 1, 5);
+    }
+    
+    // Imports system list from a file
+    public void parseSystemListFromFile(String systemListFilePath)
+    {
+        TabSeparatedFileReader reader = new TabSeparatedFileReader();
+        ArrayList<String[]> systemArrayList = reader.readFromFile(systemListFilePath);
+
+        // http://stackoverflow.com/a/19576008/3357935
+        // Extract information from arrayList
+        // TODO: Don't hardcode which column has which data
+        // TODO: Don't crash if !curLine[x].equals(NULL);
+        for (String[] curLine : systemArrayList) {
+            // TODO: Store content rather than print it
+            if (!curLine[0].equals("value")) {
+                System.out.print(curLine[0] + ", ");
+            }
+            
+            if (!curLine[1].equals("option")) {
+                System.out.print(curLine[1] + ", ");
+            }
+            
+            if (!curLine[2].equals("display")) {
+                System.out.println(curLine[2]);
+            }
+        }
+        
+        return;
     }
 }
