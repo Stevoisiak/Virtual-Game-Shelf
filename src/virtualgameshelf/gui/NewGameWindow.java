@@ -39,11 +39,13 @@ public class NewGameWindow extends Stage {
 
         // selectable list of game systems
         ArrayList<String> systemList = new ArrayList<>();
-        // TODO: Parse console list from file
-        // TODO: See if Unable to find file "..\src\src\resources\system_list.txt"
+        // Breaks BlueJ support. (BlueJ path = "..\src\src\resources\system_list.txt"
         //       is a BlueJ specific error
         parseSystemListFromFile("src/resources/system_list.txt");
-        
+        /** TODO: What data type should "parseSystemListFromFile() return?
+         *        Should we have an object type for console?
+         */
+
         systemList.add("Add New System");
         systemList.add("PSP");
 
@@ -57,6 +59,7 @@ public class NewGameWindow extends Stage {
         systemChooser.setPromptText("Choose a System");
         // checks which item is selected in the ComboBox
         systemChooser.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
             public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
                 if (newValue == "Add New System") {
                     systemField = new TextField("");
@@ -76,6 +79,7 @@ public class NewGameWindow extends Stage {
         completionChooser.setPromptText("Choose a Level of Completion");
         // checks which item is selected in the ComboBox
         completionChooser.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
             public void changed(ObservableValue ov, String oldValue, String newValue) {
                 // TODO
             }
@@ -86,6 +90,7 @@ public class NewGameWindow extends Stage {
         // http://stackoverflow.com/a/30796829
         // force the field to be numeric only
         hoursField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d*")) {
                     hoursField.setText(newValue.replaceAll("[^\\d]", ""));
@@ -111,6 +116,7 @@ public class NewGameWindow extends Stage {
         // Create entry with entered game data
         Button addButton = new Button("Add");
         addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent e) {
                 Game newGame = new Game();
                 boolean customConsole = false;
@@ -165,8 +171,9 @@ public class NewGameWindow extends Stage {
         root.add(starRow, 1, 4);
         root.add(addButton, 1, 5);
     }
-    
+
     // Imports system list from a file
+    // TODO: Determine return type
     public void parseSystemListFromFile(String systemListFilePath)
     {
         TabSeparatedFileReader reader = new TabSeparatedFileReader();
@@ -181,16 +188,16 @@ public class NewGameWindow extends Stage {
             if (!curLine[0].equals("value")) {
                 System.out.print(curLine[0] + ", ");
             }
-            
+
             if (!curLine[1].equals("option")) {
                 System.out.print(curLine[1] + ", ");
             }
-            
+
             if (!curLine[2].equals("display")) {
                 System.out.println(curLine[2]);
             }
         }
-        
+
         return;
     }
 }
