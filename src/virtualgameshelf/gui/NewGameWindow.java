@@ -30,10 +30,6 @@ public class NewGameWindow extends Stage {
         root.setAlignment(Pos.CENTER);
         // root.setGridLinesVisible(true);
 
-        HBox systemRow = new HBox();
-        systemRow.setSpacing(16);
-        systemRow.setAlignment( Pos.CENTER_LEFT );
-
         Scene popupScene = new Scene(root, 800, 300);
         this.setScene(popupScene);
 
@@ -43,6 +39,10 @@ public class NewGameWindow extends Stage {
         // custom code below --------------------------------------------
 
         // selectable list of game systems
+        HBox systemRow = new HBox();
+        systemRow.setSpacing(16);
+        systemRow.setAlignment( Pos.CENTER_LEFT );
+
         ArrayList<String> systemList = new ArrayList<>();
         systemList.add("Add New System");
         systemList.add("PSP");
@@ -68,7 +68,6 @@ public class NewGameWindow extends Stage {
                 }
             }
         });
-
         systemRow.getChildren().add(systemChooser);
 
         Label completionLabel = new Label("Game Completion:");
