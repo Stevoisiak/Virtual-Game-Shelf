@@ -14,6 +14,7 @@ import virtualgameshelf.backend.domain.Game;
 
 public class NewGameWindow extends Stage {
     private TextField systemField;
+    private Game newGame;
 
     public NewGameWindow() {
         // tell stage it is meant to pop-up (Modal)
@@ -57,6 +58,7 @@ public class NewGameWindow extends Stage {
         systemChooser.setPromptText("Choose a System");
         // checks which item is selected in the ComboBox
         systemChooser.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
             public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
                 if (newValue == "Add New System") {
                     systemField = new TextField("");
@@ -75,18 +77,13 @@ public class NewGameWindow extends Stage {
         completionChooser.getItems().addAll("Unfinished", "Beaten", "Completed", "Null", "Mastered", "Unplayed");
 
         completionChooser.setPromptText("Choose a Level of Completion");
-        // checks which item is selected in the ComboBox
-        completionChooser.valueProperty().addListener(new ChangeListener<String>() {
-            public void changed(ObservableValue ov, String oldValue, String newValue) {
-                // TODO
-            }
-        });
 
         Label hoursLabel = new Label("Hours Played:");
         TextField hoursField = new TextField("");
         // http://stackoverflow.com/a/30796829
         // force the field to be numeric only
         hoursField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!newValue.matches("\\d*")) {
                     hoursField.setText(newValue.replaceAll("[^\\d]", ""));
@@ -112,8 +109,9 @@ public class NewGameWindow extends Stage {
         // Create entry with entered game data
         Button addButton = new Button("Add");
         addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent e) {
-                Game newGame = new Game();
+                newGame = new Game();
                 boolean nameFound = false;
 
                 // Retrieve and set game info
@@ -158,7 +156,7 @@ public class NewGameWindow extends Stage {
                     newGame.setCompletion(completionChooser.getValue());
                 }
 
-                if (hoursField.getText() != null || hoursField.getText().trim().isEmpty())
+                if (hoursField.getText() == null || hoursField.getText().trim().isEmpty())
                     newGame.setHours(0);
                 else
                     newGame.setHours(Integer.parseInt(hoursField.getText()));
@@ -168,15 +166,21 @@ public class NewGameWindow extends Stage {
                 else
                     newGame.setRating(0);
 
-                // Print game info
-                System.out.println("Game Name: " + newGame.getName());
-                System.out.println("Game System: " + newGame.getSystem());
-                System.out.println("Game Completion: " + newGame.getCompletion());
-                System.out.println("Hours Played: " + newGame.getHours());
-                if (newGame.getRating() == 1) {
-                    System.out.println("Rating: " + newGame.getRating() + " star");
-                } else {
-                    System.out.println("Rating: " + newGame.getRating() + " stars");
+                // Print game info if valid input
+                if (!newGame.getName().trim().equals("")) {
+                    System.out.println("Game Name: " + newGame.getName());
+                    System.out.println("Game System: " + newGame.getSystem());
+                    System.out.println("Game Completion: " + newGame.getCompletion());
+                    System.out.println("Hours Played: " + newGame.getHours());
+                    if (newGame.getRating() == 1) {
+                        System.out.println("Rating: " + newGame.getRating() + " star");
+                    } else {
+                        System.out.println("Rating: " + newGame.getRating() + " stars");
+                    }
+
+                    // Close window (http://stackoverflow.com/a/25038465)
+                    Stage stage = (Stage) addButton.getScene().getWindow();
+                    stage.close();
                 }
             }
         });
@@ -195,11 +199,18 @@ public class NewGameWindow extends Stage {
         root.add(addButton, 1, 5);
     }
 
+    public Game showAndAddGame() {
+        this.showAndWait();
+        // Waits until window is closed before returning newGame
+        return newGame;
+
+    }
+
     public String createTextAlert(String prompt) {
 
         String value = "default";
 
-     // dialog for getting string input
+        // dialog for getting string input
         TextInputDialog textDialog = new TextInputDialog();
         // used to set the title of the window
         textDialog.setTitle("Missing Entry");
@@ -220,6 +231,5 @@ public class NewGameWindow extends Stage {
         }
 
         return value;
-
     }
 }

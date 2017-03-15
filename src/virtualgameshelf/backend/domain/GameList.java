@@ -9,7 +9,7 @@ public class GameList {
     private String[] consoleList; // Giant list of consoles (an array based on game so you know which to grab)
     private String[] shrunkenConsoleList; // Small list of consoles (no doubles)
     private int[] consoleGames; // Count for games per console
-    private List<Game> games;
+    private List<Game> games = new ArrayList<Game>();
 
     /* Start Set Functions */
     public void setId(long ID) {
@@ -64,5 +64,7 @@ public class GameList {
 
         /* TODO: Add Game to GameList final code.
                  Currently not added due to compilation errors. */
+        // Testing additions
+        games.add(game);
     }
 }
