@@ -14,7 +14,6 @@ import virtualgameshelf.backend.domain.Game;
 
 public class NewGameWindow extends Stage {
     private TextField systemField;
-    private boolean displayingAdd;
 
     public NewGameWindow() {
         // tell stage it is meant to pop-up (Modal)
@@ -32,7 +31,6 @@ public class NewGameWindow extends Stage {
         // root.setGridLinesVisible(true);
 
         HBox systemRow = new HBox();
-        //systemRow.setPadding( new Insets(16) );
         systemRow.setSpacing(16);
         systemRow.setAlignment( Pos.CENTER_LEFT );
 
