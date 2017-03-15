@@ -158,7 +158,7 @@ public class NewGameWindow extends Stage {
                     newGame.setCompletion(completionChooser.getValue());
                 }
 
-                if (hoursField.getText() != null || hoursField.getText().trim().isEmpty())
+                if (hoursField.getText() == null || hoursField.getText().trim().isEmpty())
                     newGame.setHours(0);
                 else
                     newGame.setHours(Integer.parseInt(hoursField.getText()));
