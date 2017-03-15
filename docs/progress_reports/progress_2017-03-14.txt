@@ -1,0 +1,38 @@
+Virtual Game Shelf - Progress Report - March 14, 2017
+
+Progress was unfortunately slow this week for Virtual Game Shelf. As the v0.1
+deadline passed by yesterday, it became clear we underestimated the amount of
+backend work required for a functional prototype. Our group is currently discussing
+whether or not we will still be able to meet our final project deadline.
+
+## Updates
+
+* Progress reports are now stored in the repository as .txt files in \doc
+  * The GitHub wiki didn't easily lend itself to weekly articles.
+* BlueJ support has been dropped in favor of Eclipse
+* #51 TabSepatedFileReader created to parse saved information from .txt files
+* #50 MainMenuBar separated into its own file
+  * Separate files help keep the code organized as the project grows
+* #47 Add "About Game Shelf" screen
+* #45 Prototype classes for saving Game and GameList objects
+
+## Obstacles
+
+* GUI work on viewing games is stalled until saving and loading from
+  a file is complete
+* A large amount of the backend work required for a v0.1 functional prototype
+  release has yet to be completed, meaning the deadline will need to delayed.
+  This includes features originally intended for v0.0.1.
+  * Missing features
+    * Ability to save game list to a file (v0.0.1) [backend]
+    * Basic Steam API integration (v0.0.1) [backend]
+	* Decide whether Backloggery importing is possible (v0.0.1) [backend]
+	* Basic Steam library importing (v0.1) [backend]
+	* Prototype for viewing games in your library (v0.1) [GUI]
+  * Goals without a deadline
+    * Loading gameList from a file [GUI/backend]
+* Our backend programmer's laptop started having issues which prevent
+  him from programming while on campus
+  * While Eclipse is installed on some of the University computers, it fails to
+    run or is completely missing from many of the student loaner laptops
+  * Currently, he is only able to program from his off-campus desktop
