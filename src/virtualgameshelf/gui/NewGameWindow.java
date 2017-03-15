@@ -1,6 +1,8 @@
 package virtualgameshelf.gui;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
 import javafx.beans.value.*;
 import javafx.event.*;
 import javafx.geometry.*;
@@ -12,6 +14,7 @@ import virtualgameshelf.backend.domain.Game;
 
 public class NewGameWindow extends Stage {
     private TextField systemField;
+    private boolean displayingAdd;
 
     public NewGameWindow() {
         // tell stage it is meant to pop-up (Modal)
@@ -28,7 +31,12 @@ public class NewGameWindow extends Stage {
         root.setAlignment(Pos.CENTER);
         // root.setGridLinesVisible(true);
 
-        Scene popupScene = new Scene(root, 800, 200);
+        HBox systemRow = new HBox();
+        //systemRow.setPadding( new Insets(16) );
+        systemRow.setSpacing(16);
+        systemRow.setAlignment( Pos.CENTER_LEFT );
+
+        Scene popupScene = new Scene(root, 800, 300);
         this.setScene(popupScene);
 
         // add stylesheet
@@ -56,12 +64,14 @@ public class NewGameWindow extends Stage {
                     systemField = new TextField("");
                     systemField.setPromptText("Enter a System");
 
-                    root.add(systemField, 2, 1);
+                    systemRow.getChildren().add(systemField);
                 } else {
-                    root.getChildren().remove(systemField);
+                    systemRow.getChildren().remove(systemField);
                 }
             }
         });
+
+        systemRow.getChildren().add(systemChooser);
 
         Label completionLabel = new Label("Game Completion:");
         ComboBox<String> completionChooser = new ComboBox<>();
@@ -107,19 +117,49 @@ public class NewGameWindow extends Stage {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Game newGame = new Game();
-                boolean customConsole = false;
+                boolean nameFound = false;
 
                 // Retrieve and set game info
-                newGame.setName(nameField.getText());
+                // Retrieving game name
+                do {
+                    if (nameField.getText().trim().equals("")) {
+                        String value = createTextAlert("Game Name:");
+                        newGame.setName(value);
+                    }
+                    else {
+                        newGame.setName(nameField.getText());
+                    }
 
-                if (systemChooser.getValue() == "Add New System") {
-                    customConsole = true;
-                    newGame.setSystem(systemField.getText());
-                } else {
-                    newGame.setSystem(systemChooser.getValue());
+                    if (!newGame.getName().trim().equals("")) {
+                        nameFound = true;
+                    }
+                } while (nameFound == false);
+
+             // Retrieving game system
+                if  (systemChooser.getValue() == "Add New System") {
+                    if (systemField.getText().trim().equals("")) {
+                        newGame.setSystem("Other");
+                    }
+                    else {
+                        newGame.setSystem(systemField.getText());
+                    }
+                }
+                else {
+                    if (systemChooser.getValue() == null) {
+                        newGame.setSystem("Other");
+                    }
+                    else {
+                        newGame.setSystem(systemChooser.getValue());
+                    }
                 }
 
-                newGame.setCompletion(completionChooser.getValue());
+             // Retrieving game completion
+                if  (completionChooser.getValue() == null) {
+                    newGame.setCompletion("Unfinished");
+                }
+                else {
+                    newGame.setCompletion(completionChooser.getValue());
+                }
 
                 if (hoursField.getText() != null || hoursField.getText().trim().isEmpty())
                     newGame.setHours(0);
@@ -148,7 +188,7 @@ public class NewGameWindow extends Stage {
         root.add(nameLabel, 0, 0);
         root.add(nameField, 1, 0);
         root.add(systemLabel, 0, 1);
-        root.add(systemChooser, 1, 1);
+        root.add(systemRow, 1, 1);
         root.add(completionLabel, 0, 2);
         root.add(completionChooser, 1, 2);
         root.add(hoursLabel, 0, 3);
@@ -156,5 +196,33 @@ public class NewGameWindow extends Stage {
         root.add(ratingLabel, 0, 4);
         root.add(starRow, 1, 4);
         root.add(addButton, 1, 5);
+    }
+
+    public String createTextAlert(String prompt) {
+
+        String value = "default";
+
+     // dialog for getting string input
+        TextInputDialog textDialog = new TextInputDialog();
+        // used to set the title of the window
+        textDialog.setTitle("Missing Entry");
+        // I don't want header text
+        textDialog.setHeaderText(null);
+        // what is written in the window
+        textDialog.setContentText(prompt);
+
+        // Traditional way to get the response value.
+        Optional<String> textResult = textDialog.showAndWait();
+        if ( textResult.isPresent() ) {
+            System.out.println("You entered: " + textResult.get());
+            //saves value for later
+            value = textResult.get();
+        }
+        else {
+            System.out.println("You closed the dialog.");
+        }
+
+        return value;
+
     }
 }
