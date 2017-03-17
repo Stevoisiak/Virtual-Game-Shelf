@@ -1,12 +1,11 @@
 package virtualgameshelf.gui;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
 import javafx.beans.value.*;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.scene.*;
 import javafx.stage.*;
@@ -112,30 +111,21 @@ public class NewGameWindow extends Stage {
             @Override
             public void handle(ActionEvent e) {
                 newGame = new Game();
-                boolean nameFound = false;
 
-                // Retrieve and set game info
-                // Retrieving game name
-                do {
-                    if (nameField.getText().trim().equals("")) {
-                        String value = createTextAlert("Game Name:");
-                        newGame.setName(value);
-                    }
-                    else {
-                        newGame.setName(nameField.getText());
-                    }
+                // Retrieve game name
+                if (nameField.getText() != null && !nameField.getText().trim().equals("")) {
+                    newGame.setName(nameField.getText());
+                } else {
+                    // Name is missing; stop parsing game data
+                    displayAlert("Please specify the game name.");
+                    return;
+                }
 
-                    if (!newGame.getName().trim().equals("")) {
-                        nameFound = true;
-                    }
-                } while (nameFound == false);
-
-             // Retrieving game system
+                // Retrieve game system
                 if  (systemChooser.getValue() == "Add New System") {
                     if (systemField.getText().trim().equals("")) {
                         newGame.setSystem("Other");
-                    }
-                    else {
+                    } else {
                         newGame.setSystem(systemField.getText());
                     }
                 }
@@ -148,7 +138,7 @@ public class NewGameWindow extends Stage {
                     }
                 }
 
-             // Retrieving game completion
+                // Retrieve game completion
                 if  (completionChooser.getValue() == null) {
                     newGame.setCompletion("Unfinished");
                 }
@@ -156,32 +146,32 @@ public class NewGameWindow extends Stage {
                     newGame.setCompletion(completionChooser.getValue());
                 }
 
+                // Retrieve game hours
                 if (hoursField.getText() == null || hoursField.getText().trim().isEmpty())
                     newGame.setHours(0);
                 else
                     newGame.setHours(Integer.parseInt(hoursField.getText()));
 
+                // Retrieve game rating
                 if (starGroup.getSelectedToggle() != null)
                     newGame.setRating((int) starGroup.getSelectedToggle().getUserData());
                 else
                     newGame.setRating(0);
 
-                // Print game info if valid input
-                if (!newGame.getName().trim().equals("")) {
-                    System.out.println("Game Name: " + newGame.getName());
-                    System.out.println("Game System: " + newGame.getSystem());
-                    System.out.println("Game Completion: " + newGame.getCompletion());
-                    System.out.println("Hours Played: " + newGame.getHours());
-                    if (newGame.getRating() == 1) {
-                        System.out.println("Rating: " + newGame.getRating() + " star");
-                    } else {
-                        System.out.println("Rating: " + newGame.getRating() + " stars");
-                    }
-
-                    // Close window (http://stackoverflow.com/a/25038465)
-                    Stage stage = (Stage) addButton.getScene().getWindow();
-                    stage.close();
+                // Print game info
+                System.out.println("Game Name: " + newGame.getName());
+                System.out.println("Game System: " + newGame.getSystem());
+                System.out.println("Game Completion: " + newGame.getCompletion());
+                System.out.println("Hours Played: " + newGame.getHours());
+                if (newGame.getRating() == 1) {
+                    System.out.println("Rating: " + newGame.getRating() + " star");
+                } else {
+                    System.out.println("Rating: " + newGame.getRating() + " stars");
                 }
+
+                // Close window after successful game addition (http://stackoverflow.com/a/25038465)
+                Stage stage = (Stage) addButton.getScene().getWindow();
+                stage.close();
             }
         });
         root.setHalignment(addButton, HPos.CENTER);
@@ -203,33 +193,14 @@ public class NewGameWindow extends Stage {
         this.showAndWait();
         // Waits until window is closed before returning newGame
         return newGame;
-
     }
 
-    public String createTextAlert(String prompt) {
-
-        String value = "default";
-
-        // dialog for getting string input
-        TextInputDialog textDialog = new TextInputDialog();
-        // used to set the title of the window
-        textDialog.setTitle("Missing Entry");
-        // I don't want header text
-        textDialog.setHeaderText(null);
-        // what is written in the window
-        textDialog.setContentText(prompt);
-
-        // Traditional way to get the response value.
-        Optional<String> textResult = textDialog.showAndWait();
-        if ( textResult.isPresent() ) {
-            System.out.println("You entered: " + textResult.get());
-            //saves value for later
-            value = textResult.get();
-        }
-        else {
-            System.out.println("You closed the dialog.");
-        }
-
-        return value;
+    /** Takes in a String to create and display an alert window */
+    public void displayAlert(String message) {
+        Alert infoAlert = new Alert(AlertType.WARNING);
+        infoAlert.setTitle(null);
+        infoAlert.setHeaderText(null);
+        infoAlert.setContentText(message);
+        infoAlert.showAndWait();
     }
 }
