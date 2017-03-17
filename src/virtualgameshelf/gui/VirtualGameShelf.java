@@ -1,5 +1,7 @@
 package virtualgameshelf.gui;
 
+import java.util.ArrayList;
+
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
@@ -8,8 +10,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import virtualgameshelf.backend.domain.Game;
+import virtualgameshelf.backend.domain.GameList;
 
 public class VirtualGameShelf extends Application {
+
+    private GameList gameList = new GameList();
+    private ArrayList<Game> listOfGames = new ArrayList<>();
+
     public static void main(String[] args) {
         // Automatic VM reset
         try {
@@ -60,7 +68,19 @@ public class VirtualGameShelf extends Application {
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
         manualAdd.setOnAction(e -> {
             NewGameWindow newGameWindow = new NewGameWindow();
-            newGameWindow.show();
+            //newGameWindow.show();
+            Game newGame = newGameWindow.showAndAddGame();
+            if (newGame != null) {
+                gameList.addGame(newGame.getName(), newGame.getSystem(), newGame.getHours(), newGame.getCompletion(), newGame.getRating());
+            }
+
+            listOfGames = (ArrayList<Game>) gameList.getGame();
+
+            System.out.println("/n");
+            for (Game g : listOfGames) {
+                System.out.println( g.getName());
+            }
+            System.out.println("/n");
         });
 
         MenuItem autoAdd = new MenuItem("Add New Game Via Steam");
