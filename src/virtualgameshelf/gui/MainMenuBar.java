@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
@@ -17,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import virtualgameshelf.backend.fileIO.TabSeparatedFileReader;
+import virtualgameshelf.backend.domain.Game;
 
 public class MainMenuBar extends MenuBar {
     public MainMenuBar() {
@@ -66,8 +68,28 @@ public class MainMenuBar extends MenuBar {
         });
         menuHelp.getItems().add(menuItemAbout);
 
-        Menu menuTesting = new Menu("Testing");
-        this.getMenus().add(menuTesting);
+        Menu menuDebug = new Menu("Debug");
+        this.getMenus().add(menuDebug);
+
+        MenuItem menuItemPrintGameList = new MenuItem("Print user game list");
+        menuItemPrintGameList.setOnAction(e -> {
+            List <Game> listOfGames = VirtualGameShelf.gameList.getGame();
+            // TODO: Create method for GameList.print()
+            System.out.println("Game List:");
+            if (listOfGames != null && !listOfGames.isEmpty()) {
+                for (Game g : listOfGames) {
+                    System.out.print("\t");
+                    System.out.println(g.getName()    + ", " +
+                            g.getSystem()             + ", " +
+                            g.getCompletion()         + ", " +
+                            g.getHours() + " hour(s)" + ", " +
+                            g.getRating() + " star(s)");
+                }
+            } else {
+                System.out.println("\t<empty game list>");
+            }
+        });
+        menuDebug.getItems().add(menuItemPrintGameList);
 
         MenuItem menuItemOpenSystemList = new MenuItem("Import/Export tabbed .txt file");
         menuItemOpenSystemList.setOnAction(e -> {
@@ -93,6 +115,6 @@ public class MainMenuBar extends MenuBar {
                 }
             }
         });
-        menuTesting.getItems().add(menuItemOpenSystemList);
+        menuDebug.getItems().add(menuItemOpenSystemList);
     }
 }

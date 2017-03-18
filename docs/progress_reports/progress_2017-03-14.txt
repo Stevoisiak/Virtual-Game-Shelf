@@ -26,9 +26,9 @@ whether or not we will still be able to meet our final project deadline.
   * Missing features
     * Ability to save game list to a file (v0.0.1) [backend]
     * Basic Steam API integration (v0.0.1) [backend]
-	* Decide whether Backloggery importing is possible (v0.0.1) [backend]
-	* Basic Steam library importing (v0.1) [backend]
-	* Prototype for viewing games in your library (v0.1) [GUI]
+    * Decide whether Backloggery importing is possible (v0.0.1) [backend]
+    * Basic Steam library importing (v0.1) [backend]
+    * Prototype for viewing games in your library (v0.1) [GUI]
   * Goals without a deadline
     * Loading gameList from a file [GUI/backend]
 * Our backend programmer's laptop started having issues which prevent
