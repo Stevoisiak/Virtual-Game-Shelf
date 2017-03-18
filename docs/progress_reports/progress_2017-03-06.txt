@@ -1,0 +1,37 @@
+Virtual Game Shelf - Progress Report - March 6, 2017
+
+Today marks the groundwork release of v0.0.1. It serves as a basic
+prototype of Game Shelf's user interface. While it has little to no backend
+functionality, the project groundwork has been essential to establishing a
+project workflow and understanding how to avoid the problems that come with
+collaborate coding projects.
+
+Release notes are as follows.
+
+## Updates
+
+* User Interface (prototype)
+  * #28: Add button for adding new games
+  * #32/#34: Fillable form to manually add new games
+  * MenuBar
+    * #47: "About" screen crediting project resources and contributors
+    * #48: Shortcut to GitHub repository
+    * #50: Separate MenuBar into its own file
+* Backend
+  * #38: Add Game and GameList classes
+  * #51: File reader to import/export tab separated text files into an ArrayList
+* Misc
+  * #13: Automatic build testing with Travis CI
+  * #39/#42: Sort project into packages
+  * #44: Display Travis CI build status in Readme
+
+## Obstacles
+
+* On February 28, Amazon had an issue with its AWS cloud computing services. The
+  The outage lasted for 4 hours and caused the project's automatic testing system
+  to fail. While the issue is unlikely to happen again, st
+  * The next day, all project build requests were manually restarted and succeeded
+    without issue.
+  * In case of future issues, the project manager can now merge pull requests
+    that fail automatic build testing.
+  * A build status indicator was added to the main project page (#44)

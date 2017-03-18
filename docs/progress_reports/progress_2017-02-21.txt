@@ -1,0 +1,27 @@
+Virtual Game Shelf - Progress Report - February 21, 2017
+
+Most of the work up until now has been planning and setup.
+
+Our group decided to host the project on GitHub for reliable version control.
+
+## Updates
+
+* Steven created the initial GitHub repository & readme
+* Steven has set up automatic build testing with Travis CI
+* Arielle & Steven created an empty window and MenuBar for the GUI
+* Morgan started his initial back end API work
+* Morgan & Steven created sketches for the user interface
+
+## Obstacles
+
+* Steven has not finished sketching the GUI.
+  He is receiving assistance from Morgan.
+* Morgan & Arielle haven't used Git before. Steven will teach them
+  how to make pull requests and the general Git workflow.
+* Morgan's API code is currently not compiling.
+
+## Goals
+
+* Finish initial GUI prototype
+* Successfully pull game information from Steam API
+* Ability to save games to a file
