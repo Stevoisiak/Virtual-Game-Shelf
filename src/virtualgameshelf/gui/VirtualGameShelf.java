@@ -14,9 +14,8 @@ import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
 
 public class VirtualGameShelf extends Application {
-
-    private GameList gameList = new GameList();
-    private ArrayList<Game> listOfGames = new ArrayList<>();
+    /** User's complete list of games. Static to allow for global access */
+    protected static GameList gameList = new GameList();
 
     public static void main(String[] args) {
         // Automatic VM reset
@@ -68,19 +67,11 @@ public class VirtualGameShelf extends Application {
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
         manualAdd.setOnAction(e -> {
             NewGameWindow newGameWindow = new NewGameWindow();
-            //newGameWindow.show();
             Game newGame = newGameWindow.showAndAddGame();
             if (newGame != null) {
+                // Add title to game list
                 gameList.addGame(newGame.getName(), newGame.getSystem(), newGame.getHours(), newGame.getCompletion(), newGame.getRating());
             }
-
-            listOfGames = (ArrayList<Game>) gameList.getGame();
-
-            System.out.println("/n");
-            for (Game g : listOfGames) {
-                System.out.println( g.getName());
-            }
-            System.out.println("/n");
         });
 
         MenuItem autoAdd = new MenuItem("Add New Game Via Steam");

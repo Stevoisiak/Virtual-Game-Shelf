@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
@@ -13,6 +14,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import virtualgameshelf.backend.domain.Game;
 
 public class MainMenuBar extends MenuBar {
     public MainMenuBar() {
@@ -61,5 +63,28 @@ public class MainMenuBar extends MenuBar {
             aboutWindow.showAndWait();
         });
         menuHelp.getItems().add(menuItemAbout);
+
+        Menu menuDebug = new Menu("Debug");
+        this.getMenus().add(menuDebug);
+
+        MenuItem menuItemPrintGameList = new MenuItem("Print user game list");
+        menuItemPrintGameList.setOnAction(e -> {
+            List <Game> listOfGames = VirtualGameShelf.gameList.getGame();
+            // TODO: Create method for GameList.print()
+            System.out.println("Game List:");
+            if (listOfGames != null && !listOfGames.isEmpty()) {
+                for (Game g : listOfGames) {
+                    System.out.print("\t");
+                    System.out.println(g.getName()    + ", " +
+                            g.getSystem()             + ", " +
+                            g.getCompletion()         + ", " +
+                            g.getHours() + " hour(s)" + ", " +
+                            g.getRating() + " star(s)");
+                }
+            } else {
+                System.out.println("\t<empty game list>");
+            }
+        });
+        menuDebug.getItems().add(menuItemPrintGameList);
     }
 }
