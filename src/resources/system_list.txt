@@ -1,4 +1,4 @@
-value	option	display
+name	fullname	display
 32X	32X	yes
 3DO	3DO	
 AcornA	Acorn Archimedes	

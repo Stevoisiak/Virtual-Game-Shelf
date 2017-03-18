@@ -53,8 +53,8 @@ public class NewGameWindow extends Stage {
         // Breaks BlueJ support. (BlueJ path = "..\src\src\resources\system_list.txt"
         //       is a BlueJ specific error
         parseSystemListFromFile("src/resources/system_list.txt");
-        /** TODO: What data type should "parseSystemListFromFile() return?
-         *        Should we have an object type for console?
+        /* TODO: What data type should "parseSystemListFromFile() return?
+         *       Should we have an object type for console?
          */
 
         systemList.add("Add New System");
@@ -152,15 +152,14 @@ public class NewGameWindow extends Stage {
 
         // http://stackoverflow.com/a/19576008/3357935
         // Extract information from arrayList
-        // TODO: Don't hardcode which column has which data
         // TODO: Don't crash if !curLine[x].equals(NULL);
         for (String[] curLine : systemArrayList) {
             // TODO: Store content rather than print it
-            if (!curLine[0].equals("value")) {
+            if (!curLine[0].equals("name")) {
                 System.out.print(curLine[0] + ", ");
             }
 
-            if (!curLine[1].equals("option")) {
+            if (!curLine[1].equals("fullname")) {
                 System.out.print(curLine[1] + ", ");
             }
 
