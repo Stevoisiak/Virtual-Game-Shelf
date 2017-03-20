@@ -12,3 +12,7 @@
 .menu-button > .arrow-button > .arrow {
     -fx-padding: 0;
 }
+
+.tree-view {
+	-fx-font-size:   15px;
+}
