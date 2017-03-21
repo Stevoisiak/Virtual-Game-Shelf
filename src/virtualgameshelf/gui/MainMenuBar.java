@@ -1,9 +1,12 @@
 package virtualgameshelf.gui;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -14,6 +17,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import virtualgameshelf.backend.fileIO.TabSeparatedFileReader;
 import virtualgameshelf.backend.domain.Game;
 
 public class MainMenuBar extends MenuBar {
@@ -86,5 +90,31 @@ public class MainMenuBar extends MenuBar {
             }
         });
         menuDebug.getItems().add(menuItemPrintGameList);
+
+        MenuItem menuItemOpenSystemList = new MenuItem("Import/Export tabbed .txt file");
+        menuItemOpenSystemList.setOnAction(e -> {
+            TabSeparatedFileReader reader = new TabSeparatedFileReader();
+            String inputFilePath = "src/resources/system_list.txt";
+            String outputFilePath = "bin/system_list_output.txt";
+
+            System.out.println("Importing from " + inputFilePath);
+            ArrayList<String[]> arrayList = reader.readFromFile(inputFilePath); // TODO: Move into `config` folder
+
+            // Debug: Output array to screen
+            for (String[] s : arrayList) {
+               System.out.println(Arrays.toString(s));
+            }
+
+            System.out.println("Exporting to " + outputFilePath);
+            if (reader.saveToFile(outputFilePath, arrayList) == true) {
+                System.out.println("Test successful!");
+                try {
+                    Desktop.getDesktop().open(new File(outputFilePath));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        menuDebug.getItems().add(menuItemOpenSystemList);
     }
 }

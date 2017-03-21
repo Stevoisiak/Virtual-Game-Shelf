@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.*;
 import javafx.stage.*;
 import virtualgameshelf.backend.domain.Game;
+import virtualgameshelf.backend.fileIO.TabSeparatedFileReader;
 
 public class NewGameWindow extends Stage {
     private TextField nameField;
@@ -49,6 +50,13 @@ public class NewGameWindow extends Stage {
         systemRow.setAlignment( Pos.CENTER_LEFT );
 
         ArrayList<String> systemList = new ArrayList<>();
+        // Breaks BlueJ support. (BlueJ path = "..\src\src\resources\system_list.txt"
+        //       is a BlueJ specific error
+        parseSystemListFromFile("src/resources/system_list.txt");
+        /* TODO: What data type should "parseSystemListFromFile() return?
+         *       Should we have an object type for console?
+         */
+
         systemList.add("Add New System");
         systemList.add("PSP");
 
@@ -81,6 +89,13 @@ public class NewGameWindow extends Stage {
         completionChooser.getItems().addAll("Unfinished", "Beaten", "Completed", "Null", "Mastered", "Unplayed");
 
         completionChooser.setPromptText("Choose a Level of Completion");
+        // checks which item is selected in the ComboBox
+        completionChooser.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String oldValue, String newValue) {
+                // TODO
+            }
+        });
 
         Label hoursLabel = new Label("Hours Played:");
         hoursField = new TextField("");
@@ -126,6 +141,34 @@ public class NewGameWindow extends Stage {
         root.add(ratingLabel, 0, 4);
         root.add(starRow, 1, 4);
         root.add(addButton, 1, 5);
+    }
+
+    // Imports system list from a file
+    // TODO: Determine return type
+    public void parseSystemListFromFile(String systemListFilePath)
+    {
+        TabSeparatedFileReader reader = new TabSeparatedFileReader();
+        ArrayList<String[]> systemArrayList = reader.readFromFile(systemListFilePath);
+
+        // http://stackoverflow.com/a/19576008/3357935
+        // Extract information from arrayList
+        // TODO: Don't crash if !curLine[x].equals(NULL);
+        for (String[] curLine : systemArrayList) {
+            // TODO: Store content rather than print it
+            if (!curLine[0].equals("name")) {
+                System.out.print(curLine[0] + ", ");
+            }
+
+            if (!curLine[1].equals("fullname")) {
+                System.out.print(curLine[1] + ", ");
+            }
+
+            if (!curLine[2].equals("display")) {
+                System.out.println(curLine[2]);
+            }
+        }
+
+        return;
     }
 
     public Game showAndAddGame() {
