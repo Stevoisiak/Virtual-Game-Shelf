@@ -1,49 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Virtual-Game-Shelf">
-    <property environment="env"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
-    <path id="Virtual-Game-Shelf.classpath">
-        <pathelement location="bin"/>
-        <pathelement location="externals/opencsv-3.9.jar"/>
-        <pathelement location="externals/controlsfx-8.40.12.jar"/>
-    </path>
-    <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="resources">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
+<!-- Example build file via Google: https://git.io/vSeO3 -->
+<!-- Example via Stack Overflow: http://stackoverflow.com/a/9875273/3357935 -->
+<project name="Virtual-Game-Shelf" default="makejar" basedir=".">
+    <description>
+        Ant build file for Virtual Game Shelf
+    </description>
+
+    <property name="src.dir"       location="src"/>
+    <property name="build.dir"     location="bin"/>
+    <property name="dist.dir"      location="dist"/>
+    <property name="resources.dir" location="resources"/>
+    <property name="main-class"    value="virtualgameshelf.gui.VirtualGameShelf"/>
+
+    <target name="clean" description="delete old files">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
     </target>
-    <target name="clean">
-        <delete dir="bin"/>
+
+    <target name="build" description="build class files" depends="clean">
+        <mkdir dir="${build.dir}"/> <!-- create build directory -->
+        <javac srcdir="${src.dir}" destdir="${build.dir}"/> <!-- Compile code into ${build} -->
     </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <src path="resources"/>
-            <classpath refid="Virtual-Game-Shelf.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target name="VirtualGameShelf">
-        <java classname="virtualgameshelf.gui.VirtualGameShelf" failonerror="true" fork="yes">
-            <classpath refid="Virtual-Game-Shelf.classpath"/>
-        </java>
+
+    <target name="makejar" depends="build">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.dir}/virtual-game-shelf.jar" basedir="${build.dir}">
+            <fileset dir="${src.dir}"/>
+            <fileset dir="${resources.dir}"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
     </target>
 </project>
