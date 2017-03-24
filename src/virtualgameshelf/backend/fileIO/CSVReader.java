@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TabSeparatedFileReader {
-    /** Returns arrayList of lines from a char separated file. (Separator defaults to '\t') */
+public class CSVReader {
+    /** Returns arrayList of lines from a char separated file. (Separator defaults to ',') */
     public static ArrayList<String[]> readFromFile(String filePath, String separator) {
         File file = new File(filePath);
         String[] array; // Stores a single, split line entry
@@ -44,17 +44,17 @@ public class TabSeparatedFileReader {
         return arrayList;
     }
 
-    /** Returns arrayList of lines from a char separated file. (Separator defaults to '\t') */
+    /** Returns arrayList of lines from a char separated file. (Separator defaults to ',') */
     public static ArrayList<String[]> readFromFile(String filePath, char separator) {
         return readFromFile(filePath, Character.toString(separator));
     }
 
-    /** Returns arrayList of lines from a char separated file. (Separator defaults to '\t') */
+    /** Returns arrayList of lines from a char separated file. (Separator defaults to ',') */
     public static ArrayList<String[]> readFromFile(String filePath) {
-        return readFromFile(filePath, "\t");
+        return readFromFile(filePath, ",");
     }
 
-    /** Saves arrayList of lines to a char separated file. (Separator defaults to '\t') */
+    /** Saves arrayList of lines to a char separated file. (Separator defaults to ',') */
     public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList, String separator) {
         File file = new File(filePath);
         try {
@@ -75,14 +75,14 @@ public class TabSeparatedFileReader {
 
         return true;
     }
-	
-	/** Saves arrayList of lines to a char separated file. (Separator defaults to '\t') */
+
+	/** Saves arrayList of lines to a char separated file. (Separator defaults to ',') */
 	public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList, char separator) {
 		return saveToFile(filePath, arrayList, Character.toString(separator));
 	}
-	
-	/** Saves arrayList of lines to a char separated file. (Separator defaults to '\t') */
+
+	/** Saves arrayList of lines to a char separated file. (Separator defaults to ',') */
 	public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList) {
-		return saveToFile(filePath, arrayList, "\t");
-	}	
+		return saveToFile(filePath, arrayList, ",");
+	}
 }
