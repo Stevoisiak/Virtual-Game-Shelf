@@ -1,6 +1,9 @@
 package virtualgameshelf.gui;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
@@ -11,10 +14,14 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
+import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class VirtualGameShelf extends Application {
     /** User's complete list of games. Static to allow for global access */
     protected static GameList gameList = new GameList();
+    /** Used to look up full names of consoles. ("PS4" -> "PlayStation 4") */
+    protected static Map<String, String> systemNameMap;
+    /** Consoles taken from gameList */
     ArrayList<String> shrunkenConsoleList = new ArrayList<>();
 
     VBox gameConsoleList;
@@ -57,6 +64,7 @@ public class VirtualGameShelf extends Application {
         root.setTop(menuBar);
 
         // custom code below ---------------------------------------
+        initializeSystemNameMap();
 
         // used to display games in library
         gameConsoleList = new VBox();
@@ -90,7 +98,7 @@ public class VirtualGameShelf extends Application {
                 // used to display games in gameList
                 gameConsoleList.getChildren().clear();
 
-                TreeView<VBox> treeView = new TreeView<VBox>();
+                TreeView<VBox> treeView = new TreeView<>();
 
                 treeView = displayGameConsoles();
 
@@ -104,14 +112,11 @@ public class VirtualGameShelf extends Application {
         addGameButton.getItems().addAll(manualAdd, autoAdd);
 
         // rotates the image 45 degrees when the menu button is "active"
-        addGameButton.showingProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    addGameButton.setRotate(addGameButton.getRotate() + 45);
-                } else {
-                    addGameButton.setRotate(addGameButton.getRotate() + 45);
-                }
+        addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+            if (newValue) {
+                addGameButton.setRotate(addGameButton.getRotate() + 45);
+            } else {
+                addGameButton.setRotate(addGameButton.getRotate() + 45);
             }
         });
 
@@ -138,11 +143,11 @@ public class VirtualGameShelf extends Application {
         ArrayList<Game> listOfGames = new ArrayList<>();
         listOfGames = (ArrayList<Game>) gameList.getGame();
 
-        TreeItem<String> rootNode = new TreeItem<String>("Consoles", new ImageView("resources/icons/gamepad.png"));
+        TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("resources/icons/gamepad.png"));
         rootNode.setExpanded(true);
 
         for (Game g : listOfGames) {
-            TreeItem<String> gameLeaf = new TreeItem<String>(g.getName() + "\n" + g.getSystem() +
+            TreeItem<String> gameLeaf = new TreeItem<>(g.getName() + "\n" + g.getSystem() +
                     "\n" + g.getCompletion() + "\n" + g.getHours() + " hours played \n" + g.getRating() + " star(s)");
             boolean found = false;
 
@@ -155,18 +160,18 @@ public class VirtualGameShelf extends Application {
             }
 
             if (!found){
-                TreeItem<String> depNode = new TreeItem<String>(g.getSystem(), new ImageView("resources/icons/vintage.png"));
+                TreeItem<String> depNode = new TreeItem<>(g.getSystem(), new ImageView("resources/icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
             }
         }
 
-        TreeView<String> treeView = new TreeView<String>(rootNode);
+        TreeView<String> treeView = new TreeView<>(rootNode);
 
         return treeView;
     }
 
- // used to display the list of games (other method)
+    // used to display the list of games (other method)
     public TreeView displayGameConsoles2() {
         ArrayList<Game> listOfGames = new ArrayList<>();
         listOfGames = (ArrayList<Game>) gameList.getGame();
@@ -185,7 +190,7 @@ public class VirtualGameShelf extends Application {
         Label hoursLabel = new Label();
         Label ratingLabel = new Label();
 
-        TreeItem<VBox> rootNode = new TreeItem<VBox>(title, new ImageView("resources/icons/gamepad.png"));
+        TreeItem<VBox> rootNode = new TreeItem<>(title, new ImageView("resources/icons/gamepad.png"));
         rootNode.setExpanded(true);
 
         for (Game g : listOfGames) {
@@ -203,7 +208,7 @@ public class VirtualGameShelf extends Application {
 
             gameInfo.getChildren().addAll(nameLabel, systemLabel, completionLabel, hoursLabel, ratingLabel);
 
-            TreeItem<VBox> gameLeaf = new TreeItem<VBox>(gameInfo);
+            TreeItem<VBox> gameLeaf = new TreeItem<>(gameInfo);
             boolean found = false;
 
             for (TreeItem<VBox> depNode : rootNode.getChildren()) {
@@ -224,14 +229,36 @@ public class VirtualGameShelf extends Application {
                 Label systemTitleLabel = new Label(g.getSystem() + "");
                 system.getChildren().add(systemTitleLabel);
 
-                TreeItem<VBox> depNode = new TreeItem<VBox>(system, new ImageView("resources/icons/vintage.png"));
+                TreeItem<VBox> depNode = new TreeItem<>(system, new ImageView("resources/icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
             }
         }
 
-        TreeView<VBox> treeView = new TreeView<VBox>(rootNode);
+        TreeView<VBox> treeView = new TreeView<>(rootNode);
 
         return treeView;
+    }
+
+    /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
+    private void initializeSystemNameMap() {
+        systemNameMap = new LinkedHashMap<>();
+        ArrayList<String[]> systemList = CSVReader.readFromFile("src/resources/system_list.csv", ",");
+        for (String[] s : systemList) {
+            String name = s[0];
+            String displayName = s[1];
+            if (name != null && !name.equals("name")
+                    && displayName != null && !displayName.equals("displayName")) {
+                systemNameMap.put(name, displayName);
+            }
+        }
+    }
+
+    /** if available, return system's full display name */
+    public static String getSystemDisplayName(String system) {
+        if (systemNameMap.containsKey(system)) {
+            system = systemNameMap.get(system);
+        }
+        return system;
     }
 }

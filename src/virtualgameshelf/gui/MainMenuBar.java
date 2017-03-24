@@ -1,9 +1,12 @@
 package virtualgameshelf.gui;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -15,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import virtualgameshelf.backend.domain.Game;
+import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class MainMenuBar extends MenuBar {
     public MainMenuBar() {
@@ -86,5 +90,30 @@ public class MainMenuBar extends MenuBar {
             }
         });
         menuDebug.getItems().add(menuItemPrintGameList);
+
+        MenuItem menuItemOpenSystemList = new MenuItem("Load/Save system_list.csv");
+        menuItemOpenSystemList.setOnAction(e -> {
+            String inputFilePath = "src/resources/system_list.csv";
+            String outputFilePath = "bin/system_list_output.csv";
+
+            System.out.println("Importing from " + inputFilePath);
+            ArrayList<String[]> arrayList = CSVReader.readFromFile(inputFilePath, ","); // TODO: Move into `config` folder
+
+            // Debug: Output array to screen
+            for (String[] s : arrayList) {
+               System.out.println(Arrays.toString(s));
+            }
+
+            System.out.println("Exporting to " + outputFilePath);
+            if (CSVReader.saveToFile(outputFilePath, arrayList, ",") == true) {
+                System.out.println("Test successful!");
+                try {
+                    Desktop.getDesktop().open(new File(outputFilePath));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        menuDebug.getItems().add(menuItemOpenSystemList);
     }
 }
