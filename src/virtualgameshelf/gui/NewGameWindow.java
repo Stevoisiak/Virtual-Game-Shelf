@@ -1,6 +1,5 @@
 package virtualgameshelf.gui;
 
-import java.util.ArrayList;
 import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
@@ -43,35 +42,55 @@ public class NewGameWindow extends Stage {
 
         // custom code below --------------------------------------------
 
-        // selectable list of game systems
-        HBox systemRow = new HBox();
-        systemRow.setSpacing(16);
-        systemRow.setAlignment( Pos.CENTER_LEFT );
-
-        ArrayList<String> systemList = new ArrayList<>();
-        systemList.add("Add New System");
-        systemList.add("PSP");
-
         Label nameLabel = new Label("Game Name:");
         nameField = new TextField("");
 
+        // selectable list of game systems
         Label systemLabel = new Label("Game System:");
+        HBox systemRow = new HBox();
+        systemRow.setSpacing(16);
+        systemRow.setAlignment( Pos.CENTER_LEFT );
         systemChooser = new ComboBox<>();
-        systemChooser.getItems().addAll(systemList);
+        for (String key : VirtualGameShelf.systemNameMap.keySet()) {
+            systemChooser.getItems().add(key); // populate system list
+        }
+
+        // Begin overriding ComboBox ---------------
+        // Force cell to display full console name
+        systemChooser.setButtonCell( new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                // use system's full display name
+                String displayName = VirtualGameShelf.getSystemDisplayName(item);
+                setText(displayName);
+            }
+        });
+
+        systemChooser.setCellFactory(column -> {
+            return new ListCell<String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    // use system's full display name
+                    String displayName = VirtualGameShelf.getSystemDisplayName(item);
+                    setText(displayName);
+                }
+            };
+        });
+        // Finish overriding ComboBox ---------------
+        systemChooser.getItems().add("Other");
 
         systemChooser.setPromptText("Choose a System");
         // checks which item is selected in the ComboBox
-        systemChooser.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-                if (newValue == "Add New System") {
-                    systemField = new TextField("");
-                    systemField.setPromptText("Enter a System");
+        systemChooser.valueProperty().addListener((ChangeListener<String>) (ov, oldValue, newValue) -> {
+            if (newValue == "Other") {
+                systemField = new TextField("");
+                systemField.setPromptText("Enter a System");
 
-                    systemRow.getChildren().add(systemField);
-                } else {
-                    systemRow.getChildren().remove(systemField);
-                }
+                systemRow.getChildren().add(systemField);
+            } else {
+                systemRow.getChildren().remove(systemField);
             }
         });
         systemRow.getChildren().add(systemChooser);
@@ -86,12 +105,9 @@ public class NewGameWindow extends Stage {
         hoursField = new TextField("");
         // http://stackoverflow.com/a/30796829
         // force the field to be numeric only
-        hoursField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    hoursField.setText(newValue.replaceAll("[^\\d]", ""));
-                }
+        hoursField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                hoursField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 

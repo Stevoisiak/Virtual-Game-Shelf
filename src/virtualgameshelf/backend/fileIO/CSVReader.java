@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TabSeparatedFileReader {
-    // returns arrayList of entries from a tab separated .txt file
-    public static ArrayList<String[]> readFromFile(String filePath) {
+public class CSVReader {
+    /** Returns arrayList of lines from a char separated file. (Separator defaults to ',') */
+    public static ArrayList<String[]> readFromFile(String filePath, String separator) {
         File file = new File(filePath);
         String[] array; // Stores a single, split line entry
         ArrayList<String[]> arrayList = new ArrayList<>(); // ArrayList of all entries
@@ -28,7 +28,7 @@ public class TabSeparatedFileReader {
                     break;
                 } else {
                     // '-1' prevents empty entries from being trimmed
-                    array = lineJustFetched.split("\t", -1);
+                    array = lineJustFetched.split(separator, -1);
                     arrayList.add(array);
                 }
             }
@@ -44,17 +44,26 @@ public class TabSeparatedFileReader {
         return arrayList;
     }
 
-    // Saves arrayList of arrays to a tab separated file
-    public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList) {
+    /** Returns arrayList of lines from a char separated file. (Separator defaults to ',') */
+    public static ArrayList<String[]> readFromFile(String filePath, char separator) {
+        return readFromFile(filePath, Character.toString(separator));
+    }
 
+    /** Returns arrayList of lines from a char separated file. (Separator defaults to ',') */
+    public static ArrayList<String[]> readFromFile(String filePath) {
+        return readFromFile(filePath, ",");
+    }
+
+    /** Saves arrayList of lines to a char separated file. (Separator defaults to ',') */
+    public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList, String separator) {
         File file = new File(filePath);
         try {
             FileWriter writer = new FileWriter(file);
             for (String[] s : arrayList) {
                 String formattedString = Arrays.toString(s)
-                        .replace(", ", "\t")   // replace commas with tab separators
-                        .replace("[", "")      // remove right bracket
-                        .replace("]", "");     // remove left bracket
+                        .replace(", ", separator) // replace commas with separators
+                        .replace("[", "")         // remove right bracket
+                        .replace("]", "");        // remove left bracket
                 writer.write(formattedString + "\r\n");
             }
             writer.close();
@@ -66,4 +75,14 @@ public class TabSeparatedFileReader {
 
         return true;
     }
+
+	/** Saves arrayList of lines to a char separated file. (Separator defaults to ',') */
+	public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList, char separator) {
+		return saveToFile(filePath, arrayList, Character.toString(separator));
+	}
+
+	/** Saves arrayList of lines to a char separated file. (Separator defaults to ',') */
+	public static boolean saveToFile(String filePath, ArrayList<String[]> arrayList) {
+		return saveToFile(filePath, arrayList, ",");
+	}
 }
