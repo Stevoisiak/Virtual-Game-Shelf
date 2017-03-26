@@ -5,19 +5,10 @@
 Virtual Game Shelf is a desktop Java application to organize your
 game library in a single convenient location. It strives to implement
 the best features from services like [Backloggery](http://www.backloggery.com/),
-[VGCollect](https://vgcollect.com), and [My Game Collection]
-(http://my-game-collection.tuyware.com/) without the need for an
-internet connection or Android device.
+[VGCollect](https://vgcollect.com), and [My Game Collection](http://my-game-collection.tuyware.com/)
+without the need for an internet connection or Android device.
 
 Code contributions should loosely follow [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
-
-## Compiling with BlueJ
-
-In BlueJ, select `Project -> Open Non BlueJ...`. Navigate to the
-project directory, select the `src` folder, and click `Open in BlueJ`.
-Selecting any other folder may result in a Package Line Mismatch warning.
-
-You should now be able to open and compile the project in BlueJ.
 
 ## Compiling with Eclipse
 
