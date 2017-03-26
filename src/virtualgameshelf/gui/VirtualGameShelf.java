@@ -21,8 +21,6 @@ public class VirtualGameShelf extends Application {
     protected static GameList gameList = new GameList();
     /** Used to look up full names of consoles. ("PS4" -> "PlayStation 4") */
     protected static Map<String, String> systemNameMap;
-    /** Consoles taken from gameList */
-    ArrayList<String> shrunkenConsoleList = new ArrayList<>();
 
     VBox gameConsoleList;
 
@@ -93,7 +91,6 @@ public class VirtualGameShelf extends Application {
             if (newGame != null) {
                 // Add title to game list
                 gameList.addGame(newGame.getName(), newGame.getSystem(), newGame.getHours(), newGame.getCompletion(), newGame.getRating());
-                makeShrunkenList(newGame.getSystem());
 
                 // used to display games in gameList
                 gameConsoleList.getChildren().clear();
@@ -123,21 +120,6 @@ public class VirtualGameShelf extends Application {
         return addGameButton;
     }
 
-    // used to make a list of all the consoles without repeats
-    public void makeShrunkenList(String console) {
-        boolean found = false;
-
-        for (String c : shrunkenConsoleList) {
-            if (console.equals(c)) {
-                found = true;
-            }
-        }
-
-        if (!found) {
-            shrunkenConsoleList.add(console);
-        }
-    }
-
     // used to display the list of games
     public TreeView displayGameConsoles() {
         ArrayList<Game> listOfGames = new ArrayList<>();
@@ -151,8 +133,10 @@ public class VirtualGameShelf extends Application {
                     "\n" + g.getCompletion() + "\n" + g.getHours() + " hours played \n" + g.getRating() + " star(s)");
             boolean found = false;
 
+            String displayName = getSystemDisplayName(g.getSystem());
+
             for (TreeItem<String> depNode : rootNode.getChildren()) {
-                if (depNode.getValue().contentEquals(g.getSystem())) {
+                if (depNode.getValue().contentEquals(displayName)) {
                     depNode.getChildren().add(gameLeaf);
                     found = true;
                     break;
@@ -160,7 +144,7 @@ public class VirtualGameShelf extends Application {
             }
 
             if (!found){
-                TreeItem<String> depNode = new TreeItem<>(g.getSystem(), new ImageView("resources/icons/vintage.png"));
+                TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("resources/icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
             }
