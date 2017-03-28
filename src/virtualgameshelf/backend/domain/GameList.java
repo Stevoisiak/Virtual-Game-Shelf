@@ -59,13 +59,7 @@ public class GameList {
     }
 
     public void addGame(String name, String system, int hours, String completion, int rating) {
-        Game game = new Game();
-        game.setName(name);
-        game.setSystem(system);
-        game.setHours(hours);
-        game.setCompletion(completion);
-        game.setRating(rating);
-
+        Game game = new Game(name, system, hours, completion, rating);
         games.add(game);
     }
 }

@@ -10,6 +10,19 @@ public class Game {
     private String excess; /* will not be grab-able. Is only used to store
                               excess information from file grabs */
 
+    public Game () {
+        // TODO: Set unique ID?
+    }
+
+    public Game (String name, String system, int hours, String completion, int rating) {
+        // TODO: Set unique ID?
+        this.name = name;
+        this.system = system;
+        this.hours = hours;
+        this.completion = completion;
+        this.rating = rating;
+    }
+
     /* Start Set Functions */
     public void setId(long ID) {
         this.ID = ID;
