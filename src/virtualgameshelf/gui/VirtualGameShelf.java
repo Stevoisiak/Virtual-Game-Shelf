@@ -90,7 +90,7 @@ public class VirtualGameShelf extends Application {
             Game newGame = newGameWindow.showAndAddGame();
             if (newGame != null) {
                 // Add title to game list
-                gameList.addGame(newGame.getName(), newGame.getSystem(), newGame.getHours(), newGame.getCompletion(), newGame.getRating());
+                gameList.addGame(newGame);
 
                 // used to display games in gameList
                 gameConsoleList.getChildren().clear();
