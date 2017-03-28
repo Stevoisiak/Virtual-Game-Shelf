@@ -1,0 +1,24 @@
+Virtual Game Shelf - Progress Report - March 27, 2017
+
+Over the past 3 weeks, work has been done to try and keep our project
+on schedule for the end of the semester. Unfortunately, due to various
+circumstances, our backend programmer has not been able to meet
+project deadlines. I may be able to handle some of the backend work myself
+if necessary. However, I can't work on code I haven't seen or that hasn't
+been uploaded.
+
+The lack of backend code has been a major roadblock for our group.
+Groundwork features originally planned for February’s v0.0.1 release
+such as basic Steam integration and Backloggery research are still
+not complete. The deadline for our functional v0.1 prototype is
+now 3 weeks past its original date, and none of the backend milestones
+have been met.
+
+
+## Updates
+
+* #54/#56 Progress reports and planning documentation added to project
+* #57 (Bug) Game hours no longer always equals 0
+* #58/#62 Added games now display in gameList on home screen
+* #61 Add debug menu with option to print game list
+* #62 Selectable console list loaded from file
