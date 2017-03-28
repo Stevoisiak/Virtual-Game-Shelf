@@ -12,8 +12,9 @@ Code contributions should loosely follow [Google's Java Style Guide](https://goo
 
 ## Compiling with Eclipse
 
-Before trying to compile, make sure [Eclipse Neon](https://www.eclipse.org/) and the
-[e(fx)clipse](http://www.eclipse.org/efxclipse/install.html) addon are installed.
+Before trying to compile, make sure [Eclipse Neon](https://www.eclipse.org/),
+[e(fx)clipse](http://www.eclipse.org/efxclipse/install.html), and
+[EGit](http://www.eclipse.org/egit/) are installed.
 
 Select `File -> Import` from the menu, then select `Git -> Projects from Git`
 to open the project import wizard. If you haven't already cloned
