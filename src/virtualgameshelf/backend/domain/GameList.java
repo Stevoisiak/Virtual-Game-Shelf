@@ -54,6 +54,10 @@ public class GameList {
          */
     }
 
+    public void addGame(Game game) {
+        games.add(game);
+    }
+
     public void addGame(String name, String system, int hours, String completion, int rating) {
         Game game = new Game();
         game.setName(name);
