@@ -93,7 +93,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem menuItemOpenSystemList = new MenuItem("Load/Save system_list.csv");
         menuItemOpenSystemList.setOnAction(e -> {
-            String inputFilePath = "src/resources/system_list.csv";
+            String inputFilePath = "resources/system_list.csv";
             String outputFilePath = "bin/system_list_output.csv";
 
             System.out.println("Importing from " + inputFilePath);

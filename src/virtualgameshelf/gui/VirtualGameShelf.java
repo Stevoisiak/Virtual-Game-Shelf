@@ -43,7 +43,7 @@ public class VirtualGameShelf extends Application {
         mainStage.setTitle("Virtual Game Shelf");
 
         // add application icon
-        // mainStage.getIcons().add(new Image("resources/icons/"));
+        // mainStage.getIcons().add(new Image("icons/"));
 
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root, 400, 600);
@@ -55,7 +55,7 @@ public class VirtualGameShelf extends Application {
         root.setCenter(scroll);
 
         // add stylesheet
-        mainScene.getStylesheets().add("resources/stylesheet.css");
+        mainScene.getStylesheets().add("stylesheet.css");
 
         // top menu bar
         MainMenuBar menuBar = new MainMenuBar();
@@ -81,7 +81,7 @@ public class VirtualGameShelf extends Application {
     }
 
     public MenuButton createAddGameButton() {
-        MenuButton addGameButton = new MenuButton(null, new ImageView("resources/icons/add.png"));
+        MenuButton addGameButton = new MenuButton(null, new ImageView("icons/add.png"));
         addGameButton.setPopupSide(Side.TOP);
 
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
@@ -125,7 +125,7 @@ public class VirtualGameShelf extends Application {
         ArrayList<Game> listOfGames = new ArrayList<>();
         listOfGames = (ArrayList<Game>) gameList.getGame();
 
-        TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("resources/icons/gamepad.png"));
+        TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
 
         for (Game g : listOfGames) {
@@ -144,7 +144,7 @@ public class VirtualGameShelf extends Application {
             }
 
             if (!found){
-                TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("resources/icons/vintage.png"));
+                TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
             }
@@ -158,7 +158,7 @@ public class VirtualGameShelf extends Application {
     /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
     private void initializeSystemNameMap() {
         systemNameMap = new LinkedHashMap<>();
-        ArrayList<String[]> systemList = CSVReader.readFromFile("src/resources/system_list.csv", ",");
+        ArrayList<String[]> systemList = CSVReader.readFromFile("resources/system_list.csv", ",");
         for (String[] s : systemList) {
             String name = s[0];
             String displayName = s[1];

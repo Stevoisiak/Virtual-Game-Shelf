@@ -25,7 +25,7 @@ public class NewGameWindow extends Stage {
 
         this.setTitle("Add New Game");
         // add application icon
-        // newStage.getIcons().add( new Image("resources/icons/") );
+        // newStage.getIcons().add( new Image("icons/") );
 
         GridPane root = new GridPane();
         root.setPadding(new Insets(16));
@@ -38,7 +38,7 @@ public class NewGameWindow extends Stage {
         this.setScene(popupScene);
 
         // add stylesheet
-        popupScene.getStylesheets().add("resources/stylesheet.css");
+        popupScene.getStylesheets().add("stylesheet.css");
 
         // custom code below --------------------------------------------
 
