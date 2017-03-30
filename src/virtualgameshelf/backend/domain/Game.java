@@ -1,6 +1,6 @@
 package virtualgameshelf.backend.domain;
 
-public class Game {
+public class Game implements Comparable<Game>{
     private long ID; // AutoSet / Not Required
     private String name; // REQUIRED
     private String system; // REQUIRED
@@ -78,4 +78,27 @@ public class Game {
         return rating;
     }
     /* End Get Functions */
+
+    /* Start Override Functions */
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    /** Sorts by system, then by name */
+    @Override
+    public int compareTo(Game game) {
+        String system1 = this.system;
+        String system2 = (game.system);
+        int systemComp = system1.compareTo(system2);
+
+        if (systemComp != 0) {
+            return systemComp;
+        } else {
+            String game1 = this.name.toLowerCase();
+            String game2 = (game.name.toLowerCase());
+            return game1.compareTo(game2);
+        }
+    }
+    /* End Override Functions */
 }
