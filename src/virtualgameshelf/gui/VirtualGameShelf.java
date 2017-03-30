@@ -22,7 +22,7 @@ public class VirtualGameShelf extends Application {
     /** Used to look up full names of consoles. ("PS4" -> "PlayStation 4") */
     protected static Map<String, String> systemNameMap;
     /** Visual display of gameList */
-    private static VBox gameConsoleList;
+    private static VBox gameListVBox;
 
     public static void main(String[] args) {
         // Automatic VM reset
@@ -65,11 +65,11 @@ public class VirtualGameShelf extends Application {
         initializeSystemNameMap();
 
         // used to display games in library
-        gameConsoleList = new VBox();
-        gameConsoleList.setPadding( new Insets(16) );
-        gameConsoleList.setSpacing(16);
-        gameConsoleList.setAlignment( Pos.CENTER );
-        scroll.setContent(gameConsoleList);
+        gameListVBox = new VBox();
+        gameListVBox.setPadding( new Insets(16) );
+        gameListVBox.setSpacing(16);
+        gameListVBox.setAlignment( Pos.CENTER );
+        scroll.setContent(gameListVBox);
 
         // used to add games to the library
         MenuButton addGameButton = createAddGameButton();
@@ -145,8 +145,8 @@ public class VirtualGameShelf extends Application {
         TreeView<String> treeView = new TreeView<>(rootNode);
 
         // Clear and redraw game list
-        gameConsoleList.getChildren().clear();
-        gameConsoleList.getChildren().add(treeView);
+        gameListVBox.getChildren().clear();
+        gameListVBox.getChildren().add(treeView);
     }
 
     /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
