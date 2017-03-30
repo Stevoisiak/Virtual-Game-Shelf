@@ -18,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import virtualgameshelf.backend.domain.Game;
+import virtualgameshelf.backend.domain.GameList;
 import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class MainMenuBar extends MenuBar {
@@ -26,7 +27,7 @@ public class MainMenuBar extends MenuBar {
         this.getMenus().add(menuFile);
 
         MenuItem menuItemNew = new MenuItem("New");
-        // menuItemNew.setOnAction(e -> onNew());
+        menuItemNew.setOnAction(e -> onNew());
         menuItemNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         menuFile.getItems().add(menuItemNew);
 
@@ -93,7 +94,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem menuItemOpenSystemList = new MenuItem("Load/Save system_list.csv");
         menuItemOpenSystemList.setOnAction(e -> {
-            String inputFilePath = "src/resources/system_list.csv";
+            String inputFilePath = "resources/system_list.csv";
             String outputFilePath = "bin/system_list_output.csv";
 
             System.out.println("Importing from " + inputFilePath);
@@ -115,5 +116,11 @@ public class MainMenuBar extends MenuBar {
             }
         });
         menuDebug.getItems().add(menuItemOpenSystemList);
+    }
+
+    /** Starts a new gameList */
+    public void onNew() {
+	VirtualGameShelf.gameList = new GameList();
+	VirtualGameShelf.displayGameConsoles();
     }
 }

@@ -18,11 +18,11 @@ import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class VirtualGameShelf extends Application {
     /** User's complete list of games. Static to allow for global access */
-    protected static GameList gameList = new GameList();
+    public static GameList gameList = new GameList();
     /** Used to look up full names of consoles. ("PS4" -> "PlayStation 4") */
     protected static Map<String, String> systemNameMap;
-
-    VBox gameConsoleList;
+    /** Visual display of gameList */
+    private static VBox gameListVBox;
 
     public static void main(String[] args) {
         // Automatic VM reset
@@ -43,7 +43,7 @@ public class VirtualGameShelf extends Application {
         mainStage.setTitle("Virtual Game Shelf");
 
         // add application icon
-        // mainStage.getIcons().add(new Image("resources/icons/"));
+        // mainStage.getIcons().add(new Image("icons/"));
 
         BorderPane root = new BorderPane();
         Scene mainScene = new Scene(root, 400, 600);
@@ -55,7 +55,7 @@ public class VirtualGameShelf extends Application {
         root.setCenter(scroll);
 
         // add stylesheet
-        mainScene.getStylesheets().add("resources/stylesheet.css");
+        mainScene.getStylesheets().add("stylesheet.css");
 
         // top menu bar
         MainMenuBar menuBar = new MainMenuBar();
@@ -65,11 +65,11 @@ public class VirtualGameShelf extends Application {
         initializeSystemNameMap();
 
         // used to display games in library
-        gameConsoleList = new VBox();
-        gameConsoleList.setPadding( new Insets(16) );
-        gameConsoleList.setSpacing(16);
-        gameConsoleList.setAlignment( Pos.CENTER );
-        scroll.setContent(gameConsoleList);
+        gameListVBox = new VBox();
+        gameListVBox.setPadding( new Insets(16) );
+        gameListVBox.setSpacing(16);
+        gameListVBox.setAlignment( Pos.CENTER );
+        scroll.setContent(gameListVBox);
 
         // used to add games to the library
         MenuButton addGameButton = createAddGameButton();
@@ -81,7 +81,7 @@ public class VirtualGameShelf extends Application {
     }
 
     public MenuButton createAddGameButton() {
-        MenuButton addGameButton = new MenuButton(null, new ImageView("resources/icons/add.png"));
+        MenuButton addGameButton = new MenuButton(null, new ImageView("icons/add.png"));
         addGameButton.setPopupSide(Side.TOP);
 
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
@@ -90,16 +90,8 @@ public class VirtualGameShelf extends Application {
             Game newGame = newGameWindow.showAndAddGame();
             if (newGame != null) {
                 // Add title to game list
-                gameList.addGame(newGame.getName(), newGame.getSystem(), newGame.getHours(), newGame.getCompletion(), newGame.getRating());
-
-                // used to display games in gameList
-                gameConsoleList.getChildren().clear();
-
-                TreeView<VBox> treeView = new TreeView<>();
-
-                treeView = displayGameConsoles();
-
-                gameConsoleList.getChildren().add(treeView);
+                gameList.addGame(newGame);
+                displayGameConsoles();
             }
         });
 
@@ -121,11 +113,11 @@ public class VirtualGameShelf extends Application {
     }
 
     // used to display the list of games
-    public TreeView displayGameConsoles() {
+    public static void displayGameConsoles() {
         ArrayList<Game> listOfGames = new ArrayList<>();
         listOfGames = (ArrayList<Game>) gameList.getGame();
 
-        TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("resources/icons/gamepad.png"));
+        TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
 
         for (Game g : listOfGames) {
@@ -144,7 +136,7 @@ public class VirtualGameShelf extends Application {
             }
 
             if (!found){
-                TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("resources/icons/vintage.png"));
+                TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
             }
@@ -152,13 +144,15 @@ public class VirtualGameShelf extends Application {
 
         TreeView<String> treeView = new TreeView<>(rootNode);
 
-        return treeView;
+        // Clear and redraw game list
+        gameListVBox.getChildren().clear();
+        gameListVBox.getChildren().add(treeView);
     }
 
     /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
     private void initializeSystemNameMap() {
         systemNameMap = new LinkedHashMap<>();
-        ArrayList<String[]> systemList = CSVReader.readFromFile("src/resources/system_list.csv", ",");
+        ArrayList<String[]> systemList = CSVReader.readFromFile("resources/system_list.csv", ",");
         for (String[] s : systemList) {
             String name = s[0];
             String displayName = s[1];
