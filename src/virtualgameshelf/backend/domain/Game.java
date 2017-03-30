@@ -85,17 +85,18 @@ public class Game implements Comparable<Game>{
         return name;
     }
 
+    /** Sorts by system, then by name */
     @Override
     public int compareTo(Game game) {
-        String console1 = system;
-    	String console2 = (game.system);
-    	int consoleComp = console1.compareTo(console2);
+        String system1 = this.system;
+        String system2 = (game.system);
+        int systemComp = system1.compareTo(system2);
 
-        if(consoleComp != 0) {
-        	return consoleComp;
+        if (systemComp != 0) {
+            return systemComp;
         } else {
-        	String game1 = name.toLowerCase();
-        	String game2 = (game.name.toLowerCase());
+            String game1 = this.name.toLowerCase();
+            String game2 = (game.name.toLowerCase());
             return game1.compareTo(game2);
         }
     }
