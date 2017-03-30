@@ -18,11 +18,11 @@ import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class VirtualGameShelf extends Application {
     /** User's complete list of games. Static to allow for global access */
-    protected static GameList gameList = new GameList();
+    public static GameList gameList = new GameList();
     /** Used to look up full names of consoles. ("PS4" -> "PlayStation 4") */
     protected static Map<String, String> systemNameMap;
-
-    VBox gameConsoleList;
+    /** Visual display of gameList */
+    private static VBox gameConsoleList;
 
     public static void main(String[] args) {
         // Automatic VM reset
@@ -91,15 +91,7 @@ public class VirtualGameShelf extends Application {
             if (newGame != null) {
                 // Add title to game list
                 gameList.addGame(newGame);
-
-                // used to display games in gameList
-                gameConsoleList.getChildren().clear();
-
-                TreeView<VBox> treeView = new TreeView<>();
-
-                treeView = displayGameConsoles();
-
-                gameConsoleList.getChildren().add(treeView);
+                displayGameConsoles();
             }
         });
 
@@ -121,7 +113,7 @@ public class VirtualGameShelf extends Application {
     }
 
     // used to display the list of games
-    public TreeView displayGameConsoles() {
+    public static void displayGameConsoles() {
         ArrayList<Game> listOfGames = new ArrayList<>();
         listOfGames = (ArrayList<Game>) gameList.getGame();
 
@@ -152,7 +144,9 @@ public class VirtualGameShelf extends Application {
 
         TreeView<String> treeView = new TreeView<>(rootNode);
 
-        return treeView;
+        // Clear and redraw game list
+        gameConsoleList.getChildren().clear();
+        gameConsoleList.getChildren().add(treeView);
     }
 
     /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
