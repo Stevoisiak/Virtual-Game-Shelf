@@ -74,7 +74,17 @@ public class Game implements Comparable<Game>{
 
     @Override
     public int compareTo(Game game) {
-        return name.compareTo(game.name);
+        String console1 = system;
+    	String console2 = (game.system);
+    	int consoleComp = console1.compareTo(console2);
+
+        if(consoleComp != 0) {
+        	return consoleComp;
+        } else {
+        	String game1 = name.toLowerCase();
+        	String game2 = (game.name.toLowerCase());
+            return game1.compareTo(game2);
+        }
     }
     /* End Override Functions */
 }

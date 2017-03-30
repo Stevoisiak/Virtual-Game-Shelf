@@ -6,8 +6,6 @@ public class GameList {
     private long ID;
     private String name;
 
-    private ArrayList<String> shrunkenConsoleList = new ArrayList<>(); // Small list of consoles (no doubles)
-    private Game[][] sortedGameList; // Count for games per console
     private ArrayList<Game> games = new ArrayList<>();
 
     /* Start Set Functions */
@@ -38,41 +36,6 @@ public class GameList {
     }
     /* End Get Functions */
 
-    public void setShrunkenConsoleList() {
-    	shrunkenConsoleList.clear();
-    	for(int i = 0; i < games.size(); i++) {
-    		shrunkenConsoleList.add(games.get(i).getSystem());
-    	}
-    	Collections.sort(shrunkenConsoleList);
-    	for (int i = 1; i < shrunkenConsoleList.size(); i++) {
-            String a1 = shrunkenConsoleList.get(i);
-            String a2 = shrunkenConsoleList.get(i-1);
-            if (a1.equals(a2)) {
-                shrunkenConsoleList.remove(a1);
-    			i--;
-            }
-        }
-    	setSortedGameList();
-    }
-
-    public void setSortedGameList() {
-    	Collections.sort(games);
-    	for (int i = 0; i < games.size(); i++) {
-            String gameConsole = games.get(i).getSystem();
-    		for(int y = 0; y < shrunkenConsoleList.size(); y++){
-    			if (gameConsole.equals(shrunkenConsoleList.get(y))) {
-    				sortedGameList[y][sortedGameList[y].length - 1] = games.get(i);
-    			}
-    		}
-        }
-    	games.clear();
-    	for (int x = 0; x < shrunkenConsoleList.size(); x++) {
-    		for(int y = 0; y < sortedGameList[x].length; y++) {
-    			games.add(sortedGameList[x][y]);
-    		}
-    	}
-    }
-
     public void addGame(String name, String system, int hours, String completion, int rating) {
         Game game = new Game();
         game.setName(name);
@@ -82,6 +45,6 @@ public class GameList {
         game.setRating(rating);
 
         games.add(game);
-        setShrunkenConsoleList();
+        Collections.sort(games);
     }
 }
