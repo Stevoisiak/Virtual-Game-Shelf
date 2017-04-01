@@ -6,7 +6,7 @@ public class GameList {
     private long ID;
     private String name;
 
-    private ArrayList<Game> games = new ArrayList<>();
+    private ArrayList<Game> gameList = new ArrayList<>();
 
     /* Start Set Functions */
     public void setId(long ID) {
@@ -17,8 +17,8 @@ public class GameList {
         this.name = name;
     }
 
-    public void setGame(ArrayList<Game> games) {
-        this.games = games;
+    public void setGameList(ArrayList<Game> gameList) {
+        this.gameList = gameList;
     }
     /* End Set Functions */
 
@@ -31,19 +31,19 @@ public class GameList {
         return name;
     }
 
-    public List<Game> getGame() {
-        return games;
+    public ArrayList<Game> getGameList() {
+        return gameList;
     }
     /* End Get Functions */
 
     public void addGame(Game game) {
-        games.add(game);
-        Collections.sort(games);
+        gameList.add(game);
+        Collections.sort(gameList);
     }
 
     public void addGame(String name, String system, int hours, String completion, int rating) {
         Game game = new Game(name, system, hours, completion, rating);
-        games.add(game);
-        Collections.sort(games);
+        gameList.add(game);
+        Collections.sort(gameList);
     }
 }
