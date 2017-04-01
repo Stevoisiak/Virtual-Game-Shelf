@@ -17,7 +17,7 @@ public class GameList {
         this.name = name;
     }
 
-    public void setGame(ArrayList<Game> games) {
+    public void setGameList(ArrayList<Game> games) {
         this.games = games;
     }
     /* End Set Functions */
@@ -31,7 +31,7 @@ public class GameList {
         return name;
     }
 
-    public List<Game> getGame() {
+    public ArrayList<Game> getGameList() {
         return games;
     }
     /* End Get Functions */

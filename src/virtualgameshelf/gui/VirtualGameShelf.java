@@ -114,13 +114,10 @@ public class VirtualGameShelf extends Application {
 
     // used to display the list of games
     public static void displayGameConsoles() {
-        ArrayList<Game> listOfGames = new ArrayList<>();
-        listOfGames = (ArrayList<Game>) gameList.getGame();
-
         TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
 
-        for (Game g : listOfGames) {
+        for (Game g : gameList.getGameList()) {
             TreeItem<String> gameLeaf = new TreeItem<>(g.getName() + "\n" + g.getSystem() +
                     "\n" + g.getCompletion() + "\n" + g.getHours() + " hours played \n" + g.getRating() + " star(s)");
             boolean found = false;

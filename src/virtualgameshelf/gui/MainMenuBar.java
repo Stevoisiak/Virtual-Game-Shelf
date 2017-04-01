@@ -7,8 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -74,7 +72,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem menuItemPrintGameList = new MenuItem("Print user game list");
         menuItemPrintGameList.setOnAction(e -> {
-            List <Game> listOfGames = VirtualGameShelf.gameList.getGame();
+            ArrayList<Game> listOfGames = VirtualGameShelf.gameList.getGameList();
             // TODO: Create method for GameList.print()
             System.out.println("Game List:");
             if (listOfGames != null && !listOfGames.isEmpty()) {
