@@ -85,11 +85,7 @@ public class MainMenuBar extends MenuBar {
             if (listOfGames != null && !listOfGames.isEmpty()) {
                 for (Game g : listOfGames) {
                     System.out.print("\t");
-                    System.out.println(g.getName()    + ", " +
-                            g.getSystem()             + ", " +
-                            g.getCompletion()         + ", " +
-                            g.getHours() + " hour(s)" + ", " +
-                            g.getRating() + " star(s)");
+                    System.out.println(g.toString());
                 }
             } else {
                 System.out.println("\t<empty game list>");
