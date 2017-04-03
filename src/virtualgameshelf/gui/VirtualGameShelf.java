@@ -62,7 +62,7 @@ public class VirtualGameShelf extends Application {
         mainScene.getStylesheets().add("stylesheet.css");
 
         // top menu bar
-        MainMenuBar menuBar = new MainMenuBar();
+        MainMenuBar menuBar = new MainMenuBar(mainStage);
         root.setTop(menuBar);
 
         // custom code below ---------------------------------------

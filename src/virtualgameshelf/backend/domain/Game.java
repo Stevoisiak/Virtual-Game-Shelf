@@ -89,6 +89,13 @@ public class Game implements Comparable<Game>{
                 this.rating     + " star" + (this.rating == 1 ? "" : "s");
     }
 
+    /** Returns an array containing game information */
+    public String[] toStringArray() {
+        String[] stringArray = { this.name, this.system, Integer.toString(this.hours), this.completion,
+                Integer.toString(this.rating) };
+        return stringArray;
+    }
+
     /** Sorts by system, then by name */
     @Override
     public int compareTo(Game game) {
