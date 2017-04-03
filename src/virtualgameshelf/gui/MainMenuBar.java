@@ -2,11 +2,19 @@ package virtualgameshelf.gui;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -17,7 +25,6 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
-import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class MainMenuBar extends MenuBar {
     public MainMenuBar() {
@@ -95,22 +102,33 @@ public class MainMenuBar extends MenuBar {
             String inputFilePath = "resources/system_list.csv";
             String outputFilePath = "bin/system_list_output.csv";
 
+            // Read arrayList from file
             System.out.println("Importing from " + inputFilePath);
-            ArrayList<String[]> arrayList = CSVReader.readFromFile(inputFilePath, ","); // TODO: Move into `config` folder
+            List<String[]> arrayList = null;
+            try {
+                CSVReader reader = new CSVReader(new FileReader(inputFilePath));
+                arrayList = reader.readAll();
+                reader.close();
+            } catch (FileNotFoundException er) {
+                er.printStackTrace();
+            } catch (IOException er) {
+                er.printStackTrace();
+            }
 
-            // Debug: Output array to screen
+            // Output arrayList to screen
             for (String[] s : arrayList) {
                System.out.println(Arrays.toString(s));
             }
 
+            // Output arrayList to file
             System.out.println("Exporting to " + outputFilePath);
-            if (CSVReader.saveToFile(outputFilePath, arrayList, ",") == true) {
-                System.out.println("Test successful!");
-                try {
-                    Desktop.getDesktop().open(new File(outputFilePath));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+            try {
+                CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath));
+                writer.writeAll(arrayList);
+                writer.close();
+                Desktop.getDesktop().open(new File(outputFilePath));
+            } catch (IOException er) {
+                er.printStackTrace();
             }
         });
         menuDebug.getItems().add(menuItemOpenSystemList);
