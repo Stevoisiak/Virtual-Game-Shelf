@@ -1,8 +1,13 @@
 package virtualgameshelf.gui;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.opencsv.CSVReader;
 
 import javafx.application.*;
 import javafx.beans.value.*;
@@ -14,7 +19,6 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
-import virtualgameshelf.backend.fileIO.CSVReader;
 
 public class VirtualGameShelf extends Application {
     /** User's complete list of games. Static to allow for global access */
@@ -149,13 +153,28 @@ public class VirtualGameShelf extends Application {
     /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
     private void initializeSystemNameMap() {
         systemNameMap = new LinkedHashMap<>();
-        ArrayList<String[]> systemList = CSVReader.readFromFile("resources/system_list.csv", ",");
-        for (String[] s : systemList) {
-            String name = s[0];
-            String displayName = s[1];
-            if (name != null && !name.equals("name")
-                    && displayName != null && !displayName.equals("displayName")) {
-                systemNameMap.put(name, displayName);
+        List<String[]> systemList = null;
+
+        // Read in systemList from file
+        try {
+            CSVReader reader = new CSVReader(new FileReader("resources/system_list.csv"));
+            systemList = reader.readAll();
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Populate systemName hash map
+        if (systemList != null) {
+            for (String[] s : systemList) {
+                String name = s[0];
+                String displayName = s[1];
+                if (name != null && !name.equals("name")
+                        && displayName != null && !displayName.equals("displayName")) {
+                    systemNameMap.put(name, displayName);
+                }
             }
         }
     }

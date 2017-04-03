@@ -5,19 +5,22 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="Virtual-Game-Shelf">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../eclipse/java-neon/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
     <path id="Virtual-Game-Shelf.classpath">
         <pathelement location="bin"/>
+        <pathelement location="externals/opencsv-3.9.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir=".">
-                <exclude name="**/*.launch"/>
-                <exclude name="**/*.xtend"/>
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="resources">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -31,26 +34,19 @@
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="."/>
+            <src path="src"/>
+            <src path="resources"/>
             <classpath refid="Virtual-Game-Shelf.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
+    <target name="JavaFX-Online-Chess">
+        <java classname="virtualgameshelf.gui.VirtualGameShelf" failonerror="true" fork="yes">
+            <classpath refid="Virtual-Game-Shelf.classpath"/>
+        </java>
     </target>
     <target name="VirtualGameShelf">
-        <java classname="src.VirtualGameShelf" failonerror="true" fork="yes">
+        <java classname="virtualgameshelf.gui.VirtualGameShelf" failonerror="true" fork="yes">
             <classpath refid="Virtual-Game-Shelf.classpath"/>
         </java>
     </target>
