@@ -33,17 +33,10 @@ public class VirtualGameShelf extends Application {
     private static VBox gameListVBox;
 
     public static void main(String[] args) {
-        // Automatic VM reset
-        try {
-            // Bugfix: Prevents JavaFX ComboBox freezing on Windows 10
-            // touchscreen computers (http://stackoverflow.com/a/32597281)
-            System.setProperty("glass.accessible.force", "false");
-            launch(args);
-            System.exit(0);
-        } catch (Exception error) {
-            error.printStackTrace();
-            System.exit(0);
-        }
+        // Bugfix: Prevents JavaFX ComboBox freezing on Windows 10
+        // touchscreen computers (http://stackoverflow.com/a/32597281)
+        System.setProperty("glass.accessible.force", "false");
+        launch(args);
     }
 
     @Override
