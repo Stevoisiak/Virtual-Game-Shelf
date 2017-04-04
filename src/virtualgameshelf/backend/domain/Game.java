@@ -86,7 +86,11 @@ public class Game implements Comparable<Game>{
     /* Start Override Functions */
     @Override
     public String toString() {
-        return name;
+        return this.name        + ", " +
+                this.system     + ", " +
+                this.hours      + " hour" + (this.hours == 1 ? "" : "s") + ", " +
+                this.completion + ", " +
+                this.rating     + " star" + (this.rating == 1 ? "" : "s");
     }
 
     /** Sorts by system, then by name */
