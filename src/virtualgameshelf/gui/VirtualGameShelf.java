@@ -3,9 +3,11 @@ package virtualgameshelf.gui;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.opencsv.CSVReader;
 
@@ -14,6 +16,8 @@ import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
@@ -136,7 +140,7 @@ public class VirtualGameShelf extends Application {
                 }
             }
 
-            if (!found){
+            if (!found) {
                 TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
@@ -144,6 +148,15 @@ public class VirtualGameShelf extends Application {
         }
 
         TreeView<String> treeView = new TreeView<>(rootNode);
+
+        treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
+            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+
+            // Ensures 'edit game' prompt only shows for games
+            if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
+                displayEditGameAlert(selectedItem);
+            }
+        });
 
         // Clear and redraw game list
         gameListVBox.getChildren().clear();
@@ -185,5 +198,60 @@ public class VirtualGameShelf extends Application {
             system = systemNameMap.get(system);
         }
         return system;
+    }
+
+    /** Display option to edit or delete a game */
+    public static void displayEditGameAlert(TreeItem<String> selectedItem) {
+        int index = -1;
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText(null); // TODO: Use game title for header
+        alert.setContentText("Would you like to:");
+
+        ButtonType deleteGame = new ButtonType("Delete Game");
+        ButtonType editGame = new ButtonType("Edit Game");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(deleteGame, editGame, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == deleteGame){
+            index = getGameIndex(selectedItem);
+            gameList.getGameList().remove(index);
+            displayGameConsoles();
+        }
+        else if (result.get() == editGame) {
+            index = getGameIndex(selectedItem);
+            ArrayList<Game> tempGameList = (ArrayList<Game>) gameList.getGameList().clone();
+
+            NewGameWindow newGameWindow = new NewGameWindow(tempGameList.get(index) );
+            Game newGame = newGameWindow.showAndAddGame();
+            if (newGame != null) {
+                // Add title to game list
+                gameList.getGameList().remove(index);
+                gameList.addGame(newGame);
+                displayGameConsoles();
+            }
+        }
+        else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+    /** Takes TreeItem and returns its location in GameList as an int */
+    public static int getGameIndex(TreeItem<String> selectedItem) {
+        int index = -1;
+
+        for (Game g : gameList.getGameList()) {
+            if (selectedItem.getValue().equals(g.gameString())) {
+                for (int i = 0; i < gameList.getGameList().size(); i++) {
+                    if (g.gameString().equals(gameList.getGameList().get(i).gameString())) {
+                        index = i;
+                    }
+                }
+            }
+        }
+
+        return index;
     }
 }
