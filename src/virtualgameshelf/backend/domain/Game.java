@@ -79,6 +79,7 @@ public class Game implements Comparable<Game>{
     }
     /* End Get Functions */
 
+    /** Used by VirtualGameShelf.getGameIndex() to locate Game in GameList */
     public String gameString() {
         return name + "\n" + system + "\n" + completion + "\n" + hours + " hours played \n" + rating + " star(s)";
     }

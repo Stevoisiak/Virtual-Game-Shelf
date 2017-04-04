@@ -140,7 +140,7 @@ public class VirtualGameShelf extends Application {
                 }
             }
 
-            if (!found){
+            if (!found) {
                 TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
@@ -149,15 +149,14 @@ public class VirtualGameShelf extends Application {
 
         TreeView<String> treeView = new TreeView<>(rootNode);
 
-        treeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener<Object>() {
-            @Override public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-                TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+        treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
+            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
 
-                if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
-                    displayEditGameAlert(selectedItem);
-                }
+            // Ensures 'edit game' prompt only shows for games
+            if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
+                displayEditGameAlert(selectedItem);
             }
-          });
+        });
 
         // Clear and redraw game list
         gameListVBox.getChildren().clear();
@@ -201,6 +200,7 @@ public class VirtualGameShelf extends Application {
         return system;
     }
 
+    /** Display option to edit or delete a game */
     public static void displayEditGameAlert(TreeItem<String> selectedItem) {
         int index = -1;
 
@@ -238,7 +238,7 @@ public class VirtualGameShelf extends Application {
         }
     }
 
-    /** Takes displayed TreeItem and returns its location in GameList as an int */
+    /** Takes TreeItem and returns its location in GameList as an int */
     public static int getGameIndex(TreeItem<String> selectedItem) {
         int index = -1;
 
