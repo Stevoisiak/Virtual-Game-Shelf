@@ -148,7 +148,7 @@ public class VirtualGameShelf extends Application {
             @Override public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
                 TreeItem<String> selectedItem = (TreeItem<String>) newValue;
 
-                if (selectedItem.isLeaf()) {
+                if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
                     Alert alert = displayTreeMenu(selectedItem);
                 }
             }
