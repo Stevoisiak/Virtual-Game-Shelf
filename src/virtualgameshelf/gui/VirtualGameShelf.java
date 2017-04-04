@@ -149,7 +149,7 @@ public class VirtualGameShelf extends Application {
                 TreeItem<String> selectedItem = (TreeItem<String>) newValue;
 
                 if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
-                    Alert alert = displayTreeMenu(selectedItem);
+                    displayEditGameAlert(selectedItem);
                 }
             }
           });
@@ -180,12 +180,12 @@ public class VirtualGameShelf extends Application {
         }
         return system;
     }
-    //Alert alert = new Alert(AlertType.CONFIRMATION);
-    public static Alert displayTreeMenu(TreeItem<String> selectedItem) {
+
+    public static void displayEditGameAlert(TreeItem<String> selectedItem) {
         int index = -1;
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
+        alert.setHeaderText(null); // TODO: Use game title for header
         alert.setContentText("Would you like to:");
 
         ButtonType deleteGame = new ButtonType("Delete Game");
@@ -196,15 +196,15 @@ public class VirtualGameShelf extends Application {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == deleteGame){
-            index = getIndex(selectedItem);
+            index = getGameIndex(selectedItem);
             gameList.getGameList().remove(index);
             displayGameConsoles();
         }
         else if (result.get() == editGame) {
-            index = getIndex(selectedItem);
-            ArrayList<Game> tempgameList = (ArrayList<Game>) gameList.getGameList().clone();
+            index = getGameIndex(selectedItem);
+            ArrayList<Game> tempGameList = (ArrayList<Game>) gameList.getGameList().clone();
 
-            NewGameWindow newGameWindow = new NewGameWindow(tempgameList.get(index) );
+            NewGameWindow newGameWindow = new NewGameWindow(tempGameList.get(index) );
             Game newGame = newGameWindow.showAndAddGame();
             if (newGame != null) {
                 // Add title to game list
@@ -216,11 +216,10 @@ public class VirtualGameShelf extends Application {
         else {
             // ... user chose CANCEL or closed the dialog
         }
-
-        return alert;
     }
 
-    public static int getIndex(TreeItem<String> selectedItem) {
+    /** Takes displayed TreeItem and returns its location in GameList as an int */
+    public static int getGameIndex(TreeItem<String> selectedItem) {
         int index = -1;
 
         for (Game g : gameList.getGameList()) {
