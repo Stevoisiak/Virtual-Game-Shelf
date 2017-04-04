@@ -149,8 +149,8 @@ public class VirtualGameShelf extends Application {
 
         TreeView<String> treeView = new TreeView<>(rootNode);
 
-        treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Object>) (observable, oldValue, newValue) -> {
-            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+        treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<TreeItem<String>>) (observable, oldValue, newValue) -> {
+            TreeItem<String> selectedItem = newValue;
 
             // Ensures 'edit game' prompt only shows for games
             if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
