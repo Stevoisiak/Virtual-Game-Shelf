@@ -111,9 +111,9 @@ public class VirtualGameShelf extends Application {
         // rotates the image 45 degrees when the menu button is "active"
         addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
             if (newValue) {
-                addGameButton.setRotate(addGameButton.getRotate() + 45);
+                addGameButton.setRotate(45.0);
             } else {
-                addGameButton.setRotate(addGameButton.getRotate() + 45);
+                addGameButton.setRotate(0.0);
             }
         });
 
