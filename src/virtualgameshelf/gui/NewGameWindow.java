@@ -130,7 +130,7 @@ public class NewGameWindow extends Stage {
             starRow.getChildren().add(starButtons[i]);
         }
 
-        if (game != null) {
+        if (game.getName() != null) {
             // Fill every field with game info if editing old game
             nameField.setText(game.getName());
             systemChooser.setValue(game.getSystem());
@@ -141,7 +141,7 @@ public class NewGameWindow extends Stage {
                     rb.setSelected(true);
                 }
             }
-            }
+        }
 
         // Create entry with entered game data
         addButton = new Button("Add");
