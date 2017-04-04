@@ -20,6 +20,10 @@ public class NewGameWindow extends Stage {
     private Game newGame;
 
     public NewGameWindow() {
+        this(new Game());
+    }
+
+    public NewGameWindow(Game game) {
         // tell stage it is meant to pop-up (Modal)
         this.initModality(Modality.APPLICATION_MODAL);
 
@@ -125,6 +129,19 @@ public class NewGameWindow extends Stage {
             starButtons[i].setToggleGroup(starGroup);
             starRow.getChildren().add(starButtons[i]);
         }
+
+        if (game != null) {
+            // Fill every field with game info if editing old game
+            nameField.setText(game.getName());
+            systemChooser.setValue(game.getSystem());
+            completionChooser.setValue(game.getCompletion());
+            hoursField.setText("" + game.getHours());
+            for (RadioButton rb : starButtons) {
+                if ((int)rb.getUserData() == game.getRating()) {
+                    rb.setSelected(true);
+                }
+            }
+            }
 
         // Create entry with entered game data
         addButton = new Button("Add");
