@@ -11,6 +11,7 @@
     <path id="Virtual-Game-Shelf.classpath">
         <pathelement location="bin"/>
         <pathelement location="externals/opencsv-3.9.jar"/>
+        <pathelement location="externals/controlsfx-8.40.12.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -40,11 +41,6 @@
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target name="JavaFX-Online-Chess">
-        <java classname="virtualgameshelf.gui.VirtualGameShelf" failonerror="true" fork="yes">
-            <classpath refid="Virtual-Game-Shelf.classpath"/>
-        </java>
-    </target>
     <target name="VirtualGameShelf">
         <java classname="virtualgameshelf.gui.VirtualGameShelf" failonerror="true" fork="yes">
             <classpath refid="Virtual-Game-Shelf.classpath"/>
