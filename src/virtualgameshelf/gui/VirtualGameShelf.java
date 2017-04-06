@@ -104,16 +104,16 @@ public class VirtualGameShelf extends Application {
         // rotates the image 45 degrees when the menu button is "active"
         addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
             if (newValue) {
-                addGameButton.setRotate(addGameButton.getRotate() + 45);
+                addGameButton.setRotate(45.0);
             } else {
-                addGameButton.setRotate(addGameButton.getRotate() + 45);
+                addGameButton.setRotate(0.0);
             }
         });
 
         return addGameButton;
     }
 
-    // used to display the list of games
+    /** Used to display the list of games */
     public static void displayGameConsoles() {
         TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
@@ -185,12 +185,17 @@ public class VirtualGameShelf extends Application {
         }
     }
 
-    /** if available, return system's full display name */
+    /**
+     * Returns game system's full display name
+     * @param  system Abbreviated system name. [ie: PS4]
+     * @return        Full system display name. [ie: PlayStation 4].
+     */
     public static String getSystemDisplayName(String system) {
         if (systemNameMap.containsKey(system)) {
-            system = systemNameMap.get(system);
+            return systemNameMap.get(system);
+        } else {
+            return system;
         }
-        return system;
     }
 
     /** Display option to edit or delete a game */
