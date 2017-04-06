@@ -1,5 +1,3 @@
-<!-- Example build file via Google: https://git.io/vSeO3 -->
-<!-- Example via Stack Overflow: http://stackoverflow.com/a/9875273/3357935 -->
 <project name="Virtual-Game-Shelf" default="makejar" basedir=".">
     <description>
         Ant build file for Virtual Game Shelf
@@ -9,7 +7,12 @@
     <property name="build.dir"     location="bin"/>
     <property name="dist.dir"      location="dist"/>
     <property name="resources.dir" location="resources"/>
-    <property name="main-class"    value="virtualgameshelf.gui.VirtualGameShelf"/>
+    <property name="externals.dir" location="externals"/>
+    <property name="main.class"    value="virtualgameshelf.gui.VirtualGameShelf"/>
+
+    <path id="classpath">
+        <fileset dir="${externals.dir}" includes="**/*.jar"/>
+    </path>
 
     <target name="clean" description="delete old files">
         <delete dir="${build.dir}"/>
@@ -18,7 +21,7 @@
 
     <target name="build" description="build class files" depends="clean">
         <mkdir dir="${build.dir}"/> <!-- create build directory -->
-        <javac srcdir="${src.dir}" destdir="${build.dir}"/> <!-- Compile code into ${build} -->
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath"/> <!-- Compile code into ${build} -->
     </target>
 
     <target name="makejar" depends="build">
@@ -27,8 +30,9 @@
             <fileset dir="${src.dir}"/>
             <fileset dir="${resources.dir}"/>
             <manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Main-Class" value="${main.class}"/>
             </manifest>
+            <zipgroupfileset dir="${externals.dir}" includes="*.jar"/><!-- combine external .jar dependencies -->
         </jar>
     </target>
 </project>
