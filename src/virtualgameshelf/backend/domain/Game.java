@@ -23,62 +23,6 @@ public class Game implements Comparable<Game>{
         this.rating = rating;
     }
 
-    /* Start Set Functions */
-    public void setId(long ID) {
-        this.ID = ID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSystem(String system) {
-        this.system = system;
-    }
-
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-    public void setCompletion(String completion) {
-        this.completion = completion;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public void setExcess(String excess) {
-        this.excess = excess;
-    }
-    /* End Set Functions */
-
-    /* Start Get Functions */
-    public long getId() {
-        return ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSystem() {
-        return system;
-    }
-
-    public int getHours() {
-        return hours;
-    }
-
-    public String getCompletion() {
-        return completion;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-    /* End Get Functions */
-
     /** Used by VirtualGameShelf.getGameIndex() to locate Game in GameList */
     public String gameString() {
         return name + "\n" + system + "\n" + completion + "\n" + hours + " hours played \n" + rating + " star(s)";
@@ -117,4 +61,24 @@ public class Game implements Comparable<Game>{
         }
     }
     /* End Override Functions */
+
+    /* Start Set Functions */
+    public void setId(long ID) { this.ID = ID; }
+    public void setName(String name) { this.name = name; }
+    public void setSystem(String system) { this.system = system; }
+    public void setHours(int hours) { this.hours = hours; }
+    public void setCompletion(String completion) { this.completion = completion; }
+    public void setRating(int rating) { this.rating = rating; }
+    public void setExcess(String excess) { this.excess = excess; }
+    /* End Set Functions */
+
+    /* Start Get Functions */
+    public long getId() { return ID; }
+    public String getName() { return name; }
+    public String getSystem() { return system; }
+    public int getHours() { return hours; }
+    public String getCompletion() { return completion; }
+    public int getRating() { return rating; }
+    /* End Get Functions */
+
 }
