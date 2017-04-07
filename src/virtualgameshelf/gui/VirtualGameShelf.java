@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,5 +249,11 @@ public class VirtualGameShelf extends Application {
         }
 
         return index;
+    }
+
+    public static void setGameList(GameList newGameList) {
+        gameList = newGameList;
+        Collections.sort(gameList.getGameList());
+        displayGameConsoles();
     }
 }
