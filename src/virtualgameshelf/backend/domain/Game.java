@@ -1,6 +1,7 @@
 package virtualgameshelf.backend.domain;
 
 public class Game implements Comparable<Game>{
+    // TODO: Possibly use @CsvBindByName? (http://stackoverflow.com/q/42856200/3357935)
     private long ID; // AutoSet / Not Required
     private String name; // REQUIRED
     private String system; // REQUIRED
@@ -61,6 +62,12 @@ public class Game implements Comparable<Game>{
         }
     }
     /* End Override Functions */
+
+    /**
+     * Fetch column labels for saving Game to file.
+     * @return Stored data fields ("name", "system", "hours", etc.)
+     */
+    public static String[] getColumnHeaders() { return new String[]{"name", "system", "hours", "completion", "rating"}; }
 
     /* Start Set Functions */
     public void setId(long ID) { this.ID = ID; }

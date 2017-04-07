@@ -7,6 +7,14 @@ public class GameList {
     private String name;
     private ArrayList<Game> gameList = new ArrayList<>();
 
+    public GameList() {
+
+    }
+
+    public GameList(ArrayList<Game> gameList) {
+        this.gameList = gameList;
+    }
+
     public void addGame(Game game) {
         gameList.add(game);
         Collections.sort(gameList);
