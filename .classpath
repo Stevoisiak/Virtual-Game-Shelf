@@ -3,7 +3,15 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="externals/opencsv-3.9.jar"/>
-	<classpathentry kind="lib" path="externals/controlsfx-8.40.12.jar"/>
+	<classpathentry kind="lib" path="externals/opencsv-3.9.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://opencsv.sourceforge.net/apidocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="externals/controlsfx-8.40.12.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://controlsfx.bitbucket.io/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
