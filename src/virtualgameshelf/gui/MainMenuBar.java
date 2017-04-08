@@ -70,76 +70,22 @@ public class MainMenuBar extends MenuBar {
         this.getMenus().add(menuHelp);
 
         MenuItem menuViewOnGithub = new MenuItem("View on GitHub");
-        menuViewOnGithub.setOnAction(e -> {
-            try {
-                URI githubURI = new URI("https://github.com/Stevoisiak/Virtual-Game-Shelf");
-                Desktop.getDesktop().browse(githubURI);
-            } catch (URISyntaxException | IOException ex) {
-                ex.printStackTrace();
-            }
-        });
+        menuViewOnGithub.setOnAction(e -> onViewGitHub());
         menuHelp.getItems().add(menuViewOnGithub);
 
         MenuItem menuItemAbout = new MenuItem("About Game Shelf");
-        menuItemAbout.setOnAction(e -> {
-            AboutGameShelfWindow aboutWindow = new AboutGameShelfWindow();
-            aboutWindow.showAndWait();
-        });
+        menuItemAbout.setOnAction(e -> onAboutGameShelf());
         menuHelp.getItems().add(menuItemAbout);
 
         Menu menuDebug = new Menu("Debug");
         this.getMenus().add(menuDebug);
 
-        MenuItem menuItemPrintGameList = new MenuItem("Print user game list");
-        menuItemPrintGameList.setOnAction(e -> {
-            ArrayList<Game> gameList = VirtualGameShelf.gameList.getGameList();
-            // TODO: Create method for GameList.print()
-            System.out.println("Game List:");
-            if (gameList != null && !gameList.isEmpty()) {
-                for (Game g : gameList) {
-                    System.out.print("\t");
-                    System.out.println(g.toString());
-                }
-            } else {
-                System.out.println("\t<empty game list>");
-            }
-        });
+        MenuItem menuItemPrintGameList = new MenuItem("Print current game list");
+        menuItemPrintGameList.setOnAction(e -> onPrintCurrentGameList());
         menuDebug.getItems().add(menuItemPrintGameList);
 
-        MenuItem menuItemOpenSystemList = new MenuItem("Load/Save system_list.csv");
-        menuItemOpenSystemList.setOnAction(e -> {
-            String inputFilePath = "resources/system_list.csv";
-            String outputFilePath = "bin/system_list_output.csv";
-
-            // Read arrayList from file
-            System.out.println("Importing from " + inputFilePath);
-            List<String[]> arrayList = null;
-            try {
-                CSVReader reader = new CSVReader(new FileReader(inputFilePath));
-                arrayList = reader.readAll();
-                reader.close();
-            } catch (FileNotFoundException er) {
-                er.printStackTrace();
-            } catch (IOException er) {
-                er.printStackTrace();
-            }
-
-            // Output arrayList to screen
-            for (String[] s : arrayList) {
-               System.out.println(Arrays.toString(s));
-            }
-
-            // Output arrayList to file
-            System.out.println("Exporting to " + outputFilePath);
-            try {
-                CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath));
-                writer.writeAll(arrayList);
-                writer.close();
-                Desktop.getDesktop().open(new File(outputFilePath));
-            } catch (IOException er) {
-                er.printStackTrace();
-            }
-        });
+        MenuItem menuItemOpenSystemList = new MenuItem("Import/Export system_list.csv");
+        menuItemOpenSystemList.setOnAction(e -> onImportExportSystemList());
         menuDebug.getItems().add(menuItemOpenSystemList);
     }
 
@@ -261,6 +207,71 @@ public class MainMenuBar extends MenuBar {
             } catch (IOException er) {
                 er.printStackTrace();
             }
+        }
+    }
+
+    /** View project source code on GitHub. */
+    public static void onViewGitHub() {
+        try {
+            URI githubURI = new URI("https://github.com/Stevoisiak/Virtual-Game-Shelf");
+            Desktop.getDesktop().browse(githubURI);
+        } catch (URISyntaxException | IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /** Display info about Game Shelf. */
+    public static void onAboutGameShelf() {
+        AboutGameShelfWindow aboutWindow = new AboutGameShelfWindow();
+        aboutWindow.showAndWait();
+    }
+
+    /** Debug method to print all games from the current game list. */
+    public static void onPrintCurrentGameList() {
+        ArrayList<Game> gameList = VirtualGameShelf.gameList.getGameList();
+        System.out.println("Game List:");
+        if (gameList != null && !gameList.isEmpty()) {
+            for (Game g : gameList) {
+                System.out.print("\t");
+                System.out.println(g.toString());
+            }
+        } else {
+            System.out.println("\t<empty game list>");
+        }
+    }
+
+    /** Debug method for importing/exporting system list from .csv file. */
+    public static void onImportExportSystemList() {
+        String inputFilePath = "resources/system_list.csv";
+        String outputFilePath = "bin/system_list_output.csv";
+
+        // Read arrayList from file
+        System.out.println("Importing from " + inputFilePath);
+        List<String[]> arrayList = null;
+        try {
+            CSVReader reader = new CSVReader(new FileReader(inputFilePath));
+            arrayList = reader.readAll();
+            reader.close();
+        } catch (FileNotFoundException er) {
+            er.printStackTrace();
+        } catch (IOException er) {
+            er.printStackTrace();
+        }
+
+        // Output arrayList to screen
+        for (String[] s : arrayList) {
+           System.out.println(Arrays.toString(s));
+        }
+
+        // Output arrayList to file
+        System.out.println("Exporting to " + outputFilePath);
+        try {
+            CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath));
+            writer.writeAll(arrayList);
+            writer.close();
+            Desktop.getDesktop().open(new File(outputFilePath));
+        } catch (IOException er) {
+            er.printStackTrace();
         }
     }
 
