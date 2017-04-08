@@ -24,7 +24,10 @@ public class Game implements Comparable<Game>{
         this.rating = rating;
     }
 
-    /** Used by VirtualGameShelf.getGameIndex() to locate Game in GameList */
+    /**
+     * Used by VirtualGameShelf.getGameIndex() to locate {@link Game} in {@link GameList}.
+     * @return string of game info separated by newline characters.
+     */
     public String gameString() {
         return name + "\n" + system + "\n" + completion + "\n" + hours + " hours played \n" + rating + " star(s)";
     }
@@ -39,14 +42,26 @@ public class Game implements Comparable<Game>{
                 this.rating     + " star" + (this.rating == 1 ? "" : "s");
     }
 
-    /** Returns an array containing game information */
+    /**
+     * Returns a string array representation of the object.
+     * @return a string array representation of the object.
+     */
     public String[] toStringArray() {
         String[] stringArray = { this.name, this.system, Integer.toString(this.hours), this.completion,
                 Integer.toString(this.rating) };
         return stringArray;
     }
 
-    /** Sorts by system, then by name */
+    /**
+     * Compares this game with another game alphabetically. Sorts by system,
+     * then by name.
+     *
+     * @param game
+     *            the game to be compared.
+     * @return the value 0 if games are alphabetically equal; a value less than
+     *         0 if argument is alphabetically after this game; and a value
+     *         greater than 0 if argument is alphabetically before this game.
+     */
     @Override
     public int compareTo(Game game) {
         String system1 = this.system;
@@ -64,8 +79,8 @@ public class Game implements Comparable<Game>{
     /* End Override Functions */
 
     /**
-     * Fetch column labels for saving Game to file.
-     * @return Stored data fields ("name", "system", "hours", etc.)
+     * Fetch column labels for saving game to file. ("name", "system", "hours", etc.)
+     * @return stored data fields.
      */
     public static String[] getColumnHeaders() { return new String[]{"name", "system", "hours", "completion", "rating"}; }
 
