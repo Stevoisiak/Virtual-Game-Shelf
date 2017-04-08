@@ -92,7 +92,7 @@ public class MainMenuBar extends MenuBar {
     /** Clears current gameList. */
     public void onNew() {
         VirtualGameShelf.gameList = new GameList();
-        VirtualGameShelf.displayGameConsoles();
+        VirtualGameShelf.refreshGameListDisplay();
     }
 
     /** Display prompt to load gameList from file. */
