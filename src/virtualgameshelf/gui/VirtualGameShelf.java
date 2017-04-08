@@ -90,7 +90,7 @@ public class VirtualGameShelf extends Application {
             if (newGame != null) {
                 // Add title to game list
                 gameList.addGame(newGame);
-                displayGameConsoles();
+                refreshGameListDisplay();
             }
         });
 
@@ -111,8 +111,11 @@ public class VirtualGameShelf extends Application {
         return addGameButton;
     }
 
-    /** Used to display the list of games */
-    public static void displayGameConsoles() {
+    /**
+     * Refresh the displayed list of games.
+     * Should be called whenever gameList has been modified.
+     */
+    public static void refreshGameListDisplay() {
         TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
 
@@ -214,7 +217,7 @@ public class VirtualGameShelf extends Application {
         if (result.get() == deleteGame){
             index = getGameIndex(selectedItem);
             gameList.getGameList().remove(index);
-            displayGameConsoles();
+            refreshGameListDisplay();
         }
         else if (result.get() == editGame) {
             index = getGameIndex(selectedItem);
@@ -226,7 +229,7 @@ public class VirtualGameShelf extends Application {
                 // Add title to game list
                 gameList.getGameList().remove(index);
                 gameList.addGame(newGame);
-                displayGameConsoles();
+                refreshGameListDisplay();
             }
         }
         else {
@@ -254,6 +257,6 @@ public class VirtualGameShelf extends Application {
     public static void setGameList(GameList newGameList) {
         gameList = newGameList;
         Collections.sort(gameList.getGameList());
-        displayGameConsoles();
+        refreshGameListDisplay();
     }
 }
