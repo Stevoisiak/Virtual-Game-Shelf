@@ -27,7 +27,7 @@ import virtualgameshelf.backend.domain.GameList;
 
 public class VirtualGameShelf extends Application {
     /** User's complete list of games. Static to allow for global access. */
-    public static GameList gameList = new GameList();
+    public static GameList gameList;
     /** Used to look up full names of consoles. ("PS4" -&gt; "PlayStation 4") */
     protected static Map<String, String> systemNameMap;
     /** Visual display of {@link #gameList}. */
@@ -39,6 +39,7 @@ public class VirtualGameShelf extends Application {
 
     @Override
     public void start(Stage mainStage) throws Exception {
+        gameList = new GameList();
         mainStage.setTitle("Virtual Game Shelf");
 
         // add application icon
@@ -69,6 +70,7 @@ public class VirtualGameShelf extends Application {
         gameListVBox.setSpacing(16);
         gameListVBox.setAlignment( Pos.CENTER );
         scroll.setContent(gameListVBox);
+        refreshGameList();
 
         // used to add games to the library
         MenuButton addGameButton = createAddGameButton();
@@ -97,7 +99,7 @@ public class VirtualGameShelf extends Application {
             if (newGame != null) {
                 // Add title to game list
                 gameList.addGame(newGame);
-                refreshGameListDisplay();
+                refreshGameList();
             }
         });
 
@@ -122,7 +124,7 @@ public class VirtualGameShelf extends Application {
      * Refresh the displayed list of games.
      * Should be called whenever gameList has been modified.
      */
-    public static void refreshGameListDisplay() {
+    public static void refreshGameList() {
         TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
 
@@ -234,7 +236,7 @@ public class VirtualGameShelf extends Application {
         if (result.get() == deleteGame){
             index = getGameIndex(selectedItem);
             gameList.getGameList().remove(index);
-            refreshGameListDisplay();
+            refreshGameList();
         }
         else if (result.get() == editGame) {
             index = getGameIndex(selectedItem);
@@ -246,7 +248,7 @@ public class VirtualGameShelf extends Application {
                 // Add title to game list
                 gameList.getGameList().remove(index);
                 gameList.addGame(newGame);
-                refreshGameListDisplay();
+                refreshGameList();
             }
         }
         else {
@@ -279,6 +281,6 @@ public class VirtualGameShelf extends Application {
     public static void setGameList(GameList newGameList) {
         gameList = newGameList;
         Collections.sort(gameList.getGameList());
-        refreshGameListDisplay();
+        refreshGameList();
     }
 }
