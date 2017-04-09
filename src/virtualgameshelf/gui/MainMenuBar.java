@@ -29,6 +29,7 @@ import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
 
 public class MainMenuBar extends MenuBar {
+    /** Default folder for saving user data and settings */
     private static final String userDataDirName = "user/";
     private final Stage mainStage;
     private final FileChooser fileChooser;
@@ -276,8 +277,10 @@ public class MainMenuBar extends MenuBar {
     }
 
     /**
-     * Configure window for saving/opening GameList from file.
-     * @param fileChooser FileChooser you want modified.
+     * Configure FileChooser window for saving/opening GameList from file.
+     *
+     * @param fileChooser
+     *            FileChooser you want modified.
      */
     private static void configureFileChooser(FileChooser fileChooser) {
         // set initial directory

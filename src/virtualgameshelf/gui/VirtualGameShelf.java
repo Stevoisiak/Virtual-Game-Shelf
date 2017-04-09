@@ -26,11 +26,11 @@ import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
 
 public class VirtualGameShelf extends Application {
-    /** User's complete list of games. Static to allow for global access */
+    /** User's complete list of games. Static to allow for global access. */
     public static GameList gameList = new GameList();
-    /** Used to look up full names of consoles. ("PS4" -> "PlayStation 4") */
+    /** Used to look up full names of consoles. ("PS4" -&gt; "PlayStation 4") */
     protected static Map<String, String> systemNameMap;
-    /** Visual display of gameList */
+    /** Visual display of {@link #gameList}. */
     private static VBox gameListVBox;
 
     public static void main(String[] args) {
@@ -79,6 +79,13 @@ public class VirtualGameShelf extends Application {
         mainStage.show();
     }
 
+    /**
+     * Creates button for adding new games.
+     * <p>
+     * Includes options for manually adding games or importing from Steam.
+     *
+     * @return button for adding new games.
+     */
     public MenuButton createAddGameButton() {
         MenuButton addGameButton = new MenuButton(null, new ImageView("icons/add.png"));
         addGameButton.setPopupSide(Side.TOP);
@@ -157,7 +164,7 @@ public class VirtualGameShelf extends Application {
         gameListVBox.getChildren().add(treeView);
     }
 
-    /** Initialize hashmap to lookup console names. (e.g.: "PS4" -> "PlayStation 4") */
+    /** Initialize {@link #systemNameMap} for looking up console names. */
     private void initializeSystemNameMap() {
         systemNameMap = new LinkedHashMap<>();
         List<String[]> systemList = null;
@@ -187,9 +194,14 @@ public class VirtualGameShelf extends Application {
     }
 
     /**
-     * Returns game system's full display name
-     * @param  system Abbreviated system name. [ie: PS4]
-     * @return        Full system display name. [ie: PlayStation 4].
+     * Returns game system's full display name.
+     * <p>
+     * For example, calling this method with the argument "PS4" will return
+     * "PlayStation 4".
+     *
+     * @param system
+     *            abbreviated system name.
+     * @return full system display name.
      */
     public static String getSystemDisplayName(String system) {
         if (systemNameMap.containsKey(system)) {
@@ -199,7 +211,12 @@ public class VirtualGameShelf extends Application {
         }
     }
 
-    /** Display option to edit or delete a game */
+    /**
+     * Display option to edit or delete a game.
+     *
+     * @param selectedItem
+     *            selected item from {@link #gameListVBox}.
+     */
     public static void displayEditGameAlert(TreeItem<String> selectedItem) {
         int index = -1;
 
@@ -237,7 +254,12 @@ public class VirtualGameShelf extends Application {
         }
     }
 
-    /** Takes TreeItem and returns its location in GameList as an int */
+    /**
+     * Takes TreeItem and returns its location in {@link #gameList} as an int.
+     *
+     * @param selectedItem
+     *            item from {@link #gameListVBox}
+     */
     public static int getGameIndex(TreeItem<String> selectedItem) {
         int index = -1;
 

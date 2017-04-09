@@ -19,12 +19,18 @@ public class NewGameWindow extends Stage {
     private Button addButton;
     private Game newGame;
 
-    /** Class constructor - Create new game */
+    /** Create a new window for adding games. */
     public NewGameWindow() {
         this(new Game());
     }
 
-    /** Class constructor - Edit/delete existing game */
+    /**
+     * Create a new window for adding games. Fields are pre-filled with info
+     * from game. Useful when editing games.
+     *
+     * @param game
+     *            Used to fill fields with game info.
+     */
     public NewGameWindow(Game game) {
         // tell stage it is meant to pop-up (Modal)
         this.initModality(Modality.APPLICATION_MODAL);
@@ -163,13 +169,23 @@ public class NewGameWindow extends Stage {
         root.add(addButton, 1, 5);
     }
 
+    /**
+     * Works like {@link #showAndWait()}, but returns Game object.
+     *
+     * @return game object created by the user.
+     */
     public Game showAndAddGame() {
         this.showAndWait();
         // Waits until window is closed before returning newGame
         return newGame;
     }
 
-    /** Takes in a String to create and display an alert window */
+    /**
+     * Create and display an alert to the user.
+     *
+     * @param message
+     *            string to display to user.
+     */
     private void displayAlert(String message) {
         Alert infoAlert = new Alert(AlertType.WARNING);
         infoAlert.setTitle(null);
@@ -178,6 +194,10 @@ public class NewGameWindow extends Stage {
         infoAlert.showAndWait();
     }
 
+    /**
+     * Retrieves info from text fields to create new Game object.
+     * Once it has been created, the current window is closed.
+     */
     private void onClickAddGame() {
         newGame = new Game();
 
