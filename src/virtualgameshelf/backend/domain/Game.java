@@ -78,6 +78,14 @@ public class Game implements Comparable<Game>{
     }
     /* End Override Functions */
 
+    public void print() {
+        System.out.println("Game Name: "       + this.getName());
+        System.out.println("Game System: "     + this.getSystem());
+        System.out.println("Game Completion: " + this.getCompletion());
+        System.out.println("Hours Played: "    + this.getHours());
+        System.out.println("Rating: "          + this.getRating() + " star" + (this.rating == 1 ? "" : "s"));
+    }
+
     /**
      * Fetch column labels for saving game to file. ("name", "system", "hours", etc.)
      * @return stored data fields.
