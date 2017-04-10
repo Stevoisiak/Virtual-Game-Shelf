@@ -1,5 +1,7 @@
 package virtualgameshelf.gui;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
@@ -11,7 +13,6 @@ import virtualgameshelf.backend.domain.Game;
 
 public class NewGameWindow extends Stage {
     private TextField nameField;
-    private TextField systemField;
     private TextField hoursField;
     private ToggleGroup starGroup;
     private ComboBox<String> systemChooser;
@@ -55,7 +56,7 @@ public class NewGameWindow extends Stage {
         // custom code below --------------------------------------------
 
         Label nameLabel = new Label("Game Name:");
-        nameField = new TextField("");
+        nameField = new TextField();
 
         // selectable list of game systems
         Label systemLabel = new Label("Game System:");
@@ -63,48 +64,12 @@ public class NewGameWindow extends Stage {
         systemRow.setSpacing(16);
         systemRow.setAlignment( Pos.CENTER_LEFT );
         systemChooser = new ComboBox<>();
-        for (String key : VirtualGameShelf.systemNameMap.keySet()) {
-            systemChooser.getItems().add(key); // populate system list
+        for (String value : VirtualGameShelf.systemNameMap.values()) {
+            systemChooser.getItems().add(value); // populate system list
         }
-
-        // Begin overriding ComboBox ---------------
-        // Force cell to display full console name
-        systemChooser.setButtonCell( new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                // use system's full display name
-                String displayName = VirtualGameShelf.getSystemDisplayName(item);
-                setText(displayName);
-            }
-        });
-
-        systemChooser.setCellFactory(column -> {
-            return new ListCell<String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    // use system's full display name
-                    String displayName = VirtualGameShelf.getSystemDisplayName(item);
-                    setText(displayName);
-                }
-            };
-        });
-        // Finish overriding ComboBox ---------------
-        systemChooser.getItems().add("Other");
-
         systemChooser.setPromptText("Choose a System");
-        // checks which item is selected in the ComboBox
-        systemChooser.valueProperty().addListener((ChangeListener<String>) (ov, oldValue, newValue) -> {
-            if (newValue == "Other") {
-                systemField = new TextField("");
-                systemField.setPromptText("Enter a System");
-
-                systemRow.getChildren().add(systemField);
-            } else {
-                systemRow.getChildren().remove(systemField);
-            }
-        });
+        systemChooser.setEditable(true);
+        TextFields.bindAutoCompletion(systemChooser.getEditor(), systemChooser.getItems());
         systemRow.getChildren().add(systemChooser);
 
         Label completionLabel = new Label("Game Completion:");
@@ -114,7 +79,7 @@ public class NewGameWindow extends Stage {
         completionChooser.setPromptText("Choose a Level of Completion");
 
         Label hoursLabel = new Label("Hours Played:");
-        hoursField = new TextField("");
+        hoursField = new TextField();
         // http://stackoverflow.com/a/30796829
         // force the field to be numeric only
         hoursField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
@@ -202,7 +167,7 @@ public class NewGameWindow extends Stage {
         newGame = new Game();
 
         // Retrieve game name
-        if (nameField.getText() != null && !nameField.getText().trim().equals("")) {
+        if (nameField.getText() != null && !nameField.getText().trim().isEmpty()) {
             newGame.setName(nameField.getText());
         } else {
             // Name is missing; stop parsing game data
@@ -211,32 +176,26 @@ public class NewGameWindow extends Stage {
         }
 
         // Retrieve game system
-        if (systemChooser.getValue() == "Add New System") {
-            if (systemField.getText().trim().equals("")) {
-                newGame.setSystem("Other");
-            } else {
-                newGame.setSystem(systemField.getText());
-            }
+        if (systemChooser.getValue() != null && !systemChooser.getValue().trim().isEmpty() ) {
+            String system = systemChooser.getValue().trim();
+            system = VirtualGameShelf.getSystemShortName(system);
+            newGame.setSystem(system);
         } else {
-            if (systemChooser.getValue() == null) {
-                newGame.setSystem("Other");
-            } else {
-                newGame.setSystem(systemChooser.getValue());
-            }
+            newGame.setSystem("Other");
         }
 
         // Retrieve game completion
-        if  (completionChooser.getValue() == null) {
-            newGame.setCompletion("Unfinished");
-        } else {
+        if  (completionChooser.getValue() != null) {
             newGame.setCompletion(completionChooser.getValue());
+        } else {
+            newGame.setCompletion("Unfinished");
         }
 
         // Retrieve game hours
-        if (hoursField.getText() == null || hoursField.getText().trim().isEmpty()) {
-            newGame.setHours(0);
-        } else {
+        if (hoursField.getText() != null && !hoursField.getText().trim().isEmpty()) {
             newGame.setHours(Integer.parseInt(hoursField.getText()));
+        } else {
+            newGame.setHours(0);
         }
 
         // Retrieve game rating
@@ -246,16 +205,7 @@ public class NewGameWindow extends Stage {
             newGame.setRating(0);
         }
 
-        // Print game info
-        System.out.println("Game Name: " + newGame.getName());
-        System.out.println("Game System: " + newGame.getSystem());
-        System.out.println("Game Completion: " + newGame.getCompletion());
-        System.out.println("Hours Played: " + newGame.getHours());
-        if (newGame.getRating() == 1) {
-            System.out.println("Rating: " + newGame.getRating() + " star");
-        } else {
-            System.out.println("Rating: " + newGame.getRating() + " stars");
-        }
+        //newGame.print();
 
         // Close window after successful game addition (http://stackoverflow.com/a/25038465)
         Stage stage = (Stage) addButton.getScene().getWindow();

@@ -5,11 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.opencsv.CSVReader;
 
 import javafx.application.*;
@@ -28,8 +28,8 @@ import virtualgameshelf.backend.domain.GameList;
 public class VirtualGameShelf extends Application {
     /** User's complete list of games. Static to allow for global access. */
     public static GameList gameList;
-    /** Used to look up full names of consoles. ("PS4" -&gt; "PlayStation 4") */
-    protected static Map<String, String> systemNameMap;
+    /** Used to look up full names of consoles. ("PS4" - "PlayStation 4") */
+    protected static BiMap<String, String> systemNameMap;
     /** Visual display of {@link #gameList}. */
     private static VBox gameListVBox;
 
@@ -168,7 +168,7 @@ public class VirtualGameShelf extends Application {
 
     /** Initialize {@link #systemNameMap} for looking up console names. */
     private void initializeSystemNameMap() {
-        systemNameMap = new LinkedHashMap<>();
+        systemNameMap = HashBiMap.create();
         List<String[]> systemList = null;
 
         // Read in systemList from file
@@ -205,11 +205,30 @@ public class VirtualGameShelf extends Application {
      *            abbreviated system name.
      * @return full system display name.
      */
-    public static String getSystemDisplayName(String system) {
-        if (systemNameMap.containsKey(system)) {
-            return systemNameMap.get(system);
+    public static String getSystemDisplayName(String systemShortName) {
+        if (systemNameMap.containsKey(systemShortName)) {
+            return systemNameMap.get(systemShortName);
         } else {
-            return system;
+            return systemShortName;
+        }
+    }
+
+    /**
+     * Returns game system's abbreviated name.
+     * <p>
+     * For example, calling this method with the argument "PlayStation 4" will return
+     * "PS4".
+     *
+     * @param system
+     *            full system display name.
+     * @return abbreviated system name.
+     */
+    public static String getSystemShortName(String systemLongName) {
+        if (systemNameMap.containsValue(systemLongName)) {
+            BiMap<String, String> invSystemNameMap = systemNameMap.inverse();
+            return invSystemNameMap.get(systemLongName);
+        } else {
+            return systemLongName;
         }
     }
 
