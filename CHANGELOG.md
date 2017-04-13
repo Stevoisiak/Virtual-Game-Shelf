@@ -2,9 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project (probably) adheres to [Semantic Versioning](http://semver.org/).
-
-Editor's Note: May not adhere 100% to Semantic Versioning. Sorry about that.
+and this project (mostly) adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
@@ -27,18 +25,16 @@ Initial non-functional alpha. Only provides a basic prototype of user interface.
 Little to no actual functionality.
 
 ### Added
-* User Interface
-  * #28: Add button for adding new games
-  * #32/#34: Fillable form to manually add new games
-* MenuBar
-  * #47: "About" screen crediting project resources and contributors
-  * #48: Shortcut to GitHub repository
-  * #50: Separate MenuBar into its own file
-* Backend
-  * #38: Add Game and GameList classes
-  * #51: File reader to import/export tab separated text files into an ArrayList
-* Misc
-  * #13: Automatic build testing with Travis CI
-  * #39/#42: Sort project into packages
+* #13: Automatic build testing with Travis CI
+* #28: Button for adding new games
+* #32/#34: Fillable form to manually add new games
+* #38: Add Game and GameList classes
+* #47: "About" menu button to credit project resources and contributors
+* #48: "View on GitHub" menu shortcut to GitHub repository
+* #51: File reader to import/export tab separated text files into an ArrayList
+
+### Changed
+* #39/#42: Sort project into packages
+* #50: Separate MenuBar into its own file
 
 [Unreleased]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.0.1...HEAD
