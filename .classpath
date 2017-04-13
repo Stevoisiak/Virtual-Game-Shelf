@@ -18,5 +18,6 @@
 			<attribute name="javadoc_location" value="http://google.github.io/guava/releases/21.0/api/docs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="externals/bltool.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
