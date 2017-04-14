@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.controlsfx.control.CheckTreeView;
+
 import com.opencsv.CSVReader;
 
 import javafx.application.*;
 import javafx.beans.value.*;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -32,6 +36,13 @@ public class VirtualGameShelf extends Application {
     protected static Map<String, String> systemNameMap;
     /** Visual display of {@link #gameList}. */
     private static VBox gameListVBox;
+
+    // used when deleting games
+    static ArrayList<String> selectedGamesString = new ArrayList<>();
+    static Button deleteButton;
+
+    // used when editing games
+    static Button editButton;
 
     public static void main(String[] args) {
         launch(args);
@@ -52,6 +63,7 @@ public class VirtualGameShelf extends Application {
         // used to add a scroll bar to the page
         ScrollPane scroll = new ScrollPane();
         scroll.setFitToWidth(true);
+        scroll.setFitToHeight(true);
         root.setCenter(scroll);
 
         // add stylesheet
@@ -66,19 +78,126 @@ public class VirtualGameShelf extends Application {
 
         // used to display games in library
         gameListVBox = new VBox();
-        gameListVBox.setPadding( new Insets(16) );
-        gameListVBox.setSpacing(16);
-        gameListVBox.setAlignment( Pos.CENTER );
+        gameListVBox.getStyleClass().add("gameVBox");
         scroll.setContent(gameListVBox);
         refreshGameList();
 
+        // used to display the delete button and add game button
+        HBox footer = new HBox();
+        footer.getStyleClass().add("footer");
+
+        deleteButton = createDeleteButton();
+        deleteButton.setAlignment(Pos.CENTER_LEFT);
+        deleteButton.setDisable(true);
+
+        editButton = createEditButton();
+        editButton.setAlignment(Pos.CENTER_LEFT);
+        editButton.setDisable(true);
+
         // used to add games to the library
         MenuButton addGameButton = createAddGameButton();
-        root.setMargin(addGameButton, new Insets(16));
-        root.setBottom(addGameButton);
-        root.setAlignment(addGameButton, Pos.CENTER_RIGHT);
+        addGameButton.setAlignment(Pos.CENTER_RIGHT);
+
+        footer.getChildren().addAll(deleteButton, editButton, addGameButton);
+        root.setBottom(footer);
 
         mainStage.show();
+    }
+
+    // creates button for deleting games
+    public Button createDeleteButton() {
+        Button deleteButton = new Button("Delete Game(s)");
+
+        deleteButton.setOnAction(e -> displayDeleteGameAlert());
+
+        return deleteButton;
+    }
+
+ // creates button for editing games
+    public Button createEditButton() {
+        Button editButton = new Button("Edit Game");
+
+        editButton.setOnAction(e -> displayEditGameAlert());
+
+        return editButton;
+    }
+
+    // creates alert for deleting games
+    public static void displayDeleteGameAlert() {
+        int index = -1;
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete the selected games?");
+
+        ButtonType deleteGame = new ButtonType("Delete Game(s)");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(deleteGame, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == deleteGame){
+            for (String g : selectedGamesString) {
+                index = getGameIndex(g);
+                gameList.getGameList().remove(index);
+            }
+
+            refreshGameList();
+            deleteButton.setDisable(true);
+        }
+        else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+    // creates alert for editing games
+    public static void displayEditGameAlert() {
+        int index = getGameIndex(selectedGamesString.get(0));
+        ArrayList<Game> tempGameList = (ArrayList<Game>) gameList.getGameList().clone();
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("" + tempGameList.get(index).getName());
+        alert.setHeaderText(null);
+        alert.setContentText("Would you like to edit the game " + tempGameList.get(index).getName() + "?");
+
+        ButtonType editGame = new ButtonType("Edit Game");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(editGame, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == editGame) {
+            NewGameWindow newGameWindow = new NewGameWindow(tempGameList.get(index) );
+            Game newGame = newGameWindow.showAndAddGame();
+            if (newGame != null) {
+                // Add title to game list
+                gameList.getGameList().remove(index);
+                gameList.addGame(newGame);
+                refreshGameList();
+                editButton.setDisable(true);
+                deleteButton.setDisable(true);
+            }
+        }
+        else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+ // Takes String and returns its location in the game list as an int
+    public static int getGameIndex(String selectedGame) {
+        int index = -1;
+
+        for (Game g : gameList.getGameList()) {
+            if (selectedGame.equals(g.gameString())) {
+                for (int i = 0; i < gameList.getGameList().size(); i++) {
+                    if (g.gameString().equals(gameList.getGameList().get(i).gameString())) {
+                        index = i;
+                    }
+                }
+            }
+        }
+
+        return index;
     }
 
     /**
@@ -125,11 +244,11 @@ public class VirtualGameShelf extends Application {
      * Should be called whenever gameList has been modified.
      */
     public static void refreshGameList() {
-        TreeItem<String> rootNode = new TreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
+        CheckBoxTreeItem<String> rootNode = new CheckBoxTreeItem<>("Consoles", new ImageView("icons/gamepad.png"));
         rootNode.setExpanded(true);
 
         for (Game g : gameList.getGameList()) {
-            TreeItem<String> gameLeaf = new TreeItem<>(g.getName() + "\n" + g.getSystem() +
+            CheckBoxTreeItem<String> gameLeaf = new CheckBoxTreeItem<>(g.getName() + "\n" + g.getSystem() +
                     "\n" + g.getCompletion() + "\n" + g.getHours() + " hours played \n" + g.getRating() + " star(s)");
             boolean found = false;
 
@@ -144,26 +263,56 @@ public class VirtualGameShelf extends Application {
             }
 
             if (!found) {
-                TreeItem<String> depNode = new TreeItem<>(displayName, new ImageView("icons/vintage.png"));
+                CheckBoxTreeItem<String> depNode = new CheckBoxTreeItem<>(displayName, new ImageView("icons/vintage.png"));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(gameLeaf);
             }
         }
 
-        TreeView<String> treeView = new TreeView<>(rootNode);
+        CheckTreeView<String> checkTreeView = new CheckTreeView<>(rootNode);
 
-        treeView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<TreeItem<String>>) (observable, oldValue, newValue) -> {
-            TreeItem<String> selectedItem = newValue;
+     // and listen to the relevant events (e.g. when the checked items change).
+        checkTreeView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TreeItem<String>>() {
+             @Override
+            public void onChanged(ListChangeListener.Change<? extends TreeItem<String>> c) {
+                 ObservableList<TreeItem<String>> selectedGames = checkTreeView.getCheckModel().getCheckedItems();
 
-            // Ensures 'edit game' prompt only shows for games
-            if (selectedItem.isLeaf() && selectedItem.getParent() != null) {
-                displayEditGameAlert(selectedItem);
-            }
+                 if (selectedGames.size() > 0) {
+                     selectedGamesString.clear();
+
+                     if (selectedGames.size() == 1) {
+                         editButton.setDisable(false);
+                         deleteButton.setDisable(false);
+
+                         selectedGamesString.add(selectedGames.get(0).getValue());
+                     }
+                     else {
+                         deleteButton.setDisable(false);
+
+                         for (TreeItem<String> s : selectedGames) {
+                             String singleGame = s.getValue();
+
+                             // Ensures 'delete game' prompt only shows for games
+                             if (s.isLeaf() && s.getParent() != null) {
+
+                                 selectedGamesString.add(singleGame);
+                             }
+                         }
+                     }
+                     if (selectedGames.size() > 1) {
+                         editButton.setDisable(true);
+                     }
+                 }
+                 else {
+                     deleteButton.setDisable(true);
+                     editButton.setDisable(true);
+                 }
+             }
         });
 
         // Clear and redraw game list
         gameListVBox.getChildren().clear();
-        gameListVBox.getChildren().add(treeView);
+        gameListVBox.getChildren().add(checkTreeView);
     }
 
     /** Initialize {@link #systemNameMap} for looking up console names. */
@@ -211,71 +360,6 @@ public class VirtualGameShelf extends Application {
         } else {
             return system;
         }
-    }
-
-    /**
-     * Display option to edit or delete a game.
-     *
-     * @param selectedItem
-     *            selected item from {@link #gameListVBox}.
-     */
-    public static void displayEditGameAlert(TreeItem<String> selectedItem) {
-        int index = -1;
-
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText(null); // TODO: Use game title for header
-        alert.setContentText("Would you like to:");
-
-        ButtonType deleteGame = new ButtonType("Delete Game");
-        ButtonType editGame = new ButtonType("Edit Game");
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(deleteGame, editGame, buttonTypeCancel);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == deleteGame){
-            index = getGameIndex(selectedItem);
-            gameList.getGameList().remove(index);
-            refreshGameList();
-        }
-        else if (result.get() == editGame) {
-            index = getGameIndex(selectedItem);
-            ArrayList<Game> tempGameList = (ArrayList<Game>) gameList.getGameList().clone();
-
-            NewGameWindow newGameWindow = new NewGameWindow(tempGameList.get(index) );
-            Game newGame = newGameWindow.showAndAddGame();
-            if (newGame != null) {
-                // Add title to game list
-                gameList.getGameList().remove(index);
-                gameList.addGame(newGame);
-                refreshGameList();
-            }
-        }
-        else {
-            // ... user chose CANCEL or closed the dialog
-        }
-    }
-
-    /**
-     * Takes TreeItem and returns its location in {@link #gameList} as an int.
-     *
-     * @param selectedItem
-     *            item from {@link #gameListVBox}
-     */
-    public static int getGameIndex(TreeItem<String> selectedItem) {
-        int index = -1;
-
-        for (Game g : gameList.getGameList()) {
-            if (selectedItem.getValue().equals(g.gameString())) {
-                for (int i = 0; i < gameList.getGameList().size(); i++) {
-                    if (g.gameString().equals(gameList.getGameList().get(i).gameString())) {
-                        index = i;
-                    }
-                }
-            }
-        }
-
-        return index;
     }
 
     public static void setGameList(GameList newGameList) {
