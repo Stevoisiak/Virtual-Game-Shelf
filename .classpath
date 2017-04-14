@@ -13,5 +13,11 @@
 			<attribute name="javadoc_location" value="https://controlsfx.bitbucket.io/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="externals/guava-21.0.jar" sourcepath="externals/guava-21.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://google.github.io/guava/releases/21.0/api/docs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="externals/bltool.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
