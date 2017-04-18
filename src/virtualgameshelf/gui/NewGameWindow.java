@@ -64,7 +64,7 @@ public class NewGameWindow extends Stage {
         systemRow.setSpacing(16);
         systemRow.setAlignment( Pos.CENTER_LEFT );
         systemChooser = new ComboBox<>();
-        for (String value : VirtualGameShelf.systemNameMap.values()) {
+        for (String value : GameShelf.systemNameMap.values()) {
             systemChooser.getItems().add(value); // populate system list
         }
         systemChooser.setPromptText("Choose a System");
@@ -178,7 +178,7 @@ public class NewGameWindow extends Stage {
         // Retrieve game system
         if (systemChooser.getValue() != null && !systemChooser.getValue().trim().isEmpty() ) {
             String system = systemChooser.getValue().trim();
-            system = VirtualGameShelf.getSystemShortName(system);
+            system = GameShelf.getSystemShortName(system);
             newGame.setSystem(system);
         } else {
             newGame.setSystem("Other");
