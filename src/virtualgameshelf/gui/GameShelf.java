@@ -25,7 +25,7 @@ import javafx.stage.*;
 import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
 
-public class VirtualGameShelf extends Application {
+public class GameShelf extends Application {
     /** User's complete list of games. Static to allow for global access. */
     public static GameList gameList;
     /** Used to look up full names of consoles. ("PS4" - "PlayStation 4") */
