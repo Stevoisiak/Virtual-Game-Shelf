@@ -27,13 +27,11 @@ public class BLToolImportFile {
             if (file.canRead()) {
                 try {
                     CSVReader reader = new CSVReader(new FileReader(file), ',', CSVParser.DEFAULT_QUOTE_CHARACTER, 1);
-                    //String[] header = Game.getColumnHeaders();
 
                     // read line by line
                     String[] record = null;
                     while ((record = reader.readNext()) != null) {
-                        // TODO: Error handling for string-to-int conversion & empty fields
-                        // TODO: Read columns by field name, regardless of order
+
                         Game game = new Game();
                         game.setName(record[1]);
                         game.setSystem(record[2]);
