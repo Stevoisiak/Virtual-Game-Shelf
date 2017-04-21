@@ -21,9 +21,8 @@ import com.opencsv.CSVReader;
 // https://clojurefun.wordpress.com/2012/12/24/invoking-clojure-code-from-java/
 
 public class BLToolImportFile {
-
     public void blToolAddGames(File file) {
-    	if (file != null) {
+        if (file != null) {
             if (file.canRead()) {
                 try {
                     CSVReader reader = new CSVReader(new FileReader(file), ',', CSVParser.DEFAULT_QUOTE_CHARACTER, 1);

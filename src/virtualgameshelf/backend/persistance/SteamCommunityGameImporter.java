@@ -12,65 +12,61 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.net.URL;
 
-
 /*
  * XML DOM example
  * https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
  */
 
 public class SteamCommunityGameImporter {
+    public void steamCommunityAddGames(String id) {
+        try {
+            String url = "http://steamcommunity.com/id/" + id + "/games/?tab=all&xml=1";
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(new URL(url).openStream());
 
-	public void steamCommunityAddGames(String id) {
-		 try {
+            // optional, but recommended
+            // read this -
+            // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+            doc.getDocumentElement().normalize();
 
-				String url = "http://steamcommunity.com/id/" + id + "/games/?tab=all&xml=1";
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(new URL(url).openStream());
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-				//optional, but recommended
-				//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-				doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("game");
 
-				System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            System.out.println("----------------------------");
 
-				NodeList nList = doc.getElementsByTagName("game");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
 
-				System.out.println("----------------------------");
+                Node nNode = nList.item(temp);
 
-				for (int temp = 0; temp < nList.getLength(); temp++) {
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
-					Node nNode = nList.item(temp);
+                    Element eElement = (Element) nNode;
 
-					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    String name = (eElement.getElementsByTagName("name").item(0).getTextContent());
+                    name = name.substring(10, name.length() - 4);
 
-						Element eElement = (Element) nNode;
+                    String stringHours = (eElement.getElementsByTagName("hoursOnRecord").item(0).getTextContent());
+                    int hours = Integer.parseInt(stringHours);
 
+                    String completion = "Unfinished";
+                    if (hours == 0) {
+                        completion = "Unplayed";
+                    }
 
-						String name = (eElement.getElementsByTagName("name").item(0).getTextContent());
-						name = name.substring(10, name.length()-4);
+                    Game game = new Game();
+                    game.setName(name);
+                    game.setSystem("PC");
+                    game.setHours(hours);
+                    game.setCompletion(completion);
+                    game.setRating(0);
+                    GameShelf.gameList.addGame(game);
 
-						String stringHours = (eElement.getElementsByTagName("hoursOnRecord").item(0).getTextContent());
-						int hours = Integer.parseInt(stringHours);
-
-						String completion = "Unfinished";
-						if(hours == 0) {
-							completion = "Unplayed";
-						}
-
-						Game game = new Game();
-                        game.setName(name);
-                        game.setSystem("PC");
-                        game.setHours(hours);
-                        game.setCompletion(completion);
-                        game.setRating(0);
-                        GameShelf.gameList.addGame(game);
-
-					}
-				}
-			    } catch (Exception e) {
-				e.printStackTrace();
-			    }
-			  }
-
-	}
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
