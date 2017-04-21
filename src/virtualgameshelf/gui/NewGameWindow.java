@@ -205,8 +205,6 @@ public class NewGameWindow extends Stage {
             newGame.setRating(0);
         }
 
-        //newGame.print();
-
         // Close window after successful game addition (http://stackoverflow.com/a/25038465)
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
