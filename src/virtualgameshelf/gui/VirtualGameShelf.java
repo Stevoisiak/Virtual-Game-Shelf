@@ -279,7 +279,7 @@ public class VirtualGameShelf extends Application {
              if (selectedGames.size() > 0) {
                  selectedGamesString.clear();
 
-                 if (selectedGames.size() == 1) {
+                 if (selectedGames.size() == 1 && selectedGames.get(0).isLeaf()) {
                      editButton.setDisable(false);
                      deleteButton.setDisable(false);
 
@@ -292,8 +292,7 @@ public class VirtualGameShelf extends Application {
                          String singleGame = s.getValue();
 
                          // Ensures 'delete game' prompt only shows for games
-                         if (s.isLeaf() && s.getParent() != null) {
-
+                         if (s.isLeaf() && s.getParent() != null ) {
                              selectedGamesString.add(singleGame);
                          }
                      }
