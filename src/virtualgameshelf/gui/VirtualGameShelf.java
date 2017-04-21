@@ -250,6 +250,7 @@ public class VirtualGameShelf extends Application {
         for (Game g : gameList.getGameList()) {
             CheckBoxTreeItem<String> gameLeaf = new CheckBoxTreeItem<>(g.getName() + "\n" + g.getSystem() +
                     "\n" + g.getCompletion() + "\n" + g.getHours() + " hours played \n" + g.getRating() + " star(s)");
+            gameLeaf.setIndependent(true);
             boolean found = false;
 
             String displayName = getSystemDisplayName(g.getSystem());
@@ -300,6 +301,11 @@ public class VirtualGameShelf extends Application {
                  if (selectedGames.size() > 1) {
                      editButton.setDisable(true);
                  }
+
+                 if(selectedGames.get(0).getValue().equals("Consoles") && selectedGames.size() == 1){
+                     editButton.setDisable(true);
+                     deleteButton.setDisable(true);
+                }
              }
              else {
                  deleteButton.setDisable(true);
