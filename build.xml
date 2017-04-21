@@ -8,7 +8,7 @@
     <property name="dist.dir"      location="dist"/>
     <property name="resources.dir" location="resources"/>
     <property name="externals.dir" location="externals"/>
-    <property name="main.class"    value="virtualgameshelf.gui.VirtualGameShelf"/>
+    <property name="main.class"    value="virtualgameshelf.gui.GameShelf"/>
 
     <path id="classpath">
         <fileset dir="${externals.dir}" includes="**/*.jar"/>

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project (mostly) adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.1.0] - 2017-04-13
+First functional release, featuring the ability to edit entries in the gamelist,
+and the option to save or load from a .csv file.
+
 ### Added
 * #61 Debug menu for printing gameList and FileIO
 * #62/#79 Game list displayed on program home screen
