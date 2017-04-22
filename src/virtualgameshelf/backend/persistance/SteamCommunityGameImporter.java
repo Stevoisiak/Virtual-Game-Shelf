@@ -64,16 +64,16 @@ public class SteamCommunityGameImporter {
 
                     String name = "";
                     name = (eElement.getElementsByTagName("name").item(0).getTextContent());
-                    System.out.println(name);
-                    	/*
-                    	 * This is apparently Unneeded
-                    	 * name = name.substring(10, name.length() - 4);
-                    	 */
+                    //System.out.println(name);
+                    /*
+                     * This is apparently Unneeded
+                     * name = name.substring(10, name.length() - 4);
+                    */
 
                     int hours = 0;
                     if(eElement.getElementsByTagName("hoursOnRecord").getLength() > 0){
                     	String stringHours = (eElement.getElementsByTagName("hoursOnRecord").item(0).getTextContent());
-                    	System.out.println(stringHours);
+                    	// System.out.println(stringHours);
                         hours = (int) Math.round(Double.parseDouble(stringHours));
                     }
 
