@@ -63,11 +63,11 @@ public class SteamCommunityGameImporter {
             // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            // System.out.println("Root element :" + doc.getDocumentElement().getNodeName()); //Check to make sure of correct RootElement
 
             NodeList nList = doc.getElementsByTagName("game");
 
-            System.out.println("----------------------------");
+            // System.out.println("----------------------------"); // Used to Differentiate the stuff below and the stuff above. Not needed
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
