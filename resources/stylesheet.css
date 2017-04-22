@@ -3,6 +3,7 @@
     -fx-border-width: 0;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
+    -fx-alignment: center-right;
 }
 
 .menu-button > .arrow-button {
@@ -15,4 +16,15 @@
 
 .tree-view {
 	-fx-font-size:   15px;
+}
+
+.gameVBox {
+	-fx-padding: 16;
+	-fx-alignment: center;
+}
+
+.footer {
+	-fx-padding: 16;
+	-fx-spacing: 30;
+	-fx-alignment: center;
 }
