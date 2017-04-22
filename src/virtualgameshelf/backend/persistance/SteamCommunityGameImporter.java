@@ -62,11 +62,20 @@ public class SteamCommunityGameImporter {
 
                     Element eElement = (Element) nNode;
 
-                    String name = (eElement.getElementsByTagName("name").item(0).getTextContent());
-                    name = name.substring(10, name.length() - 4);
+                    String name = "";
+                    name = (eElement.getElementsByTagName("name").item(0).getTextContent());
+                    System.out.println(name);
+                    	/*
+                    	 * This is apparently Unneeded
+                    	 * name = name.substring(10, name.length() - 4);
+                    	 */
 
-                    String stringHours = (eElement.getElementsByTagName("hoursOnRecord").item(0).getTextContent());
-                    int hours = Integer.parseInt(stringHours);
+                    int hours = 0;
+                    if(eElement.getElementsByTagName("hoursOnRecord").getLength() > 0){
+                    	String stringHours = (eElement.getElementsByTagName("hoursOnRecord").item(0).getTextContent());
+                    	System.out.println(stringHours);
+                        hours = (int) Math.round(Double.parseDouble(stringHours));
+                    }
 
                     String completion = "Unfinished";
                     if (hours == 0) {
@@ -86,5 +95,6 @@ public class SteamCommunityGameImporter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        GameShelf.refreshGameList();
     }
 }

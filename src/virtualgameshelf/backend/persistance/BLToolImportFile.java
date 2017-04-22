@@ -57,6 +57,6 @@ public class BLToolImportFile {
                 System.err.println("Cannot open " + file.getAbsolutePath() + ". File may be read-only or in use by another program.");
             }
         }
-
+        GameShelf.refreshGameList();
     }
 }
