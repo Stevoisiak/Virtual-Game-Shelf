@@ -99,7 +99,7 @@ public class MainMenuBar extends MenuBar {
 
     /** Clears current gameList. */
     public void onNew() {
-        VirtualGameShelf.setGameList(new GameList());
+        GameShelf.setGameList(new GameList());
     }
 
     /** Display prompt to load gameList from file. */
@@ -149,7 +149,7 @@ public class MainMenuBar extends MenuBar {
 
         // Replace gameList
         if (loadSuccess) {
-            VirtualGameShelf.setGameList(new GameList((ArrayList<Game>) loadedGameList));
+            GameShelf.setGameList(new GameList((ArrayList<Game>) loadedGameList));
         }
     }
 
@@ -162,7 +162,7 @@ public class MainMenuBar extends MenuBar {
         // TODO: Error handling for "File in use" when overwriting a file.
 
         // initial setup
-        String appPath = VirtualGameShelf.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String appPath = GameShelf.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String gameListFileName = "game_list.csv";
 
         File userDataDirectory = new File(appPath + userDataDirName);
@@ -178,7 +178,7 @@ public class MainMenuBar extends MenuBar {
             CSVWriter csvWriter = new CSVWriter(new FileWriter(outFile), ',');
             String[] header = Game.getColumnHeaders();
             csvWriter.writeNext(header);
-            for (Game g : VirtualGameShelf.gameList.getGameList()) {
+            for (Game g : GameShelf.gameList.getGameList()) {
                 csvWriter.writeNext(g.toStringArray());
             }
             csvWriter.close();
@@ -204,7 +204,7 @@ public class MainMenuBar extends MenuBar {
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(outFile), ',');
                 String[] header = Game.getColumnHeaders();
                 csvWriter.writeNext(header);
-                for (Game g : VirtualGameShelf.gameList.getGameList()) {
+                for (Game g : GameShelf.gameList.getGameList()) {
                     csvWriter.writeNext(g.toStringArray());
                 }
                 csvWriter.close();
@@ -235,7 +235,7 @@ public class MainMenuBar extends MenuBar {
 
     /** Debug method to print all games from the current game list. */
     public static void onPrintCurrentGameList() {
-        ArrayList<Game> gameList = VirtualGameShelf.gameList.getGameList();
+        ArrayList<Game> gameList = GameShelf.gameList.getGameList();
         System.out.println("Game List:");
         if (gameList != null && !gameList.isEmpty()) {
             for (Game g : gameList) {
@@ -313,7 +313,7 @@ public class MainMenuBar extends MenuBar {
      */
     private static void configureFileChooser(FileChooser fileChooser) {
         // set initial directory
-        String appPath = VirtualGameShelf.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String appPath = GameShelf.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         File userDataDirectory = new File(appPath + userDataDirName);
         File userDirectory = new File(System.getProperty("user.dir"));
 
