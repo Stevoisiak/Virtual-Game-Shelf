@@ -112,7 +112,18 @@ public class SteamCommunityGameImporter {
 	                    game.setHours(hours);
 	                    game.setCompletion(completion);
 	                    game.setRating(0);
-	                    GameShelf.gameList.addGame(game);
+
+	                    //For Duplicate checking
+	                    boolean duplicate = false;
+	                    for(Game g : GameShelf.gameList.getGameList()) {
+	                    	duplicate = g.compare(game);
+	                    	if(duplicate == true) {
+	                    		break;
+	                    	}
+	                    }
+	                    if (duplicate == false) {
+	                    	GameShelf.gameList.addGame(game);
+	                    }
                     }
 
                 }

@@ -78,6 +78,41 @@ public class Game implements Comparable<Game>{
     }
     /* End Override Functions */
 
+    /**
+     * Compares this game with another game.
+     * If same name and system
+     * -> updates current game with higher hours
+     * --> then compares completion and new hours to
+     * --> see if completion can change from Unplayed
+     * --> to Unfinished if set as Unplayed.
+     *
+     * @param game
+     *            the game to be compared.
+     * @return the value false if games are not the same;
+     * the value true if the games have the same name and system.
+     */
+    public boolean compare(Game game) {
+    	boolean comparison = false;
+        String system1 = this.system;
+        String system2 = (game.system);
+        boolean systemComp = system1.equals(system2);
+        String name1 = this.name;
+        String name2 = (game.name);
+        boolean nameComp = name1.equals(name2);
+
+        if(systemComp == true && nameComp == true) {
+        	comparison = true;
+        	if(this.hours < game.hours) {
+        		this.hours = game.hours;
+        		if((this.completion.equals("Unplayed")) && (this.hours > 0)) {
+        			this.completion = "Unfinished";
+        		}
+        	}
+        }
+
+        return comparison;
+    }
+
     public void print() {
         System.out.println("Game Name: "       + this.getName());
         System.out.println("Game System: "     + this.getSystem());
