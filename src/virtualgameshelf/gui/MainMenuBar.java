@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
@@ -20,6 +21,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -27,6 +29,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
+import virtualgameshelf.backend.persistance.SteamCommunityGameImporter;
 
 public class MainMenuBar extends MenuBar {
     /** Default folder for saving user data and settings */
@@ -88,6 +91,10 @@ public class MainMenuBar extends MenuBar {
         MenuItem menuItemOpenSystemList = new MenuItem("Import/Export system_list.csv");
         menuItemOpenSystemList.setOnAction(e -> onImportExportSystemList());
         menuDebug.getItems().add(menuItemOpenSystemList);
+
+        MenuItem menuItemTestImportSteamLibraryXML = new MenuItem("Test importing Steam library (.XML)");
+        menuItemTestImportSteamLibraryXML.setOnAction(e -> onTestImportSteamLibraryXML());
+        menuDebug.getItems().add(menuItemTestImportSteamLibraryXML);
     }
 
     /** Clears current gameList. */
@@ -111,7 +118,7 @@ public class MainMenuBar extends MenuBar {
             if (file.canRead()) {
                 try {
                     CSVReader reader = new CSVReader(new FileReader(file), ',', CSVParser.DEFAULT_QUOTE_CHARACTER, 1);
-                    //String[] header = Game.getColumnHeaders();
+                    // String[] header = Game.getColumnHeaders();
 
                     // read line by line
                     String[] record = null;
@@ -260,7 +267,7 @@ public class MainMenuBar extends MenuBar {
 
         // Output arrayList to screen
         for (String[] s : arrayList) {
-           System.out.println(Arrays.toString(s));
+            System.out.println(Arrays.toString(s));
         }
 
         // Output arrayList to file
@@ -272,6 +279,29 @@ public class MainMenuBar extends MenuBar {
             Desktop.getDesktop().open(new File(outputFilePath));
         } catch (IOException er) {
             er.printStackTrace();
+        }
+    }
+
+    /** Test importing games into gamelist from Steam library (.xml file). */
+    public static void onTestImportSteamLibraryXML() {
+        // TODO: ID field should be empty by default in final code.
+        //       Leaving 'Stevoisiak' as default ID for testing.
+
+        // TODO: Accept multiple formats for Steam ID.
+        //       (ie: gabelogannewell, 76561197960287930, STEAM_0:0:11101,
+        //            [U:1:22202], http://steamcommunity.com/id/gabelogannewell/,
+        //            http://steamcommunity.com/profiles/76561197960287930/,
+        //            http://steamcommunity.com/profiles/[U:1:22202]/)
+        //       Convert types with (https://github.com/xPaw/SteamID.php)?
+        TextInputDialog steamIdDialog = new TextInputDialog("Stevoisiak");
+        steamIdDialog.setTitle("Import library from Steam");
+        steamIdDialog.setHeaderText(null);
+        steamIdDialog.setContentText("Please enter your steam ID.");
+
+        Optional<String> steamID = steamIdDialog.showAndWait();
+        if (steamID.isPresent()) {
+            SteamCommunityGameImporter importer = new SteamCommunityGameImporter();
+            importer.steamCommunityAddGames(steamID.get());
         }
     }
 
