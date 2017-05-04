@@ -1,5 +1,6 @@
 package virtualgameshelf.gui;
 
+import org.controlsfx.control.Rating;
 import org.controlsfx.control.textfield.TextFields;
 
 import javafx.beans.value.*;
@@ -14,7 +15,7 @@ import virtualgameshelf.backend.domain.Game;
 public class NewGameWindow extends Stage {
     private TextField nameField;
     private TextField hoursField;
-    private ToggleGroup starGroup;
+    private Rating ratingField;
     private ComboBox<String> systemChooser;
     private ComboBox<String> completionChooser;
     private Button addButton;
@@ -89,19 +90,9 @@ public class NewGameWindow extends Stage {
         });
 
         Label ratingLabel = new Label("Rating:");
-        HBox starRow = new HBox();
-        starRow.setSpacing(5);
-        starRow.setAlignment(Pos.CENTER);
-
-        // radio for 1-5 star rating
-        starGroup = new ToggleGroup();
-        RadioButton starButtons[] = new RadioButton[5];
-        for (int i = 0; i < starButtons.length; i++) {
-            starButtons[i] = new RadioButton(i+1 + " Star");
-            starButtons[i].setUserData(i+1);
-            starButtons[i].setToggleGroup(starGroup);
-            starRow.getChildren().add(starButtons[i]);
-        }
+        // rating control
+        ratingField = new Rating();
+        ratingField.setRating(0);
 
         if (game.getName() != null) {
             // Fill every field with game info if editing old game
@@ -109,11 +100,7 @@ public class NewGameWindow extends Stage {
             systemChooser.setValue(game.getSystem());
             completionChooser.setValue(game.getCompletion());
             hoursField.setText("" + game.getHours());
-            for (RadioButton rb : starButtons) {
-                if ((int)rb.getUserData() == game.getRating()) {
-                    rb.setSelected(true);
-                }
-            }
+            ratingField.setRating(game.getRating());
         }
 
         // Create entry with entered game data
@@ -130,7 +117,7 @@ public class NewGameWindow extends Stage {
         root.add(hoursLabel, 0, 3);
         root.add(hoursField, 1, 3);
         root.add(ratingLabel, 0, 4);
-        root.add(starRow, 1, 4);
+        root.add(ratingField, 1, 4);
         root.add(addButton, 1, 5);
     }
 
@@ -199,11 +186,7 @@ public class NewGameWindow extends Stage {
         }
 
         // Retrieve game rating
-        if (starGroup.getSelectedToggle() != null) {
-            newGame.setRating((int) starGroup.getSelectedToggle().getUserData());
-        } else {
-            newGame.setRating(0);
-        }
+        newGame.setRating((int)ratingField.getRating());
 
         // Close window after successful game addition (http://stackoverflow.com/a/25038465)
         Stage stage = (Stage) addButton.getScene().getWindow();
