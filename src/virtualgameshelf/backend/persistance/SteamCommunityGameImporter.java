@@ -105,14 +105,25 @@ public class SteamCommunityGameImporter {
                     }
 
                    //Makes sure we are actually creating a game that has a name.
-                    if(!(name.equals(""))) {
-	                    Game game = new Game();
-	                    game.setName(name);
-	                    game.setSystem("PC");
-	                    game.setHours(hours);
-	                    game.setCompletion(completion);
-	                    game.setRating(0);
-	                    GameShelf.gameList.addGame(game);
+                    if (!(name.equals(""))) {
+                        Game game = new Game();
+                        game.setName(name);
+                        game.setSystem("PC");
+                        game.setHours(hours);
+                        game.setCompletion(completion);
+                        game.setRating(0);
+
+                        //For Duplicate checking
+                        boolean duplicate = false;
+                        for (Game g : GameShelf.gameList.getGameList()) {
+                            duplicate = g.compare(game);
+                            if (duplicate == true) {
+                                break;
+                            }
+                        }
+                        if (duplicate == false) {
+                            GameShelf.gameList.addGame(game);
+                        }
                     }
 
                 }
