@@ -92,7 +92,7 @@ public class Game implements Comparable<Game>{
      * the value true if the games have the same name and system.
      */
     public boolean compare(Game game) {
-    	boolean comparison = false;
+        boolean comparison = false;
         String system1 = this.system;
         String system2 = (game.system);
         boolean systemComp = system1.equals(system2);
@@ -100,16 +100,15 @@ public class Game implements Comparable<Game>{
         String name2 = (game.name);
         boolean nameComp = name1.equals(name2);
 
-        if(systemComp == true && nameComp == true) {
-        	comparison = true;
-        	if(this.hours < game.hours) {
-        		this.hours = game.hours;
-        		if((this.completion.equals("Unplayed")) && (this.hours > 0)) {
-        			this.completion = "Unfinished";
-        		}
-        	}
+        if (systemComp == true && nameComp == true) {
+            comparison = true;
+            if (this.hours < game.hours) {
+                this.hours = game.hours;
+                if ((this.completion.equals("Unplayed")) && (this.hours > 0)) {
+                    this.completion = "Unfinished";
+                }
+            }
         }
-
         return comparison;
     }
 
