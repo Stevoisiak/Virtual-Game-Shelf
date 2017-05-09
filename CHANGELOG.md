@@ -17,19 +17,19 @@ First functional release, featuring the ability to edit entries in the gamelist,
 and the option to save or load from a .csv file.
 
 ### Added
-* #61 Debug menu for printing gameList and FileIO
-* #62/#79 Game list displayed on program home screen
-* #65 Dropdown list of systems loaded from `system_list.csv`
-* #73 'New' menu button clears game
-* #83/#88 Save and load gamelist from file
+* #61: Debug menu for printing gameList and FileIO
+* #62/#79: Game list displayed on program home screen
+* #65: Dropdown list of systems loaded from `system_list.csv`
+* #73: 'New' menu button clears game
+* #83/#88: Save and load gamelist from file
 
 ### Changed
-* #67 Drop BlueJ support in favor of Eclipse
-* #99 System selection changed from dropdown to an auto-completing textbox
+* #67: Drop BlueJ support in favor of Eclipse
+* #99: System selection changed from dropdown to an auto-completing textbox
 
 ### Fixed
-* #57 Game hours no longer always equals 0
-* #75 Gamelist sorted alphabetically
+* #57: Game hours no longer always equals 0
+* #75: Gamelist sorted alphabetically
 
 ## 0.0.1 - 2017-03-06
 Initial non-functional alpha. Only provides a basic prototype of user interface.
@@ -50,3 +50,4 @@ Little to no actual functionality.
 
 [Unreleased]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.0.1...v0.1.0
+[0.0.1]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/cc75417...v0.0.1
