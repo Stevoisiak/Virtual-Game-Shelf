@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project (mostly) adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+* #111/#116: Debug option for importing Steam library
+
+### Changed
+* #108: Selectable checkboxes for editing and deleting games
+* #117: NewGameWindow uses star images for ratings
+
 ## [0.1.0] - 2017-04-13
 First functional release, featuring the ability to edit entries in the gamelist,
 and the option to save or load from a .csv file.
@@ -40,4 +48,5 @@ Little to no actual functionality.
 * #39/#42: Sort project into packages
 * #50: Separate MenuBar into its own file
 
+[Unreleased]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.0.1...v0.1.0
