@@ -4,24 +4,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project (mostly) adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+* #111/#116: Debug option for importing Steam library
+
+### Changed
+* #108: Selectable checkboxes for editing and deleting games
+* #117: NewGameWindow uses star images for ratings
+
 ## [0.1.0] - 2017-04-13
 First functional release, featuring the ability to edit entries in the gamelist,
 and the option to save or load from a .csv file.
 
 ### Added
-* #61 Debug menu for printing gameList and FileIO
-* #62/#79 Game list displayed on program home screen
-* #65 Dropdown list of systems loaded from `system_list.csv`
-* #73 'New' menu button clears game
-* #83/#88 Save and load gamelist from file
+* #61: Debug menu for printing gameList and FileIO
+* #62/#79: Game list displayed on program home screen
+* #65: Dropdown list of systems loaded from `system_list.csv`
+* #73: 'New' menu button clears game
+* #83/#88: Save and load gamelist from file
 
 ### Changed
-* #67 Drop BlueJ support in favor of Eclipse
-* #99 System selection changed from dropdown to an auto-completing textbox
+* #67: Drop BlueJ support in favor of Eclipse
+* #99: System selection changed from dropdown to an auto-completing textbox
 
 ### Fixed
-* #57 Game hours no longer always equals 0
-* #75 Gamelist sorted alphabetically
+* #57: Game hours no longer always equals 0
+* #75: Gamelist sorted alphabetically
 
 ## 0.0.1 - 2017-03-06
 Initial non-functional alpha. Only provides a basic prototype of user interface.
@@ -40,4 +48,6 @@ Little to no actual functionality.
 * #39/#42: Sort project into packages
 * #50: Separate MenuBar into its own file
 
+[Unreleased]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/v0.0.1...v0.1.0
+[0.0.1]: https://github.com/Stevoisiak/Virtual-Game-Shelf/compare/cc75417...v0.0.1
