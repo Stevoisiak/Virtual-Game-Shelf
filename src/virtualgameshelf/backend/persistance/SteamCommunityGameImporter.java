@@ -108,7 +108,7 @@ public class SteamCommunityGameImporter {
                     if (!(name.equals(""))) {
                         Game game = new Game();
                         game.setName(name);
-                        game.setSystem("PC");
+                        game.setSystem("Steam");
                         game.setHours(hours);
                         game.setCompletion(completion);
                         game.setRating(0);
