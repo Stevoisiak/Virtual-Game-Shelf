@@ -38,11 +38,11 @@ public class GameShelf extends Application {
     private static VBox gameListVBox;
 
     // used when deleting games
-    static ArrayList<String> selectedGamesString = new ArrayList<>();
+    private static ArrayList<String> selectedGamesString = new ArrayList<>();
 
-    static MenuButton addGameButton;
-    static Button deleteButton;
-    static Button editButton;
+    private static MenuButton addGameButton;
+    private static Button deleteButton;
+    private static Button editButton;
 
     public static void main(String[] args) {
         launch(args);
