@@ -113,7 +113,7 @@ public class GameShelf extends Application {
         return deleteButton;
     }
 
- // creates button for editing games
+    // creates button for editing games
     public Button createEditButton() {
         Button editButton = new Button("Edit Game");
 
@@ -183,7 +183,7 @@ public class GameShelf extends Application {
         }
     }
 
- // Takes String and returns its location in the game list as an int
+    // Takes String and returns its location in the game list as an int
     public static int getGameIndex(String selectedGame) {
         int index = -1;
 
@@ -196,7 +196,6 @@ public class GameShelf extends Application {
                 }
             }
         }
-
         return index;
     }
 
@@ -272,45 +271,45 @@ public class GameShelf extends Application {
 
         CheckTreeView<String> checkTreeView = new CheckTreeView<>(rootNode);
 
-     // and listen to the relevant events (e.g. when the checked items change).
+        // and listen to the relevant events (e.g. when the checked items change).
         checkTreeView.getCheckModel().getCheckedItems().addListener((ListChangeListener<TreeItem<String>>) c -> {
-             ObservableList<TreeItem<String>> selectedGames = checkTreeView.getCheckModel().getCheckedItems();
+            ObservableList<TreeItem<String>> selectedGames = checkTreeView.getCheckModel().getCheckedItems();
 
-             if (selectedGames.size() > 0) {
-                 selectedGamesString.clear();
+            if (selectedGames.size() > 0) {
+                selectedGamesString.clear();
 
-                 if (selectedGames.size() == 1 && selectedGames.get(0).isLeaf()) {
-                     editButton.setDisable(false);
-                     deleteButton.setDisable(false);
+                if (selectedGames.size() == 1 && selectedGames.get(0).isLeaf()) {
+                    editButton.setDisable(false);
+                    deleteButton.setDisable(false);
 
-                     selectedGamesString.add(selectedGames.get(0).getValue());
-                 }
-                 else {
-                     deleteButton.setDisable(false);
-
-                     for (TreeItem<String> s : selectedGames) {
-                         String singleGame = s.getValue();
-
-                         // Ensures 'delete game' prompt only shows for games
-                         if (s.isLeaf() && s.getParent() != null ) {
-                             selectedGamesString.add(singleGame);
-                         }
-                     }
-                 }
-                 if (selectedGames.size() > 1) {
-                     editButton.setDisable(true);
-                 }
-
-                 if(selectedGames.get(0).getValue().equals("Consoles") && selectedGames.size() == 1){
-                     editButton.setDisable(true);
-                     deleteButton.setDisable(true);
+                    selectedGamesString.add(selectedGames.get(0).getValue());
                 }
-             }
-             else {
-                 deleteButton.setDisable(true);
-                 editButton.setDisable(true);
-             }
-         });
+                else {
+                    deleteButton.setDisable(false);
+
+                    for (TreeItem<String> s : selectedGames) {
+                        String singleGame = s.getValue();
+
+                        // Ensures 'delete game' prompt only shows for games
+                        if (s.isLeaf() && s.getParent() != null ) {
+                            selectedGamesString.add(singleGame);
+                        }
+                    }
+                }
+                if (selectedGames.size() > 1) {
+                    editButton.setDisable(true);
+                }
+
+                if (selectedGames.get(0).getValue().equals("Consoles") && selectedGames.size() == 1){
+                    editButton.setDisable(true);
+                    deleteButton.setDisable(true);
+                }
+            }
+            else {
+                deleteButton.setDisable(true);
+                editButton.setDisable(true);
+            }
+        });
 
         // Clear and redraw game list
         gameListVBox.getChildren().clear();
