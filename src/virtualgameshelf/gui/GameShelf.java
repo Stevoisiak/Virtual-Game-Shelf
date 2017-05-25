@@ -39,9 +39,9 @@ public class GameShelf extends Application {
 
     // used when deleting games
     static ArrayList<String> selectedGamesString = new ArrayList<>();
-    static Button deleteButton;
 
-    // used when editing games
+    static MenuButton addGameButton;
+    static Button deleteButton;
     static Button editButton;
 
     public static void main(String[] args) {
@@ -87,16 +87,8 @@ public class GameShelf extends Application {
         footer.getStyleClass().add("footer");
 
         deleteButton = createDeleteButton();
-        deleteButton.setAlignment(Pos.CENTER_LEFT);
-        deleteButton.setDisable(true);
-
         editButton = createEditButton();
-        editButton.setAlignment(Pos.CENTER_LEFT);
-        editButton.setDisable(true);
-
-        // used to add games to the library
-        MenuButton addGameButton = createAddGameButton();
-        addGameButton.setAlignment(Pos.CENTER_RIGHT);
+        addGameButton = createAddGameButton();
 
         footer.getChildren().addAll(deleteButton, editButton, addGameButton);
         root.setBottom(footer);
@@ -107,18 +99,18 @@ public class GameShelf extends Application {
     // creates button for deleting games
     public Button createDeleteButton() {
         Button deleteButton = new Button("Delete Game(s)");
-
+        deleteButton.setAlignment(Pos.CENTER_LEFT);
+        deleteButton.setDisable(true);
         deleteButton.setOnAction(e -> displayDeleteGameAlert());
-
         return deleteButton;
     }
 
     // creates button for editing games
     public Button createEditButton() {
         Button editButton = new Button("Edit Game");
-
+        editButton.setAlignment(Pos.CENTER_LEFT);
+        editButton.setDisable(true);
         editButton.setOnAction(e -> displayEditGameAlert());
-
         return editButton;
     }
 
@@ -208,7 +200,16 @@ public class GameShelf extends Application {
      */
     public MenuButton createAddGameButton() {
         MenuButton addGameButton = new MenuButton(null, new ImageView("icons/add.png"));
+        addGameButton.setAlignment(Pos.CENTER_RIGHT);
         addGameButton.setPopupSide(Side.TOP);
+        addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+            // rotate image 45 degrees when menu button is "active"
+            if (newValue) {
+                addGameButton.setRotate(45.0);
+            } else {
+                addGameButton.setRotate(0.0);
+            }
+        });
 
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
         manualAdd.setOnAction(e -> {
@@ -225,16 +226,6 @@ public class GameShelf extends Application {
         autoAdd.setOnAction(e -> System.out.println("This feature is not yet available."));
 
         addGameButton.getItems().addAll(manualAdd, autoAdd);
-
-        // rotates the image 45 degrees when the menu button is "active"
-        addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
-            if (newValue) {
-                addGameButton.setRotate(45.0);
-            } else {
-                addGameButton.setRotate(0.0);
-            }
-        });
-
         return addGameButton;
     }
 
