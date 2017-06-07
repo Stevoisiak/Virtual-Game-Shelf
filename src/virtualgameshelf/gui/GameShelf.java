@@ -38,11 +38,11 @@ public class GameShelf extends Application {
     private static VBox gameListVBox;
 
     // used when deleting games
-    static ArrayList<String> selectedGamesString = new ArrayList<>();
-    static Button deleteButton;
+    private static ArrayList<String> selectedGamesString = new ArrayList<>();
 
-    // used when editing games
-    static Button editButton;
+    private static MenuButton addGameButton;
+    private static Button deleteButton;
+    private static Button editButton;
 
     public static void main(String[] args) {
         launch(args);
@@ -87,16 +87,8 @@ public class GameShelf extends Application {
         footer.getStyleClass().add("footer");
 
         deleteButton = createDeleteButton();
-        deleteButton.setAlignment(Pos.CENTER_LEFT);
-        deleteButton.setDisable(true);
-
         editButton = createEditButton();
-        editButton.setAlignment(Pos.CENTER_LEFT);
-        editButton.setDisable(true);
-
-        // used to add games to the library
-        MenuButton addGameButton = createAddGameButton();
-        addGameButton.setAlignment(Pos.CENTER_RIGHT);
+        addGameButton = createAddGameButton();
 
         footer.getChildren().addAll(deleteButton, editButton, addGameButton);
         root.setBottom(footer);
@@ -107,18 +99,18 @@ public class GameShelf extends Application {
     // creates button for deleting games
     public Button createDeleteButton() {
         Button deleteButton = new Button("Delete Game(s)");
-
+        deleteButton.setAlignment(Pos.CENTER_LEFT);
+        deleteButton.setDisable(true);
         deleteButton.setOnAction(e -> displayDeleteGameAlert());
-
         return deleteButton;
     }
 
- // creates button for editing games
+    // creates button for editing games
     public Button createEditButton() {
         Button editButton = new Button("Edit Game");
-
+        editButton.setAlignment(Pos.CENTER_LEFT);
+        editButton.setDisable(true);
         editButton.setOnAction(e -> displayEditGameAlert());
-
         return editButton;
     }
 
@@ -183,7 +175,7 @@ public class GameShelf extends Application {
         }
     }
 
- // Takes String and returns its location in the game list as an int
+    // Takes String and returns its location in the game list as an int
     public static int getGameIndex(String selectedGame) {
         int index = -1;
 
@@ -196,7 +188,6 @@ public class GameShelf extends Application {
                 }
             }
         }
-
         return index;
     }
 
@@ -209,7 +200,16 @@ public class GameShelf extends Application {
      */
     public MenuButton createAddGameButton() {
         MenuButton addGameButton = new MenuButton(null, new ImageView("icons/add.png"));
+        addGameButton.setAlignment(Pos.CENTER_RIGHT);
         addGameButton.setPopupSide(Side.TOP);
+        addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+            // rotate image 45 degrees when menu button is "active"
+            if (newValue) {
+                addGameButton.setRotate(45.0);
+            } else {
+                addGameButton.setRotate(0.0);
+            }
+        });
 
         MenuItem manualAdd = new MenuItem("Manually Add New Game");
         manualAdd.setOnAction(e -> {
@@ -226,16 +226,6 @@ public class GameShelf extends Application {
         autoAdd.setOnAction(e -> System.out.println("This feature is not yet available."));
 
         addGameButton.getItems().addAll(manualAdd, autoAdd);
-
-        // rotates the image 45 degrees when the menu button is "active"
-        addGameButton.showingProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
-            if (newValue) {
-                addGameButton.setRotate(45.0);
-            } else {
-                addGameButton.setRotate(0.0);
-            }
-        });
-
         return addGameButton;
     }
 
@@ -272,45 +262,45 @@ public class GameShelf extends Application {
 
         CheckTreeView<String> checkTreeView = new CheckTreeView<>(rootNode);
 
-     // and listen to the relevant events (e.g. when the checked items change).
+        // and listen to the relevant events (e.g. when the checked items change).
         checkTreeView.getCheckModel().getCheckedItems().addListener((ListChangeListener<TreeItem<String>>) c -> {
-             ObservableList<TreeItem<String>> selectedGames = checkTreeView.getCheckModel().getCheckedItems();
+            ObservableList<TreeItem<String>> selectedGames = checkTreeView.getCheckModel().getCheckedItems();
 
-             if (selectedGames.size() > 0) {
-                 selectedGamesString.clear();
+            if (selectedGames.size() > 0) {
+                selectedGamesString.clear();
 
-                 if (selectedGames.size() == 1 && selectedGames.get(0).isLeaf()) {
-                     editButton.setDisable(false);
-                     deleteButton.setDisable(false);
+                if (selectedGames.size() == 1 && selectedGames.get(0).isLeaf()) {
+                    editButton.setDisable(false);
+                    deleteButton.setDisable(false);
 
-                     selectedGamesString.add(selectedGames.get(0).getValue());
-                 }
-                 else {
-                     deleteButton.setDisable(false);
-
-                     for (TreeItem<String> s : selectedGames) {
-                         String singleGame = s.getValue();
-
-                         // Ensures 'delete game' prompt only shows for games
-                         if (s.isLeaf() && s.getParent() != null ) {
-                             selectedGamesString.add(singleGame);
-                         }
-                     }
-                 }
-                 if (selectedGames.size() > 1) {
-                     editButton.setDisable(true);
-                 }
-
-                 if(selectedGames.get(0).getValue().equals("Consoles") && selectedGames.size() == 1){
-                     editButton.setDisable(true);
-                     deleteButton.setDisable(true);
+                    selectedGamesString.add(selectedGames.get(0).getValue());
                 }
-             }
-             else {
-                 deleteButton.setDisable(true);
-                 editButton.setDisable(true);
-             }
-         });
+                else {
+                    deleteButton.setDisable(false);
+
+                    for (TreeItem<String> s : selectedGames) {
+                        String singleGame = s.getValue();
+
+                        // Ensures 'delete game' prompt only shows for games
+                        if (s.isLeaf() && s.getParent() != null ) {
+                            selectedGamesString.add(singleGame);
+                        }
+                    }
+                }
+                if (selectedGames.size() > 1) {
+                    editButton.setDisable(true);
+                }
+
+                if (selectedGames.get(0).getValue().equals("Consoles") && selectedGames.size() == 1){
+                    editButton.setDisable(true);
+                    deleteButton.setDisable(true);
+                }
+            }
+            else {
+                deleteButton.setDisable(true);
+                editButton.setDisable(true);
+            }
+        });
 
         // Clear and redraw game list
         gameListVBox.getChildren().clear();
