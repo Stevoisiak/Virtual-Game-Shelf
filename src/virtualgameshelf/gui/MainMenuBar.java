@@ -173,20 +173,15 @@ public class MainMenuBar extends MenuBar {
             userDataDirectory.mkdir();
         }
 
-        // start writing to file
-        try {
-            CSVWriter csvWriter = new CSVWriter(new FileWriter(outFile), ',');
-            String[] header = Game.getColumnHeaders();
-            csvWriter.writeNext(header);
-            for (Game g : GameShelf.gameList.getGameList()) {
-                csvWriter.writeNext(g.toStringArray());
+        // Save to file
+        if (outFile != null) {
+            try {
+                saveGameListToFile(outFile);
+            } catch (FileNotFoundException er) {
+                er.printStackTrace(); // Can occur if directories do not exist
+            } catch (IOException er) {
+                er.printStackTrace();
             }
-            csvWriter.close();
-            System.out.println("Saved to " + outFile.getAbsolutePath());
-        } catch (FileNotFoundException er) {
-            er.printStackTrace();
-        } catch (IOException er) {
-            er.printStackTrace();
         }
     }
 
@@ -198,19 +193,12 @@ public class MainMenuBar extends MenuBar {
         fileChooser.setTitle("Save As");
         File outFile = fileChooser.showSaveDialog(mainStage);
 
-        // start writing to file
+        // Save to file
         if (outFile != null) {
             try {
-                CSVWriter csvWriter = new CSVWriter(new FileWriter(outFile), ',');
-                String[] header = Game.getColumnHeaders();
-                csvWriter.writeNext(header);
-                for (Game g : GameShelf.gameList.getGameList()) {
-                    csvWriter.writeNext(g.toStringArray());
-                }
-                csvWriter.close();
-                System.out.println("Saved to " + outFile.getPath());
+                saveGameListToFile(outFile);
             } catch (FileNotFoundException er) {
-                er.printStackTrace();
+                er.printStackTrace(); // Can occur if directories do not exist
             } catch (IOException er) {
                 er.printStackTrace();
             }
@@ -303,6 +291,23 @@ public class MainMenuBar extends MenuBar {
             SteamCommunityGameImporter importer = new SteamCommunityGameImporter();
             importer.steamCommunityAddGames(steamID.get());
         }
+    }
+
+    /**
+     * Saves current gameList to a file.
+     *
+     * @param outFile
+     *            gameList will be written to this file
+     */
+    private static void saveGameListToFile(File outFile) throws IOException {
+        CSVWriter csvWriter = new CSVWriter(new FileWriter(outFile), ',');
+        String[] header = Game.getColumnHeaders();
+        csvWriter.writeNext(header);
+        for (Game g : GameShelf.gameList.getGameList()) {
+            csvWriter.writeNext(g.toStringArray());
+        }
+        csvWriter.close();
+        System.out.println("Saved to " + outFile.getPath());
     }
 
     /**
