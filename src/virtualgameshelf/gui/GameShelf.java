@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.controlsfx.control.CheckTreeView;
 
@@ -30,6 +32,8 @@ import virtualgameshelf.backend.domain.Game;
 import virtualgameshelf.backend.domain.GameList;
 
 public class GameShelf extends Application {
+    private static final Logger LOGGER = Logger.getLogger( GameShelf.class.getName() );
+
     /** User's complete list of games. Static to allow for global access. */
     public static GameList gameList;
     /** Used to look up full names of consoles. ("PS4" - "PlayStation 4") */
@@ -70,10 +74,12 @@ public class GameShelf extends Application {
         mainScene.getStylesheets().add("stylesheet.css");
 
         // top menu bar
+        LOGGER.log( Level.FINE, "Creating main menubar");
         MainMenuBar menuBar = new MainMenuBar(mainStage);
         root.setTop(menuBar);
 
         // custom code below ---------------------------------------
+        LOGGER.log( Level.FINE, "Initializing hashmap of game system names");
         initializeSystemNameMap();
 
         // used to display games in library
